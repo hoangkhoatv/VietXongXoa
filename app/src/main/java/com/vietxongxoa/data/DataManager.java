@@ -1,0 +1,195 @@
+/*
+ *    Copyright (C) 2018 MINDORKS NEXTGEN PRIVATE LIMITED
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
+package com.vietxongxoa.data;
+
+import android.util.Log;
+
+import com.google.gson.JsonObject;
+import com.vietxongxoa.data.listeners.CreateListener;
+import com.vietxongxoa.data.listeners.DataListener;
+import com.vietxongxoa.data.listeners.WriteListener;
+import com.vietxongxoa.data.local.PreferencesHelper;
+import com.vietxongxoa.data.remote.ApiHelper;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.StringRequestListener;
+import com.vietxongxoa.data.remote.ApiInterface;
+import com.vietxongxoa.model.Data;
+import com.vietxongxoa.model.DataReponse;
+import com.vietxongxoa.model.PostItem;
+import com.vietxongxoa.model.Users;
+import com.vietxongxoa.model.Write;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+
+@Singleton
+public class DataManager {
+
+    private final PreferencesHelper mPreferencesHelper;
+    private final ApiHelper mApiHelper;
+
+    @Inject
+    public DataManager(PreferencesHelper preferencesHelper, ApiHelper apiHelper) {
+        this.mPreferencesHelper = preferencesHelper;
+        this.mApiHelper = apiHelper;
+    }
+
+    public Users getUserName() {
+        Users users = null;
+        final String data = mPreferencesHelper.getData(PreferencesHelper.KEY_USER);
+        if (data != null) {
+            users = new Users();
+            users.username = data;
+
+        }
+        return users;
+    }
+
+    public void setUSerName(Users users) {
+        mPreferencesHelper.putData(PreferencesHelper.KEY_USER, users.username);
+        mPreferencesHelper.putData(PreferencesHelper.KEY_TOKEN, users.token);
+
+
+    }
+
+    public void postWrite(final WriteListener listener, JsonObject content) {
+        ApiInterface apiService = mApiHelper.getCient().create(ApiInterface.class);
+        Call<DataReponse<Data<PostItem>>> call = apiService.postWirte(
+                mPreferencesHelper.getData(PreferencesHelper.KEY_TOKEN),
+                content
+        );
+        call.enqueue(new Callback<DataReponse<Data<PostItem>>>() {
+            @Override
+            public void onResponse(Call<DataReponse<Data<PostItem>>> call, Response<DataReponse<Data<PostItem>>> response) {
+                if (response.isSuccessful()) {
+                    listener.onResponse(response.body().data);
+                } else {
+                    try {
+                        listener.onError(response.errorBody().string());
+                    } catch (IOException e) {
+                        listener.onError(e.getMessage());
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DataReponse<Data<PostItem>>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void postCreateUser(final CreateListener listener, JsonObject username) {
+
+        final String data = mPreferencesHelper.getData(PreferencesHelper.KEY_USER);
+        if (data != null) {
+            Users users = new Users();
+            users.username = data;
+            listener.onResponse(users);
+            return;
+        }
+
+        ApiInterface apiService = mApiHelper.getCient().create(ApiInterface.class);
+        Call<DataReponse<Data<Users>>> call = apiService.postCreateUser(username);
+        call.enqueue(new Callback<DataReponse<Data<Users>>>() {
+            @Override
+            public void onResponse(Call<DataReponse<Data<Users>>> call, Response<DataReponse<Data<Users>>> response) {
+                Log.d("UserName", response.body().data.attributes.username);
+                listener.onResponse(response.body().data.attributes);
+            }
+
+            @Override
+            public void onFailure(Call<DataReponse<Data<Users>>> call, Throwable t) {
+                Log.e("UserName", t.getMessage());
+                listener.onError(t.getMessage());
+
+            }
+        });
+    }
+
+    public void getDetail(final WriteListener listener, String idPost){
+        ApiInterface apiService = mApiHelper.getCient().create(ApiInterface.class);
+        Call<DataReponse<Data<PostItem>>> call = apiService.getDetail(idPost);
+        call.enqueue(new Callback<DataReponse<Data<PostItem>>>() {
+            @Override
+            public void onResponse(Call<DataReponse<Data<PostItem>>> call, Response<DataReponse<Data<PostItem>>> response) {
+                if(response.isSuccessful()){
+                    if (response.isSuccessful()) {
+                        listener.onResponse(response.body().data);
+                    } else {
+                        try {
+                            listener.onError(response.errorBody().string());
+                        } catch (IOException e) {
+                            listener.onError(e.getMessage());
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DataReponse<Data<PostItem>>> call, Throwable t) {
+                listener.onError(t.getMessage());
+            }
+        });
+    }
+
+    public void getData(final DataListener listener, int page, int limit) {
+//
+//        final String data = mPreferencesHelper.getData();
+//
+//        if (data != null) {
+//            listener.onResponse(data);
+//            return;
+//        }
+        ApiInterface apiService = mApiHelper.getCient().create(ApiInterface.class);
+        Call<DataReponse<List<Data<PostItem>>>> call = apiService.getListPost(
+                mPreferencesHelper.getData(PreferencesHelper.KEY_TOKEN),
+                String.valueOf(limit),
+                String.valueOf(page)
+        );
+        call.enqueue(new Callback<DataReponse<List<Data<PostItem>>>>() {
+            @Override
+            public void onResponse(Call<DataReponse<List<Data<PostItem>>>> call, Response<DataReponse<List<Data<PostItem>>>> response) {
+                if (response.isSuccessful()) {
+                    listener.onResponse(response.body().data);
+                } else {
+                    try {
+                        listener.onError(response.errorBody().string());
+                    } catch (IOException e) {
+                        listener.onError(e.getMessage());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DataReponse<List<Data<PostItem>>>> call, Throwable t) {
+                listener.onError(t.getMessage());
+            }
+        });
+
+
+    }
+}

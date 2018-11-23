@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/cardview_light_background"
+    android:layout_marginTop="@dimen/activity_vertical_margin"
+    android:padding="@dimen/activity_vertical_margin">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hint_write"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:id="@+id/text_write"
+        android:layout_alignParentLeft="true"></TextView>
+</RelativeLayout>
