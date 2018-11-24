@@ -74,7 +74,7 @@ public class CreateActivity extends BaseActivity implements CreateMvpView {
 
     @OnClick(R.id.btnCreate)
     public void onCreateUser(View view) {
-        if(!edtName.getFreezesText()){
+        if (!edtName.getText().toString().matches("")){
             mCreatePresenter.postData(Users.getJson(String.valueOf(edtName.getText())));
         } else {
             Toast.makeText(getApplicationContext(),getString(R.string.toast_emtry_name),Toast.LENGTH_SHORT).show();
