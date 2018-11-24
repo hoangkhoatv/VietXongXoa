@@ -7,7 +7,7 @@
     android:background="@color/colorPrimary">
     <TableRow>
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:text="@string/btn_back"
@@ -15,10 +15,11 @@
             android:padding="@dimen/activity_vertical_margin"
             android:layout_alignParentTop="true"
             android:id="@+id/btnBack"
+            android:layout_weight="0.3"
             android:gravity="left">
         </Button>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             android:gravity="center_horizontal"
@@ -27,12 +28,12 @@
             android:textColor="@color/cardview_light_background"
             android:padding="@dimen/activity_vertical_margin"
             android:layout_alignParentTop="true"
-            android:layout_weight="1"
+            android:layout_weight="0.4"
             />
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="0.3">
 
         </LinearLayout>
     </TableRow>

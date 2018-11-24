@@ -19,6 +19,7 @@ package com.vietxongxoa.data;
 import android.util.Log;
 
 import com.google.gson.JsonObject;
+import com.vietxongxoa.R;
 import com.vietxongxoa.data.listeners.CreateListener;
 import com.vietxongxoa.data.listeners.DataListener;
 import com.vietxongxoa.data.listeners.WriteListener;
@@ -27,20 +28,26 @@ import com.vietxongxoa.data.remote.ApiHelper;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.StringRequestListener;
 import com.vietxongxoa.data.remote.ApiInterface;
+import com.vietxongxoa.data.remote.ErrorUtils;
+import com.vietxongxoa.model.ApiError;
 import com.vietxongxoa.model.Data;
 import com.vietxongxoa.model.DataReponse;
 import com.vietxongxoa.model.PostItem;
 import com.vietxongxoa.model.Users;
 import com.vietxongxoa.model.Write;
+import com.vietxongxoa.ui.base.BaseActivity;
 
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Converter;
 import retrofit2.Response;
 
 
@@ -77,7 +84,7 @@ public class DataManager {
     public void postWrite(final WriteListener listener, JsonObject content) {
         ApiInterface apiService = mApiHelper.getCient().create(ApiInterface.class);
         Call<DataReponse<Data<PostItem>>> call = apiService.postWirte(
-                mPreferencesHelper.getData(PreferencesHelper.KEY_TOKEN),
+                mPreferencesHelper.getKeyToken(),
                 content
         );
         call.enqueue(new Callback<DataReponse<Data<PostItem>>>() {
@@ -117,15 +124,19 @@ public class DataManager {
         call.enqueue(new Callback<DataReponse<Data<Users>>>() {
             @Override
             public void onResponse(Call<DataReponse<Data<Users>>> call, Response<DataReponse<Data<Users>>> response) {
-                Log.d("UserName", response.body().data.attributes.username);
-                listener.onResponse(response.body().data.attributes);
+                if (response.isSuccessful() && response.body().status.toString().matches("success")) {
+                    listener.onResponse(response.body().data.attributes);
+                } else {
+                    ApiError apiError = ErrorUtils.parseError(response);
+                    if(apiError!=null){
+                        listener.onError(apiError.message);
+                    }
+                }
             }
 
             @Override
             public void onFailure(Call<DataReponse<Data<Users>>> call, Throwable t) {
-                Log.e("UserName", t.getMessage());
                 listener.onError(t.getMessage());
-
             }
         });
     }
@@ -136,15 +147,13 @@ public class DataManager {
         call.enqueue(new Callback<DataReponse<Data<PostItem>>>() {
             @Override
             public void onResponse(Call<DataReponse<Data<PostItem>>> call, Response<DataReponse<Data<PostItem>>> response) {
-                if(response.isSuccessful()){
-                    if (response.isSuccessful()) {
-                        listener.onResponse(response.body().data);
-                    } else {
-                        try {
-                            listener.onError(response.errorBody().string());
-                        } catch (IOException e) {
-                            listener.onError(e.getMessage());
-                        }
+                if (response.isSuccessful()) {
+                    listener.onResponse(response.body().data);
+                } else {
+                    try {
+                        listener.onError(response.errorBody().string());
+                    } catch (IOException e) {
+                        listener.onError(e.getMessage());
                     }
                 }
             }
@@ -156,7 +165,7 @@ public class DataManager {
         });
     }
 
-    public void getData(final DataListener listener, int page, int limit) {
+    public void getData(final DataListener listener, int offset, int limit) {
 //
 //        final String data = mPreferencesHelper.getData();
 //
@@ -166,9 +175,9 @@ public class DataManager {
 //        }
         ApiInterface apiService = mApiHelper.getCient().create(ApiInterface.class);
         Call<DataReponse<List<Data<PostItem>>>> call = apiService.getListPost(
-                mPreferencesHelper.getData(PreferencesHelper.KEY_TOKEN),
+                mPreferencesHelper.getKeyToken(),
                 String.valueOf(limit),
-                String.valueOf(page)
+                String.valueOf(offset)
         );
         call.enqueue(new Callback<DataReponse<List<Data<PostItem>>>>() {
             @Override

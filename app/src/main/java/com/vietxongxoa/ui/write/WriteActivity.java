@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -73,6 +74,7 @@ public class WriteActivity extends BaseActivity implements WriteMvpView {
             intent.putExtra(PreferencesHelper.KEY_ID,data.id);
             intent.putExtra(PreferencesHelper.KEY_CONTENT,data.attributes.content);
             intent.putExtra(PreferencesHelper.KEY_AUTHOR,data.attributes.author);
+            intent.putExtra(PreferencesHelper.KEY_DATE,data.attributes.created);
             this.startActivity(intent);
             BaseActivity.hideKeyboard(this);
             finish();
@@ -86,7 +88,7 @@ public class WriteActivity extends BaseActivity implements WriteMvpView {
 
     @OnClick(R.id.btnDelelte)
     public void onDeleteWrite(View view) {
-        if (!editWrite.getFreezesText()){
+        if (!editWrite.getText().toString().matches("")){
             mWritePresenter.postData(
                     Write.getJson(String.valueOf(editWrite.getText()))
             );

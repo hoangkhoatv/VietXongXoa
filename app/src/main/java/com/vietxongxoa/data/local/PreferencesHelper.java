@@ -38,6 +38,7 @@ public class PreferencesHelper {
     public static final String KEY_ID = "id post";
     public static final String KEY_AUTHOR = "author";
     public static final String KEY_CONTENT = "content";
+    public static final String KEY_DATE = "date";
 
     @Inject
     public PreferencesHelper(@ApplicationContext Context context) {
@@ -54,6 +55,11 @@ public class PreferencesHelper {
 
     public String getData(String key) {
         return mPref.getString(key, null);
+    }
+
+    public String getKeyToken() {
+        return "Bearer " + mPref.getString(KEY_TOKEN, null);
+
     }
 
 }

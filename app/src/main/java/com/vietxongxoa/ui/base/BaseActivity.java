@@ -26,6 +26,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.vietxongxoa.MyApplication;
 import com.vietxongxoa.injection.component.ActivityComponent;
@@ -53,6 +54,9 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    protected void  showToast(String message){
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
     public ActivityComponent activityComponent() {
         if (mActivityComponent == null) {
             mActivityComponent = DaggerActivityComponent.builder()

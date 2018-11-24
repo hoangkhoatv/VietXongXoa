@@ -66,7 +66,7 @@ public class CreateActivity extends BaseActivity implements CreateMvpView {
 
     @Override
     public void showError(String error) {
-
+        showToast(error);
     }
 
     @BindView(R.id.edtName)

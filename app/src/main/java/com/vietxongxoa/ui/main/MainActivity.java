@@ -100,7 +100,6 @@ public class MainActivity extends BaseActivity implements MainMvpView,MyAdapter.
     @Override
     public void showData(final List<Data<PostItem>> data) {
         final List<Object> baseItems = new ArrayList<>();
-
         for(Data<PostItem> temp : data){
             PostItem postItem = (PostItem) temp.attributes;
             postItem.type = BaseItem.SECOND_TYPE;
@@ -115,14 +114,23 @@ public class MainActivity extends BaseActivity implements MainMvpView,MyAdapter.
                     swipeRefreshLayout .setRefreshing(false);
                 }
                 setWritePost();
-                adapter.add(baseItems);
+                if (baseItems.size()  != 0){
+                    adapter.add(baseItems);
+                } else {
+                    adapter.onHidden();
+                }
             }
         });
     }
 
     @Override
     public void showError(String error) {
-
+        if(adapter!=null){
+            adapter.onLoadMoreFailed();
+        }
+        if (swipeRefreshLayout.isRefreshing()){
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
     private void setWritePost(){
         if (isWrite){

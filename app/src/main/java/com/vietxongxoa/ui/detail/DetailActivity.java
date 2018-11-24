@@ -28,6 +28,9 @@ public class DetailActivity extends BaseActivity implements DetailMvpView {
 
     @BindView(R.id.text_post)
     TextView textPost;
+    @BindView(R.id.text_date)
+    TextView textDate;
+
 
 
     @Inject
@@ -72,8 +75,10 @@ public class DetailActivity extends BaseActivity implements DetailMvpView {
         String idPost = intent.getStringExtra(PreferencesHelper.KEY_ID);
         String author = intent.getStringExtra(PreferencesHelper.KEY_AUTHOR);
         String content = intent.getStringExtra(PreferencesHelper.KEY_CONTENT);
+        String date = intent.getStringExtra(PreferencesHelper.KEY_DATE);
         textName.setText(author);
         textPost.setText(content);
+        textDate.setText(date);
 
     }
 

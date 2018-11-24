@@ -16,6 +16,7 @@ public abstract class LoadMoreRecyclerViewAdapter<T> extends BaseRecyclerViewAda
     private RetryLoadMoreListener mRetryLoadMoreListener;
     private boolean mOnLoadMoreFailed;
     private boolean mIsReachEnd;
+    private boolean mLoadHidden;
 
     protected LoadMoreRecyclerViewAdapter(@NonNull Context context,
                                           ItemClickListener itemClickListener,
@@ -56,6 +57,8 @@ public abstract class LoadMoreRecyclerViewAdapter<T> extends BaseRecyclerViewAda
 
             ((BottomViewHolder) holder).mProgressBar.setVisibility(
                     mIsReachEnd ? View.GONE : mOnLoadMoreFailed ? View.GONE : View.VISIBLE);
+            ((BottomViewHolder) holder).mProgressBar.setVisibility(
+                    mLoadHidden ? View.GONE : View.VISIBLE);
             ((BottomViewHolder) holder).layoutRetry.setVisibility(
                     mIsReachEnd ? View.GONE : mOnLoadMoreFailed ? View.VISIBLE : View.GONE);
         }
@@ -90,6 +93,7 @@ public abstract class LoadMoreRecyclerViewAdapter<T> extends BaseRecyclerViewAda
                     mRetryLoadMoreListener.onRetryLoadMore();
                 }
             });
+
         }
     }
 
@@ -98,15 +102,25 @@ public abstract class LoadMoreRecyclerViewAdapter<T> extends BaseRecyclerViewAda
      */
     public void startLoadMore() {
         mOnLoadMoreFailed = false;
+        mLoadHidden = false;
+
+
         notifyDataSetChanged();
     }
-
     /**
      * It help visible layout retry when load more failed
      */
     public void onLoadMoreFailed() {
         mOnLoadMoreFailed = true;
+        mLoadHidden = false;
         notifyItemChanged(bottomItemPosition());
+
+
+    }
+
+    public void onHidden(){
+        mLoadHidden = true;
+        notifyDataSetChanged();
     }
 
     public void onReachEnd() {

@@ -14,12 +14,14 @@ public class PostViewHolder  extends RecyclerView.ViewHolder implements View.OnC
 
     private TextView textName;
     private TextView textPost;
+    private TextView textDate;
     private ItemClickListener itemClickListener;
 
     public PostViewHolder(View itemView) {
         super(itemView);
         textName= (TextView) itemView.findViewById(R.id.text_name);
         textPost = (TextView) itemView.findViewById(R.id.text_post);
+        textDate = (TextView) itemView.findViewById(R.id.text_date);
         itemView.setOnClickListener(this);
 
     }
@@ -32,8 +34,10 @@ public class PostViewHolder  extends RecyclerView.ViewHolder implements View.OnC
         PostItem postItem= (PostItem) item;
         String userName = postItem.author;
         String strPost= postItem.content;
+        String strDate = postItem.created;
         textName.setText(userName);
         textPost.setText(strPost);
+        textDate.setText(strDate);
     }
 
     @Override

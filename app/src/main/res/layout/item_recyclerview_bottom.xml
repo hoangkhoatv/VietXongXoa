@@ -5,9 +5,7 @@
     android:layout_height="60dp"
     android:orientation="horizontal"
     android:gravity="center"
-    android:background="@color/background"
-
-    >
+    android:background="@color/background">
 
     <ProgressBar
         android:id="@+id/progress"
@@ -22,13 +20,14 @@
         android:id="@+id/layout_retry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="@dimen/activity_vertical_margin"
         android:gravity="center"
         >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Load failed"
+            android:text="@string/error"
             />
 
         <Button
@@ -36,16 +35,17 @@
             android:layout_marginLeft="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Try Again"
+            android:text="Thử lại"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/cardview_light_background"
             />
-
     </LinearLayout>
 
     <TextView
         android:id="@+id/text_no_more_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="No more item"
+        android:text="Hiện chưa có dữ liệu!"
         android:gravity="center"
         />
 

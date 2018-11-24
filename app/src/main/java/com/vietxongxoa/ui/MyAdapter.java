@@ -60,6 +60,7 @@ public class MyAdapter extends LoadMoreRecyclerViewAdapter<Object> {
                     Intent intent = DetailActivity.getStartIntent(mContext);
                     intent.putExtra(PreferencesHelper.KEY_AUTHOR,item.author);
                     intent.putExtra(PreferencesHelper.KEY_CONTENT,item.content);
+                    intent.putExtra(PreferencesHelper.KEY_DATE,item.created);
                     mContext.startActivity(intent);
                 }
             });

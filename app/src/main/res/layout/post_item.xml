@@ -14,7 +14,19 @@
         android:text="@string/name_user"
         android:layout_gravity="left"
         android:textColor="@color/text_name"
-        android:padding="@dimen/activity_vertical_margin"/>
+        android:textSize="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_vertical_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"/>
+    <TextView
+        android:id="@+id/text_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/name_user"
+        android:layout_gravity="left"
+        android:paddingLeft="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

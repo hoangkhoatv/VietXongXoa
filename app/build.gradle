@@ -17,7 +17,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdkVersion 28
     buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.vietxongxoa"
@@ -36,7 +36,8 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
     // App's dependencies, including test
     implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     implementation "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
@@ -47,7 +48,9 @@ dependencies {
     implementation "com.google.guava:guava:$rootProject.guavaVersion"
     implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
-    compileOnly 'org.glassfish:javax.annotation:10.0-b28' //Required by Dagger2
+    compileOnly 'org.glassfish:javax.annotation:10.0-b28'
+
+    //Required by Dagger2
     implementation "com.amitshekhar.android:android-networking:$rootProject.fastAndroidNetworkingVersion"
     implementation "com.jakewharton:butterknife:$rootProject.butterknifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterknifeVersion"
@@ -83,5 +86,5 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.6.2'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-    implementation "com.squareup.okhttp3:okhttp:3.12.0"
+    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
 }

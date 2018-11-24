@@ -15,7 +15,7 @@
   -->
 
 <resources>
-    <string name="app_name">VietXongXoa</string>
+    <string name="app_name">Viết Xong Xóa</string>
     <string name="load_data">Load Data</string>
     <string name="hint_write">Viết để xóa...</string>
     <string name="name_user">\@someome</string>
@@ -26,4 +26,5 @@
     <string name="text_delete">Xóa đi</string>
     <string name="toast_emtry_name">Tên người dùng trống.</string>
     <string name="btn_back">Quay lại</string>
+    <string name="error">Đã có lỗi xảy ra!</string>
 </resources>
