@@ -179,14 +179,13 @@ public class DataManager {
         call.enqueue(new Callback<DataReponse<List<Data<PostItem>>>>() {
             @Override
             public void onResponse(Call<DataReponse<List<Data<PostItem>>>> call, Response<DataReponse<List<Data<PostItem>>>> response) {
-                if (response.isSuccessful()) {
-                    if (response.body().status.matches("Su"))
+                if (response.isSuccessful() && response.body().status.toString().matches("success")) {
                     listener.onResponse(response.body().data);
                 } else {
-                    try {
-                        listener.onError(response.errorBody().string());
-                    } catch (IOException e) {
-                        listener.onError(e.getMessage());
+                    ApiError apiError = ErrorUtils.parseError(response);
+                    if(apiError!=null){
+                        listener.onError(apiError.message);
+
                     }
                 }
             }
