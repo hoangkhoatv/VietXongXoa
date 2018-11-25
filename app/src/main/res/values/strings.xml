@@ -15,7 +15,7 @@
   -->
 
 <resources>
-    <string name="app_name">Viết Xong Xóa</string>
+    <string name="app_name">VXX</string>
     <string name="load_data">Load Data</string>
     <string name="hint_write">Viết để xóa...</string>
     <string name="name_user">\@someome</string>
