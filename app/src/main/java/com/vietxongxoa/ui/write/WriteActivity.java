@@ -65,7 +65,6 @@ public class WriteActivity extends BaseActivity implements WriteMvpView {
         ButterKnife.bind(this);
         ButterKnife.bind(this);
         mWritePresenter.attachView(this);
-        editWrite.setText("Sau 5 năm yêu nhau, sau rất nhiều cãi vã, niềm vui có, những điều rất hạnh phúc cũng có, và đến 2 lần anh ngoại tình cũng đã có, rồi tha thứ cũng đã có... Bây giờ anh chán, anh mệt rồi! Anh nói quen em anh đã mất rất nhiều thứ, bỏ qua rất nhiều cơ hội gì gì đó. Anh nói anh thiệt thòi em cũng thiệt thòi vậy thì mình hòa, việc đó không phải bàn. Anh nói rồi em sẽ tìm được 1 người không quan trọng trinh tiết để có thể yêu em... Nhưng anh không bàn về việc thanh xuân của em, và tương lai hi vọng của em tự bao giờ đã dồn về hết cho anh. Anh xa em anh thấy bình yên và tự do, còn em hụt hẫng và chìm vào một mớ hỗn loạn mà chưa bao giờ em từng trải qua. Và tiếp theo, em không biết phải làm sao để có thể bước qua được, thật sự bế tắc và mất phương hướng... Anh tàn nhẫn và ích kỷ lắm!");
     }
 
     @Override
