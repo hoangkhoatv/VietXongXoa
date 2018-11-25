@@ -16,12 +16,17 @@
 
 package com.vietxongxoa.ui.main;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -89,6 +94,7 @@ public class MainActivity extends BaseActivity implements MainMvpView,MyAdapter.
         mMainPresenter.attachView(this);
         setupRecyclerView();
 
+
     }
 
     @Override
@@ -121,6 +127,42 @@ public class MainActivity extends BaseActivity implements MainMvpView,MyAdapter.
                 }
             }
         });
+    }
+
+    protected void showDialogRate(){
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.title_dialog))
+                .setMessage(getString(R.string.content_dialog))
+                .setPositiveButton(getString(R.string.yes_dialog), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Uri uri = Uri.parse("market://details?id=" + getBaseContext().getPackageName());
+                        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+
+                        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                                Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                                Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                        try {
+                            startActivity(goToMarket);
+                        } catch (ActivityNotFoundException e) {
+                            startActivity(new Intent(Intent.ACTION_VIEW,
+                                    Uri.parse("http://play.google.com/store/apps/details?id=" + getBaseContext().getPackageName())));
+                        }
+                    }
+                })
+                .setNegativeButton(getString(R.string.no_didalog), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .show();
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        showDialogRate();
     }
 
     @Override
