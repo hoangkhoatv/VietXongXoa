@@ -16,6 +16,7 @@
             android:text="@string/name_user"
             android:layout_gravity="left"
             android:textColor="@color/text_name"
+            android:textStyle="bold"
             android:textSize="@dimen/activity_vertical_margin"
             android:paddingLeft="@dimen/activity_vertical_margin"
             android:paddingRight="@dimen/activity_vertical_margin"

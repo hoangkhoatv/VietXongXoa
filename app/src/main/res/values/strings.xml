@@ -28,7 +28,7 @@
     <string name="btn_back">Quay lại</string>
     <string name="error">Đã có lỗi xảy ra!</string>
     <string name="title_dialog">Hãy đánh 5 * cho ứng dụng được tốt hơn</string>
-    <string name="content_dialog">Những đánh giá và ý kiến đóng góp của bạn sẽ được chúng lắng nghe và phát triển ứng ngày càng tốt hơn.</string>
+    <string name="content_dialog">Những đánh giá và ý kiến đóng góp của bạn sẽ được chúng tôi lắng nghe và phát triển ứng dụng ngày càng tốt hơn.</string>
     <string name="yes_dialog">Có</string>
     <string name="no_didalog">Thoát</string>
 </resources>
