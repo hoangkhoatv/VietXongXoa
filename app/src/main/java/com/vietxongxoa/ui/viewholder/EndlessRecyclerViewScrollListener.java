@@ -73,30 +73,17 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
             loading = false;
             previousTotalItemCount = totalItemCount;
         }
-        Log.d("Pre Count ",String.valueOf(previousTotalItemCount));
-        Log.d("Total Count",String.valueOf(totalItemCount));
-        Log.d("Current",String.valueOf(currentPage));
-
-        Log.d("lastVisibleItemPosition",String.valueOf(lastVisibleItemPosition));
-        Log.d("Loadinf",String.valueOf(loading));
+//        Log.d("Pre Count ",String.valueOf(previousTotalItemCount));
+//        Log.d("Total Count",String.valueOf(totalItemCount));
+//        Log.d("Current",String.valueOf(currentPage));
+//
+//        Log.d("lastVisibleItemPosition",String.valueOf(lastVisibleItemPosition));
+//        Log.d("Loadinf",String.valueOf(loading));
         if (loading && (lastVisibleItemPosition == totalItemCount -1) && (currentPage  >= totalItemCount)){
             currentPage = currentPage -  visibleThreshold;
             loading = false;
         }
-//        if (loading && (totalItemCount == lastVisibleItemPosition)){
-//            currentPage = currentPage -  visibleThreshold;
-//            if ( currentPage < 0 ){
-//                currentPage = 1;
-//            }
-//            loading = false;
-//
-//        }
-//        if (loading && (totalItemCount == previousTotalItemCount)){
-//            currentPage = currentPage -  visibleThreshold;
-//            if ( currentPage < 0 ){
-//                currentPage = 1;
-//            }
-//        }
+
 
         // If it isn’t currently loading, we check to see if we have breached
         // the visibleThreshold and need to reload more data.

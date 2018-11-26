@@ -174,7 +174,8 @@ public class DataManager {
         Call<DataReponse<List<Data<PostItem>>>> call = apiService.getListPost(
                 mPreferencesHelper.getKeyToken(),
                 String.valueOf(limit),
-                String.valueOf(offset)
+                String.valueOf(offset),
+                "#trending"
         );
         call.enqueue(new Callback<DataReponse<List<Data<PostItem>>>>() {
             @Override

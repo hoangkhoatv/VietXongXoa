@@ -25,7 +25,8 @@ public interface ApiInterface {
     Call<DataReponse<List<Data<PostItem>>>> getListPost(
             @Header("Authorization") String authKey,
             @Query("limit") String limit,
-            @Query("offset") String offset
+            @Query("offset") String offset,
+            @Query("hashtag") String hashtag
     );
 
     @POST("users")

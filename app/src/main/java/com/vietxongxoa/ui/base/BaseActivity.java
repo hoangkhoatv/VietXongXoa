@@ -57,6 +57,7 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
     protected void  showToast(String message){
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
+
     public ActivityComponent activityComponent() {
         if (mActivityComponent == null) {
             mActivityComponent = DaggerActivityComponent.builder()
@@ -94,6 +95,5 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
             progressDialog.cancel();
         }
     }
-
 
 }

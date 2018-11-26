@@ -29,4 +29,5 @@ public interface MainMvpView extends MvpView {
     void showData(List<Data<PostItem>> data);
 
     void showError(String error);
+
 }

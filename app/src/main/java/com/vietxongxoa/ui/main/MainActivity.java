@@ -248,4 +248,5 @@ public class MainActivity extends BaseActivity implements MainMvpView,MyAdapter.
         }, 500);
     }
 
+
 }
