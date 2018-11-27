@@ -70,6 +70,7 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
     public ActivityComponent getActivityComponent() {
         return mActivityComponent;
     }
+
     @TargetApi(Build.VERSION_CODES.M)
     public void requestPermissionsSafely(String[] permissions, int requestCode) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -96,4 +97,5 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
         }
     }
 
+    public abstract void setActionBar();
 }

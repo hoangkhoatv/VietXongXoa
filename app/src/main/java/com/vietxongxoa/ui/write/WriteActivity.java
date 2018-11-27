@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.vietxongxoa.R;
 import com.vietxongxoa.data.local.PreferencesHelper;
@@ -43,25 +44,7 @@ public class WriteActivity extends BaseActivity implements WriteMvpView {
         super.onCreate(savedInstanceState);
         activityComponent().inject(this);
         setContentView(R.layout.activity_write);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowHomeEnabled(false);
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(false);
-        View view = getLayoutInflater().inflate(R.layout.action_bar_back_layout,
-                null);
-        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
-                ActionBar.LayoutParams.MATCH_PARENT);
-        actionBar.setCustomView(view, layoutParams);
-        Toolbar parent = (Toolbar) view.getParent();
-        parent.setContentInsetsAbsolute(0, 0);
-        Button btnBack = (Button) view.findViewById(R.id.btnBack);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-
+        setActionBar();
         ButterKnife.bind(this);
         ButterKnife.bind(this);
         mWritePresenter.attachView(this);
@@ -96,4 +79,27 @@ public class WriteActivity extends BaseActivity implements WriteMvpView {
         }
     }
 
+    @Override
+    public void setActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        View view = getLayoutInflater().inflate(R.layout.action_bar_back_layout,
+                null);
+        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+                ActionBar.LayoutParams.MATCH_PARENT);
+        actionBar.setCustomView(view, layoutParams);
+        Toolbar parent = (Toolbar) view.getParent();
+        parent.setContentInsetsAbsolute(0, 0);
+        Button btnBack = (Button) view.findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        TextView txtTitle = (TextView) view.findViewById(R.id.text_title);
+        txtTitle.setText(getString(R.string.title_detail));
+    }
 }

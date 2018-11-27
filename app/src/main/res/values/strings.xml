@@ -34,4 +34,8 @@
     <string name="yes_dialog">Có</string>
     <string name="no_didalog">Thoát</string>
     <string name="view_more">Xem thêm</string>
+
+    <string name="title_create">Chỉ là một cái tên</string>
+    <string name="title_main">#trending</string>
+    <string name="title_detail">Viết để xóa đi...</string>
 </resources>

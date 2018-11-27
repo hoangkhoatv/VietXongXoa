@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vietxongxoa.R;
@@ -34,17 +35,7 @@ public class CreateActivity extends BaseActivity implements CreateMvpView {
         super.onCreate(savedInstanceState);
         activityComponent().inject(this);
         setContentView(R.layout.activity_create);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowHomeEnabled(false);
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(false);
-        View view = getLayoutInflater().inflate(R.layout.action_bar_layout,
-                null);
-        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
-                ActionBar.LayoutParams.MATCH_PARENT);
-        actionBar.setCustomView(view, layoutParams);
-        Toolbar parent = (Toolbar) view.getParent();
-        parent.setContentInsetsAbsolute(0, 0);
+        setActionBar();
         ButterKnife.bind(this);
         mCreatePresenter.attachView(this);
         if(mCreatePresenter.getUserName()!=null){
@@ -81,4 +72,20 @@ public class CreateActivity extends BaseActivity implements CreateMvpView {
         }
     }
 
+    @Override
+    public void setActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        View view = getLayoutInflater().inflate(R.layout.action_bar_layout,
+                null);
+        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+                ActionBar.LayoutParams.MATCH_PARENT);
+        actionBar.setCustomView(view, layoutParams);
+        Toolbar parent = (Toolbar) view.getParent();
+        parent.setContentInsetsAbsolute(0, 0);
+        TextView txtTitle = (TextView) view.findViewById(R.id.text_title);
+        txtTitle.setText(getString(R.string.title_create));
+    }
 }

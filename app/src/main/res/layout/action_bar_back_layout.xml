@@ -22,6 +22,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:id="@+id/text_title"
             android:text="@string/app_name"
             android:gravity="center_horizontal"
             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -30,6 +31,8 @@
             android:padding="@dimen/activity_vertical_margin"
             android:layout_alignParentTop="true"
             android:layout_weight="0.4"
+            android:textSize="@dimen/activity_vertical_margin"
+
             />
         <LinearLayout
             android:layout_width="0dp"

@@ -47,24 +47,7 @@ public class DetailActivity extends BaseActivity implements DetailMvpView {
         super.onCreate(savedInstanceState);
         activityComponent().inject(this);
         setContentView(R.layout.activity_detail);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowHomeEnabled(false);
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(false);
-        View view = getLayoutInflater().inflate(R.layout.action_bar_back_layout,
-                null);
-        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
-                ActionBar.LayoutParams.MATCH_PARENT);
-        actionBar.setCustomView(view, layoutParams);
-        Toolbar parent = (Toolbar) view.getParent();
-        parent.setContentInsetsAbsolute(0, 0);
-        Button btnBack = (Button) view.findViewById(R.id.btnBack);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        setActionBar();
         ButterKnife.bind(this);
         mDetailPresenter.attachView(this);
         getData();
@@ -90,5 +73,30 @@ public class DetailActivity extends BaseActivity implements DetailMvpView {
     @Override
     public void showError(String error) {
 
+    }
+
+    @Override
+    public void setActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        View view = getLayoutInflater().inflate(R.layout.action_bar_back_layout,
+                null);
+        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+                ActionBar.LayoutParams.MATCH_PARENT);
+        actionBar.setCustomView(view, layoutParams);
+        Toolbar parent = (Toolbar) view.getParent();
+        parent.setContentInsetsAbsolute(0, 0);
+
+        Button btnBack = (Button) view.findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        TextView txtTitle = (TextView) view.findViewById(R.id.text_title);
+        txtTitle.setText(getString(R.string.title_detail));
     }
 }
