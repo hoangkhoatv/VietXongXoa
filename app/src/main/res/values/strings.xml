@@ -24,7 +24,7 @@
     <string name="create_hint">Một cái tên nào đó...</string>
 
     <string name="hint_writing">Viết để xóa đi...</string>
-    <string name="text_create">Tiếp tục</string>
+    <string name="text_create">Vào để viết</string>
     <string name="text_delete">Xóa đi</string>
     <string name="toast_emtry_name">Tên người dùng trống.</string>
     <string name="btn_back">Quay lại</string>
