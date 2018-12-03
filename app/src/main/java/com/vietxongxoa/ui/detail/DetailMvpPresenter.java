@@ -6,6 +6,7 @@ public interface DetailMvpPresenter <V extends DetailMvpView> extends MvpPresent
 
     void getData(String idPost);
 
+    void getComment(String uuid, int limit, int offset);
 
 }
 

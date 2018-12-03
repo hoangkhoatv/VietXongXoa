@@ -3,6 +3,7 @@ package com.vietxongxoa.data.remote;
 import android.support.annotation.RawRes;
 
 import com.google.gson.JsonObject;
+import com.vietxongxoa.model.CommentItem;
 import com.vietxongxoa.model.Data;
 import com.vietxongxoa.model.DataReponse;
 import com.vietxongxoa.model.PostItem;
@@ -59,6 +60,13 @@ public interface ApiInterface {
     Call<DataReponse<Boolean>> deleteLove(
             @Header("Authorization") String authKey,
             @Body JsonObject content
+    );
+
+    @GET("comment")
+    Call<DataReponse<List<Data<CommentItem>>>> getComments(
+            @Query("article_uuid") String uuid,
+            @Query("limit") int limit,
+            @Query("offset") int offset
     );
 
 }

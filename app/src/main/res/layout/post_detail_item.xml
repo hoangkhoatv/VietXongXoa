@@ -50,6 +50,12 @@
             android:paddingLeft="@dimen/activity_vertical_margin"
             android:paddingTop="@dimen/cardview_default_radius"
             android:layout_weight="1">
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:id="@+id/btnLove"
+                android:background="@android:color/transparent">
+            </Button>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -78,8 +84,25 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:paddingRight="@dimen/activity_vertical_margin"
             android:layout_weight="1">
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/commnet"
+                android:id="@+id/comment"
+                android:textColor="@color/colorPrimary"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_toLeftOf="@id/comment"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginRight="@dimen/cardview_default_radius"
+                android:id="@+id/numberComment"/>
 
         </RelativeLayout>
     </LinearLayout>

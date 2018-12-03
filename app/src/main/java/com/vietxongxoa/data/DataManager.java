@@ -17,6 +17,7 @@
 package com.vietxongxoa.data;
 
 import com.google.gson.JsonObject;
+import com.vietxongxoa.data.listeners.CommentListener;
 import com.vietxongxoa.data.listeners.CreateListener;
 import com.vietxongxoa.data.listeners.DataListener;
 import com.vietxongxoa.data.listeners.LoveListener;
@@ -26,6 +27,7 @@ import com.vietxongxoa.data.remote.ApiHelper;
 import com.vietxongxoa.data.remote.ApiInterface;
 import com.vietxongxoa.data.remote.ErrorUtils;
 import com.vietxongxoa.model.ApiError;
+import com.vietxongxoa.model.CommentItem;
 import com.vietxongxoa.model.Data;
 import com.vietxongxoa.model.DataReponse;
 import com.vietxongxoa.model.PostItem;
@@ -235,5 +237,31 @@ public class DataManager {
             }
         });
 
+    }
+
+    public void getComments(final CommentListener listener, String uuid , int limit, int offset){
+        ApiInterface apiService = mApiHelper.getCient().create(ApiInterface.class);
+        Call<DataReponse<List<Data<CommentItem>>>> call = apiService.getComments(
+                uuid,
+                limit,
+                offset);
+       call.enqueue(new Callback<DataReponse<List<Data<CommentItem>>>>() {
+           @Override
+           public void onResponse(Call<DataReponse<List<Data<CommentItem>>>> call, Response<DataReponse<List<Data<CommentItem>>>> response) {
+               if (response.isSuccessful() && response.body().status.toString().matches("success")) {
+                   listener.onResponse(response.body().data);
+               } else {
+                   ApiError apiError = ErrorUtils.parseError(response);
+                   if(apiError!=null){
+                       listener.onError(apiError.message);
+                   }
+               }
+           }
+
+           @Override
+           public void onFailure(Call<DataReponse<List<Data<CommentItem>>>> call, Throwable t) {
+               listener.onError(t.getMessage());
+           }
+       });
     }
 }

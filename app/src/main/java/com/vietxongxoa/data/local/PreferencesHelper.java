@@ -39,6 +39,9 @@ public class PreferencesHelper {
     public static final String KEY_AUTHOR = "author";
     public static final String KEY_CONTENT = "content";
     public static final String KEY_DATE = "date";
+    public static final String KEY_NUM_LOVE = "number love";
+    public static final String KEY_LOVED = "loved";
+    public static final String KEY_COMMET = "comment";
 
     @Inject
     public PreferencesHelper(@ApplicationContext Context context) {

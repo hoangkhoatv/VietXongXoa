@@ -1,4 +1,4 @@
-package com.vietxongxoa.ui;
+package com.vietxongxoa.ui.adapter;
 
 import android.content.Context;
 
@@ -17,8 +17,10 @@ import com.vietxongxoa.model.PostItem;
 import com.vietxongxoa.ui.detail.DetailActivity;
 import com.vietxongxoa.ui.main.ItemInteractiveListener;
 import com.vietxongxoa.ui.main.MainActivity;
+import com.vietxongxoa.ui.viewholder.CommentViewHolder;
 import com.vietxongxoa.ui.viewholder.ItemClickListener;
 import com.vietxongxoa.ui.viewholder.LoadMoreRecyclerViewAdapter;
+import com.vietxongxoa.ui.viewholder.PostDetailViewHolder;
 import com.vietxongxoa.ui.viewholder.PostViewHolder;
 import com.vietxongxoa.ui.viewholder.WriteViewHolder;
 import com.vietxongxoa.ui.write.WriteActivity;
@@ -72,6 +74,9 @@ public class PostAdapter extends LoadMoreRecyclerViewAdapter<Object> {
                     intent.putExtra(PreferencesHelper.KEY_AUTHOR,item.author);
                     intent.putExtra(PreferencesHelper.KEY_CONTENT,item.content);
                     intent.putExtra(PreferencesHelper.KEY_DATE,item.created);
+                    intent.putExtra(PreferencesHelper.KEY_NUM_LOVE,item.love);
+                    intent.putExtra(PreferencesHelper.KEY_COMMET, item.comment);
+                    intent.putExtra(PreferencesHelper.KEY_LOVED, item.loved);
                     mContext.startActivity(intent);
                 }
 

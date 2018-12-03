@@ -37,7 +37,7 @@ import com.vietxongxoa.model.BaseItem;
 import com.vietxongxoa.model.Data;
 import com.vietxongxoa.model.PostItem;
 import com.vietxongxoa.model.WirteItem;
-import com.vietxongxoa.ui.PostAdapter;
+import com.vietxongxoa.ui.adapter.PostAdapter;
 import com.vietxongxoa.ui.base.BaseActivity;
 import com.vietxongxoa.ui.viewholder.EndlessRecyclerViewScrollListener;
 
@@ -63,7 +63,6 @@ public class MainActivity extends BaseActivity implements MainMvpView, PostAdapt
     int currentPage  = 0;
     int endPage = -1;
     private PostAdapter adapter;
-    private boolean emulatorLoadMoreFaild = true;
     private EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
     private boolean isWrite = true;
 
