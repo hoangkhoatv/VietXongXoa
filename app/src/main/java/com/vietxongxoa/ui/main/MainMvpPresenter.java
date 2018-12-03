@@ -23,4 +23,8 @@ public interface MainMvpPresenter<V extends MainMvpView> extends MvpPresenter<V>
 
     void getData(int page, int limit);
 
+    void postLove(String uuid, int position);
+
+    void deleteLove(String uuid, int position);
+
 }

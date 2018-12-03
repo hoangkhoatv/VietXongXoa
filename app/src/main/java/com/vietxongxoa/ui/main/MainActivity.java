@@ -21,7 +21,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -31,7 +30,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.vietxongxoa.R;
@@ -39,7 +37,7 @@ import com.vietxongxoa.model.BaseItem;
 import com.vietxongxoa.model.Data;
 import com.vietxongxoa.model.PostItem;
 import com.vietxongxoa.model.WirteItem;
-import com.vietxongxoa.ui.MyAdapter;
+import com.vietxongxoa.ui.PostAdapter;
 import com.vietxongxoa.ui.base.BaseActivity;
 import com.vietxongxoa.ui.viewholder.EndlessRecyclerViewScrollListener;
 
@@ -51,7 +49,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity implements MainMvpView,MyAdapter.ItemClickListener, MyAdapter.RetryLoadMoreListener {
+public class MainActivity extends BaseActivity implements MainMvpView, PostAdapter.ItemClickListener, PostAdapter.RetryLoadMoreListener, ItemInteractiveListener {
 
     @Inject
     MainPresenter<MainMvpView> mMainPresenter;
@@ -64,7 +62,7 @@ public class MainActivity extends BaseActivity implements MainMvpView,MyAdapter.
     int limit = 10;
     int currentPage  = 0;
     int endPage = -1;
-    private MyAdapter adapter;
+    private PostAdapter adapter;
     private boolean emulatorLoadMoreFaild = true;
     private EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
     private boolean isWrite = true;
@@ -97,12 +95,16 @@ public class MainActivity extends BaseActivity implements MainMvpView,MyAdapter.
     @Override
     public void showData(final List<Data<PostItem>> data) {
         final List<Object> baseItems = new ArrayList<>();
-        for(Data<PostItem> temp : data){
-            PostItem postItem = (PostItem) temp.attributes;
-            postItem.type = BaseItem.SECOND_TYPE;
-            baseItems.add(postItem);
-
+        for (int i = 0; i < data.size() - 1; i++){
+            data.get(i).attributes.type = BaseItem.SECOND_TYPE;
+            baseItems.add(data.get(i));
         }
+//        for(Data<PostItem> temp : data){
+//            PostItem postItem = (PostItem) temp.attributes;
+//            postItem.type = BaseItem.SECOND_TYPE;
+//            baseItems.add(postItem);
+//
+//        }
         MainActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -165,11 +167,30 @@ public class MainActivity extends BaseActivity implements MainMvpView,MyAdapter.
             swipeRefreshLayout.setRefreshing(false);
         }
     }
+
+    @Override
+    public void showLove(String status, int position) {
+        if (status.matches("success")){
+            adapter.loved(position);
+        }
+    }
+
+    @Override
+    public void showUnlove(String status, int position) {
+        if (status.matches("success")){
+            adapter.unLove(position);
+        }
+    }
+
+
     private void setWritePost(){
         if (isWrite){
-            WirteItem wirteItem = new WirteItem();
+            Data<WirteItem> dataItem = new Data<WirteItem>();
+            dataItem.attributes = new WirteItem();
+            dataItem.attributes.type = BaseItem.HEADER_TYPE;
+
             List<Object> baseItem = new ArrayList<>();
-            baseItem.add(wirteItem);
+            baseItem.add(dataItem);
             adapter.add(baseItem);
             isWrite = false;
 
@@ -181,7 +202,7 @@ public class MainActivity extends BaseActivity implements MainMvpView,MyAdapter.
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new MyAdapter(this, this, this);
+        adapter = new PostAdapter(this, this, this,this);
         recyclerView.setAdapter(adapter);
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager){
             @Override
@@ -255,5 +276,15 @@ public class MainActivity extends BaseActivity implements MainMvpView,MyAdapter.
         parent.setContentInsetsAbsolute(0, 0);
         TextView txtTitle = (TextView) view.findViewById(R.id.text_title);
         txtTitle.setText(getString(R.string.title_main));
+    }
+
+    @Override
+    public void onLove(String idPost, boolean isLove, int position) {
+        if(!isLove){
+            mMainPresenter.postLove(idPost, position);
+        } else {
+            mMainPresenter.deleteLove(idPost, position);
+        }
+
     }
 }

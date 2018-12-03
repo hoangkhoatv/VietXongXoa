@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.vietxongxoa.R;
+import com.vietxongxoa.ui.main.ItemInteractiveListener;
 
 public abstract class LoadMoreRecyclerViewAdapter<T> extends BaseRecyclerViewAdapter<T> {
     private static final int TYPE_PROGRESS = 0xFFFF;

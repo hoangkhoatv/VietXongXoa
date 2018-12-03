@@ -38,6 +38,7 @@
     <string name="title_create">Chỉ là một cái tên</string>
     <string name="title_main">#trending</string>
     <string name="title_detail">Viết để xóa đi...</string>
-    <string name="u2665">♥</string>
-    <string name="ud83d_udcac">💬</string>
+    <string name="empty_comment">Tham gia bình luận cho hoạt động này</string>
+    <string name="enter_comment">Nhập bình luận...</string>
+    <string name="answer">Trả lời</string>
 </resources>

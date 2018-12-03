@@ -23,13 +23,6 @@ import butterknife.ButterKnife;
 
 public class DetailActivity extends BaseActivity implements DetailMvpView {
 
-    @BindView(R.id.text_name)
-    TextView textName;
-
-    @BindView(R.id.text_post)
-    TextView textPost;
-    @BindView(R.id.text_date)
-    TextView textDate;
 
 
 
@@ -54,14 +47,14 @@ public class DetailActivity extends BaseActivity implements DetailMvpView {
 
     }
     public void getData(){
-        Intent intent = getIntent();
-        String idPost = intent.getStringExtra(PreferencesHelper.KEY_ID);
-        String author = intent.getStringExtra(PreferencesHelper.KEY_AUTHOR);
-        String content = intent.getStringExtra(PreferencesHelper.KEY_CONTENT);
-        String date = intent.getStringExtra(PreferencesHelper.KEY_DATE);
-        textName.setText(author);
-        textPost.setText(content);
-        textDate.setText(date);
+//        Intent intent = getIntent();
+//        String idPost = intent.getStringExtra(PreferencesHelper.KEY_ID);
+//        String author = intent.getStringExtra(PreferencesHelper.KEY_AUTHOR);
+//        String content = intent.getStringExtra(PreferencesHelper.KEY_CONTENT);
+//        String date = intent.getStringExtra(PreferencesHelper.KEY_DATE);
+//        textName.setText(author);
+//        textPost.setText(content);
+//        textDate.setText(date);
 
     }
 
@@ -99,4 +92,5 @@ public class DetailActivity extends BaseActivity implements DetailMvpView {
         TextView txtTitle = (TextView) view.findViewById(R.id.text_title);
         txtTitle.setText(getString(R.string.title_detail));
     }
+
 }

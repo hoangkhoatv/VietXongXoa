@@ -16,17 +16,13 @@
 
 package com.vietxongxoa.data;
 
-import android.util.Log;
-
 import com.google.gson.JsonObject;
-import com.vietxongxoa.R;
 import com.vietxongxoa.data.listeners.CreateListener;
 import com.vietxongxoa.data.listeners.DataListener;
+import com.vietxongxoa.data.listeners.LoveListener;
 import com.vietxongxoa.data.listeners.WriteListener;
 import com.vietxongxoa.data.local.PreferencesHelper;
 import com.vietxongxoa.data.remote.ApiHelper;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.StringRequestListener;
 import com.vietxongxoa.data.remote.ApiInterface;
 import com.vietxongxoa.data.remote.ErrorUtils;
 import com.vietxongxoa.model.ApiError;
@@ -34,11 +30,9 @@ import com.vietxongxoa.model.Data;
 import com.vietxongxoa.model.DataReponse;
 import com.vietxongxoa.model.PostItem;
 import com.vietxongxoa.model.Users;
-import com.vietxongxoa.model.Write;
-import com.vietxongxoa.ui.base.BaseActivity;
 
-import java.io.IOException;
-import java.lang.annotation.Annotation;
+import com.google.gson.JsonObject;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -49,6 +43,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Converter;
 import retrofit2.Response;
+import retrofit2.http.Body;
 
 
 @Singleton
@@ -197,6 +192,48 @@ public class DataManager {
             }
         });
 
+    }
+
+    public void postLove(final LoveListener listener, JsonObject content){
+        ApiInterface apiService = mApiHelper.getCient().create(ApiInterface.class);
+        Call<DataReponse<Boolean>> call = apiService.postLove(
+                mPreferencesHelper.getKeyToken(),
+                content
+        );
+        call.enqueue(new Callback<DataReponse<Boolean>>() {
+            @Override
+            public void onResponse(Call<DataReponse<Boolean>> call, Response<DataReponse<Boolean>> response) {
+                if (response.isSuccessful()) {
+                    listener.onLoved(response.body().status.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DataReponse<Boolean>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public  void deleteLove(final  LoveListener listener, JsonObject content){
+        ApiInterface apiService = mApiHelper.getCient().create(ApiInterface.class);
+        Call<DataReponse<Boolean>> call = apiService.deleteLove(
+                mPreferencesHelper.getKeyToken(),
+                content
+        );
+        call.enqueue(new Callback<DataReponse<Boolean>>() {
+            @Override
+            public void onResponse(Call<DataReponse<Boolean>> call, Response<DataReponse<Boolean>> response) {
+                if (response.isSuccessful()) {
+                    listener.onUnlove(response.body().status.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DataReponse<Boolean>> call, Throwable t) {
+
+            }
+        });
 
     }
 }

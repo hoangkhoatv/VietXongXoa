@@ -11,9 +11,13 @@ import com.vietxongxoa.model.Write;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -44,4 +48,17 @@ public interface ApiInterface {
     Call<DataReponse<Data<PostItem>>> getDetail(
             @Path("idPost") String idPost
     );
+
+    @POST("love")
+    Call<DataReponse<Boolean>> postLove(
+            @Header("Authorization") String authKey,
+            @Body JsonObject content
+    );
+
+    @HTTP(method = "DELETE", path = "love", hasBody = true)
+    Call<DataReponse<Boolean>> deleteLove(
+            @Header("Authorization") String authKey,
+            @Body JsonObject content
+    );
+
 }

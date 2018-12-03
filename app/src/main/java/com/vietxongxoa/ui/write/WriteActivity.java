@@ -54,7 +54,7 @@ public class WriteActivity extends BaseActivity implements WriteMvpView {
     public void showData(Data<PostItem> data) {
         if(data!=null){
             Intent intent = DetailActivity.getStartIntent(getBaseContext());
-            intent.putExtra(PreferencesHelper.KEY_ID,data.id);
+            intent.putExtra(PreferencesHelper.KEY_ID,data.uuid);
             intent.putExtra(PreferencesHelper.KEY_CONTENT,data.attributes.content);
             intent.putExtra(PreferencesHelper.KEY_AUTHOR,data.attributes.author);
             intent.putExtra(PreferencesHelper.KEY_DATE,data.attributes.created);

@@ -1,51 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background">
-    <ScrollView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:scrollbars="none"
+            android:background="@color/background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none">
-        <LinearLayout
-            android:orientation="vertical"
+        android:layout_gravity="bottom"
+        android:background="@color/cardview_light_background"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:minHeight="25dp">
+
+        <EditText
             android:layout_width="match_parent"
-            android:background="@color/cardview_light_background"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/text_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/name_user"
-                android:layout_gravity="left"
-                android:textColor="@color/text_name"
-                android:textStyle="bold"
-                android:textSize="@dimen/activity_vertical_margin"
-                android:paddingLeft="@dimen/activity_vertical_margin"
-                android:paddingRight="@dimen/activity_vertical_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"/>
-            <TextView
-                android:id="@+id/text_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/name_user"
-                android:layout_gravity="left"
-                android:paddingLeft="@dimen/activity_vertical_margin"
-                android:paddingRight="@dimen/activity_vertical_margin"
-                android:paddingBottom="@dimen/activity_vertical_margin"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/text_post"
-                android:id="@+id/text_post"
-                android:paddingLeft="@dimen/activity_vertical_margin"
-                android:paddingRight="@dimen/activity_vertical_margin"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                android:textColor="@color/text_post">
-            </TextView>
-
-        </LinearLayout>
-    </ScrollView>
-
-</LinearLayout>
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/activity_vertical_margin"
+            android:background="@android:color/transparent"
+            android:layout_gravity="bottom"
+            android:id="@+id/editCommnent"
+            android:layout_marginRight="@dimen/cardview_default_radius"
+            android:layout_weight="0.9"
+            android:hint="@string/enter_comment"/>
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="bottom"
+            android:layout_weight="0.1"
+            android:layout_toLeftOf="@+id/editCommnent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/send"/>
+    </LinearLayout>
+</FrameLayout>

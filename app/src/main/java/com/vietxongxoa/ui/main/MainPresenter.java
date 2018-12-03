@@ -18,10 +18,13 @@ package com.vietxongxoa.ui.main;
 
 import com.vietxongxoa.data.listeners.DataListener;
 import com.vietxongxoa.data.DataManager;
+import com.vietxongxoa.data.listeners.LoveListener;
 import com.vietxongxoa.model.Data;
 import com.vietxongxoa.model.PostItem;
 import com.vietxongxoa.ui.base.BasePresenter;
 
+
+import com.google.gson.JsonObject;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -54,5 +57,40 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
                 getMvpView().showError(error);
             }
         }, page, limit);
+    }
+
+    @Override
+    public void postLove(String uuid, final int position) {
+        JsonObject content = new JsonObject();
+        content.addProperty("article_uuid", uuid);
+
+        mDataManager.postLove(new LoveListener() {
+            @Override
+            public void onLoved(String status) {
+                getMvpView().showLove(status, position);
+
+            }
+
+            @Override
+            public void onUnlove(String status) {
+
+            }
+        },content);
+    }
+
+    @Override
+    public void deleteLove(String uuid, final int position) {
+        JsonObject content = new JsonObject();
+        content.addProperty("article_uuid", uuid);
+        mDataManager.deleteLove(new LoveListener() {
+            @Override
+            public void onLoved(String status) {
+            }
+
+            @Override
+            public void onUnlove(String status) {
+                getMvpView().showUnlove(status, position);
+            }
+        },content);
     }
 }

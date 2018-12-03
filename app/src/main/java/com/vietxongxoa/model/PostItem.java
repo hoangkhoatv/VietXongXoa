@@ -17,4 +17,12 @@ public class PostItem extends BaseItem {
         @Expose
         public String content;
 
+        @SerializedName("loved")
+        @Expose
+        public boolean loved;
+
+        @SerializedName("love")
+        @Expose
+        public String love;
+
 }

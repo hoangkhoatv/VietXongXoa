@@ -30,4 +30,7 @@ public interface MainMvpView extends MvpView {
 
     void showError(String error);
 
+    void showLove(String status, int position);
+
+    void showUnlove(String status, int position);
 }

@@ -13,9 +13,9 @@ public class Data<V>{
     @Expose
     public  String type;
 
-    @SerializedName("id")
+    @SerializedName("uuid")
     @Expose
-    public  String id;
+    public  String uuid;
 
     @SerializedName("message")
     @Expose
