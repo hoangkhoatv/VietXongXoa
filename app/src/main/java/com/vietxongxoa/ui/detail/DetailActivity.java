@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.vietxongxoa.R;
@@ -35,6 +36,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class DetailActivity extends BaseActivity implements DetailMvpView, CommentAdapter.ItemClickListener, CommentAdapter.RetryLoadMoreListener, ItemInteractiveListener {
 
@@ -44,6 +46,11 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
     RecyclerView recyclerView;
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.editCommnent)
+    TextView edtComment;
+    @BindView(R.id.btnComment)
+    ImageButton btnComment;
+
 
     @Inject
     DetailPresenter<DetailMvpView> mDetailPresenter;
@@ -150,6 +157,47 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
     }
 
     @Override
+    public void showPostComment(Data<CommentItem> comment) {
+        final List<Object> baseItems = new ArrayList<>();
+        comment.attributes.type = BaseItem.SECOND_TYPE;
+        baseItems.add(comment);
+        DetailActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (baseItems.size()  != 0){
+                    adapter.add(baseItems);
+                } else {
+                    adapter.onHidden();
+                }
+            }
+        });
+        btnComment.setEnabled(true);
+        edtComment.setText("");
+        adapter.increaseComment();
+        recyclerView.scrollToPosition(adapter.sizeData());
+    }
+
+    @Override
+    public void showErrorPostComment(String error) {
+
+    }
+
+    @Override
+    public void showLove(String status, int position) {
+        if (status.matches("success")){
+            adapter.loved(position);
+        }
+    }
+
+    @Override
+    public void showUnlove(String status, int position) {
+        if (status.matches("success")){
+            adapter.unLove(position);
+        }
+    }
+
+
+    @Override
     public void setActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(false);
@@ -209,7 +257,11 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
 
     @Override
     public void onLove(String idPost, boolean isLove, int position) {
-
+        if(!isLove){
+            mDetailPresenter.postLove(idPost, position);
+        } else {
+            mDetailPresenter.deleteLove(idPost, position);
+        }
     }
 
     @Override
@@ -235,5 +287,14 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
                 mDetailPresenter.getComment(dataTupe.uuid, limit, page);
             }
         }, 500);
+    }
+
+    @OnClick(R.id.btnComment)
+    public void onClickComment(View view) {
+        if (!edtComment.getText().toString().matches("")) {
+            btnComment.setEnabled(false);
+            BaseActivity.hideKeyboard(this);
+            mDetailPresenter.postComment(dataTupe.uuid, edtComment.getText().toString());
+        }
     }
 }

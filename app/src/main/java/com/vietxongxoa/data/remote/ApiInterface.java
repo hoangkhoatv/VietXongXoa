@@ -8,11 +8,9 @@ import com.vietxongxoa.model.Data;
 import com.vietxongxoa.model.DataReponse;
 import com.vietxongxoa.model.PostItem;
 import com.vietxongxoa.model.Users;
-import com.vietxongxoa.model.Write;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -70,6 +68,14 @@ public interface ApiInterface {
             @Query("limit") int limit,
             @Query("offset") int offset
     );
+
+    @POST("comment")
+    Call<DataReponse<Data<CommentItem>>> postCommet(
+            @Header("Authorization") String authKey,
+            @Body JsonObject content
+    );
+
+
 
 
 

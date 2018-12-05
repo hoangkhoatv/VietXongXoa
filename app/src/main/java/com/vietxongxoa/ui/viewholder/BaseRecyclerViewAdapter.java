@@ -34,6 +34,10 @@ public abstract class BaseRecyclerViewAdapter<T>
         notifyDataSetChanged();
     }
 
+    public int sizeData(){
+        return mDataList.size();
+    }
+
     public void clear() {
         mDataList.clear();
         notifyDataSetChanged();

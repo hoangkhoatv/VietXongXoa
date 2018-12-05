@@ -32,20 +32,12 @@ import com.vietxongxoa.model.Data;
 import com.vietxongxoa.model.DataReponse;
 import com.vietxongxoa.model.PostItem;
 import com.vietxongxoa.model.Users;
-
-import com.google.gson.JsonObject;
-
 import java.util.List;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Converter;
 import retrofit2.Response;
-import retrofit2.http.Body;
 
 
 @Singleton
@@ -264,5 +256,29 @@ public class DataManager {
                listener.onError(t.getMessage());
            }
        });
+    }
+
+    public void postComment(final CommentListener listener, JsonObject content){
+
+        ApiInterface apiService = mApiHelper.getCient().create(ApiInterface.class);
+        Call<DataReponse<Data<CommentItem>>> call = apiService.postCommet(
+                mPreferencesHelper.getKeyToken(),
+                content
+        );
+        call.enqueue(new Callback<DataReponse<Data<CommentItem>>>() {
+            @Override
+            public void onResponse(Call<DataReponse<Data<CommentItem>>> call, Response<DataReponse<Data<CommentItem>>> response) {
+                if (response.isSuccessful()) {
+                    if (response.isSuccessful() && response.body().status.toString().matches("success")) {
+                        listener.onCommnetResponse(response.body().data);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DataReponse<Data<CommentItem>>> call, Throwable t) {
+
+            }
+        });
     }
 }

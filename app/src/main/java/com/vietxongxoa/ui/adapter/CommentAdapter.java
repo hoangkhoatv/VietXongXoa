@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.vietxongxoa.R;
 import com.vietxongxoa.model.BaseItem;
@@ -56,7 +57,6 @@ public class CommentAdapter extends LoadMoreRecyclerViewAdapter<Object> {
             ((PostDetailViewHolder) holder).setItemClickListener(new com.vietxongxoa.ui.viewholder.ItemClickListener() {
                 @Override
                 public void onClick(View view, int position, boolean isLongClick) {
-
                 }
 
                 @Override
@@ -95,5 +95,25 @@ public class CommentAdapter extends LoadMoreRecyclerViewAdapter<Object> {
 
 
             super.onBindViewHolder(holder, position);
+    }
+
+    public void loved(int pos){
+        ((Data<PostItem> ) mDataList.get(pos)).attributes.loved = true;
+        int love = Integer.parseInt(((Data<PostItem> ) mDataList.get(pos)).attributes.love) + 1;
+        ((Data<PostItem> ) mDataList.get(pos)).attributes.love = String.valueOf(love);
+        notifyItemChanged(pos);
+    }
+
+    public void unLove(int pos){
+        ((Data<PostItem> ) mDataList.get(pos)).attributes.loved = false;
+        int love = Integer.parseInt(((Data<PostItem> ) mDataList.get(pos)).attributes.love) - 1;
+        ((Data<PostItem> ) mDataList.get(pos)).attributes.love = String.valueOf(love);
+        notifyItemChanged(pos);
+    }
+
+    public void increaseComment(){
+        int comment= ((Data<PostItem> ) mDataList.get(0)).attributes.comment + 1;
+        ((Data<PostItem> ) mDataList.get(0)).attributes.comment = comment;
+        notifyItemChanged(0);
     }
 }

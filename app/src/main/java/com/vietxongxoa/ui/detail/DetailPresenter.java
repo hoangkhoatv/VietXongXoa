@@ -2,8 +2,10 @@ package com.vietxongxoa.ui.detail;
 
 import android.os.Handler;
 
+import com.google.gson.JsonObject;
 import com.vietxongxoa.data.DataManager;
 import com.vietxongxoa.data.listeners.CommentListener;
+import com.vietxongxoa.data.listeners.LoveListener;
 import com.vietxongxoa.data.listeners.WriteListener;
 import com.vietxongxoa.model.CommentItem;
 import com.vietxongxoa.model.Data;
@@ -50,7 +52,81 @@ public class DetailPresenter<V extends DetailMvpView> extends BasePresenter<V> i
                 getMvpView().showError(error);
 
             }
+
+            @Override
+            public void onCommnetResponse(Data<CommentItem> dataReponse) {
+            }
+
+            @Override
+            public void onCommnetError(String error) {
+
+            }
         }, uuid, limit, offset);
+    }
+
+    @Override
+    public void postComment(String uuid, String content) {
+        JsonObject json = new JsonObject();
+        json.addProperty("article_uuid", uuid);
+        json.addProperty("content", content);
+        mDataManager.postComment(new CommentListener() {
+            @Override
+            public void onResponse(List<Data<CommentItem>> dataReponse) {
+
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+
+            @Override
+            public void onCommnetResponse(Data<CommentItem> dataReponse) {
+                getMvpView().showPostComment(dataReponse);
+            }
+
+            @Override
+            public void onCommnetError(String error) {
+                getMvpView().showError(error);
+            }
+        },json);
+
+
+    }
+
+    @Override
+    public void postLove(String uuid, final int position) {
+        JsonObject content = new JsonObject();
+        content.addProperty("article_uuid", uuid);
+
+        mDataManager.postLove(new LoveListener() {
+            @Override
+            public void onLoved(String status) {
+                getMvpView().showLove(status, position);
+
+            }
+
+            @Override
+            public void onUnlove(String status) {
+
+            }
+        },content);
+    }
+
+    @Override
+    public void deleteLove(String uuid, final int position) {
+        JsonObject content = new JsonObject();
+        content.addProperty("article_uuid", uuid);
+        mDataManager.deleteLove(new LoveListener() {
+            @Override
+            public void onLoved(String status) {
+            }
+
+            @Override
+            public void onUnlove(String status) {
+                getMvpView().showUnlove(status, position);
+            }
+        },content);
     }
 
 }

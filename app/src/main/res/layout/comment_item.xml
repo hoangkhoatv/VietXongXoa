@@ -1,96 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/activity_horizontal_margin">
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/border_comment">
+        android:background="@drawable/border_comment"
+        android:orientation="vertical">
+
         <TextView
             android:id="@+id/text_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/name_user"
             android:layout_gravity="left"
-            android:textStyle="bold"
+            android:paddingLeft="@dimen/activity_vertical_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingRight="@dimen/activity_vertical_margin"
+            android:text="@string/name_user"
             android:textColor="@color/text_name"
             android:textSize="@dimen/activity_vertical_margin"
-            android:paddingLeft="@dimen/activity_vertical_margin"
-            android:paddingRight="@dimen/activity_vertical_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            />
+            android:textStyle="bold" />
+
         <TextView
+            android:id="@+id/text_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/text_post"
-            android:id="@+id/text_comment"
             android:paddingLeft="@dimen/activity_vertical_margin"
             android:paddingRight="@dimen/activity_vertical_margin"
             android:paddingBottom="@dimen/activity_vertical_margin"
-            android:textColorLink="@color/text_post"
-            android:textColor="@color/text_post"></TextView>
+            android:text="@string/text_post"
+            android:textColor="@color/text_post"
+            android:textColorLink="@color/text_post"></TextView>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/cardview_default_radius"
+        android:orientation="horizontal"
         android:paddingLeft="@dimen/cardview_default_radius"
-        android:orientation="horizontal">
+        android:paddingTop="@dimen/cardview_default_radius">
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <Button
+                android:id="@+id/btnLove"
                 android:layout_width="60dp"
                 android:layout_height="30dp"
-                android:id="@+id/btnLove"
-                android:background="@android:color/transparent">
-            </Button>
+                android:background="@android:color/transparent"></Button>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:orientation="horizontal">
+
                 <com.vietxongxoa.utils.IconTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/iconLove"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:text="@string/fa_icon_love"/>
-                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimary"
+                    android:text="@string/fa_icon_love"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <TextView
                     android:id="@+id/numLoved"
-                    android:text="0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/cardview_default_radius"
+                    android:text="0"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/activity_vertical_margin" />
             </LinearLayout>
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <Button
+                android:id="@+id/btnAnswer"
                 android:layout_width="50dp"
                 android:layout_height="30dp"
-                android:id="@+id/btnAnswer"
+                android:background="@android:color/transparent"
+                android:gravity="left"
                 android:text="@string/answer"
                 android:textAllCaps="false"
-                android:gravity="left"
-                android:textColor="@color/colorPrimary"
-                android:background="@android:color/transparent">
-            </Button>
+                android:textColor="@color/colorPrimary"></Button>
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/text_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/name_user"
-                android:layout_gravity="left"></TextView>
+                android:layout_gravity="left"
+                android:text="@string/name_user"></TextView>
         </RelativeLayout>
     </LinearLayout>
 

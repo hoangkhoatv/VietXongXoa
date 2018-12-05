@@ -37,7 +37,9 @@
             android:layout_height="30dp"
             android:layout_gravity="bottom"
             android:layout_weight="0.1"
+            android:id="@+id/btnComment"
             android:layout_toLeftOf="@+id/editCommnent"
+            android:onClick="onClickComment"
             android:layout_alignParentRight="true"
             android:background="@drawable/send"/>
     </LinearLayout>

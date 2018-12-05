@@ -8,5 +8,10 @@ public interface DetailMvpPresenter <V extends DetailMvpView> extends MvpPresent
 
     void getComment(String uuid, int limit, int offset);
 
+    void postComment(String uuid, String content);
+
+    void postLove(String uuid, int position);
+
+    void deleteLove(String uuid, int position);
 }
 

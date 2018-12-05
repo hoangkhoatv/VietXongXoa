@@ -17,4 +17,12 @@ public interface DetailMvpView extends MvpView {
 
     void showErrorCommets(String error);
 
+    void showPostComment(Data<CommentItem> comment);
+
+    void showErrorPostComment(String error);
+
+    void showLove(String status, int position);
+
+    void showUnlove(String status, int position);
+
 }
