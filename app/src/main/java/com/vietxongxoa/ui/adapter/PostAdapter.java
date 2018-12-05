@@ -71,6 +71,7 @@ public class PostAdapter extends LoadMoreRecyclerViewAdapter<Object> {
                 @Override
                 public void onClick(View view, int position, boolean isLongClick) {
                     Intent intent = DetailActivity.getStartIntent(mContext);
+                    intent.putExtra(PreferencesHelper.KEY_ID, dataTupe.uuid);
                     intent.putExtra(PreferencesHelper.KEY_AUTHOR,item.author);
                     intent.putExtra(PreferencesHelper.KEY_CONTENT,item.content);
                     intent.putExtra(PreferencesHelper.KEY_DATE,item.created);

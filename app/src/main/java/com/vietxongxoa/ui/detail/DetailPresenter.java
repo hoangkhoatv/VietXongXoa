@@ -1,5 +1,7 @@
 package com.vietxongxoa.ui.detail;
 
+import android.os.Handler;
+
 import com.vietxongxoa.data.DataManager;
 import com.vietxongxoa.data.listeners.CommentListener;
 import com.vietxongxoa.data.listeners.WriteListener;
@@ -25,7 +27,7 @@ public class DetailPresenter<V extends DetailMvpView> extends BasePresenter<V> i
         mDataManager.getDetail(new WriteListener() {
             @Override
             public void onResponse(Data<PostItem> dataReponse) {
-                getMvpView().showData(dataReponse.attributes);
+                getMvpView().showData(dataReponse);
             }
 
             @Override
@@ -50,5 +52,5 @@ public class DetailPresenter<V extends DetailMvpView> extends BasePresenter<V> i
             }
         }, uuid, limit, offset);
     }
-    
+
 }

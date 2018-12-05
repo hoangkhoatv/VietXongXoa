@@ -138,7 +138,7 @@ public class DataManager {
 
     public void getDetail(final WriteListener listener, String idPost){
         ApiInterface apiService = mApiHelper.getCient().create(ApiInterface.class);
-        Call<DataReponse<Data<PostItem>>> call = apiService.getDetail(idPost);
+        Call<DataReponse<Data<PostItem>>> call = apiService.getDetail(mPreferencesHelper.getKeyToken(), idPost);
         call.enqueue(new Callback<DataReponse<Data<PostItem>>>() {
             @Override
             public void onResponse(Call<DataReponse<Data<PostItem>>> call, Response<DataReponse<Data<PostItem>>> response) {
@@ -242,6 +242,7 @@ public class DataManager {
     public void getComments(final CommentListener listener, String uuid , int limit, int offset){
         ApiInterface apiService = mApiHelper.getCient().create(ApiInterface.class);
         Call<DataReponse<List<Data<CommentItem>>>> call = apiService.getComments(
+                mPreferencesHelper.getKeyToken(),
                 uuid,
                 limit,
                 offset);

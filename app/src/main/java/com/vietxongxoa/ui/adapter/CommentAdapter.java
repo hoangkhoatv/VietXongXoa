@@ -89,6 +89,8 @@ public class CommentAdapter extends LoadMoreRecyclerViewAdapter<Object> {
 
                 }
             });
+            ((CommentViewHolder) holder).setData(item);
+
         }
 
 

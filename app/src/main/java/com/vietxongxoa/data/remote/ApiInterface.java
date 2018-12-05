@@ -47,6 +47,7 @@ public interface ApiInterface {
 
     @GET("articles/{idPost}")
     Call<DataReponse<Data<PostItem>>> getDetail(
+            @Header("Authorization") String authKey,
             @Path("idPost") String idPost
     );
 
@@ -64,9 +65,12 @@ public interface ApiInterface {
 
     @GET("comment")
     Call<DataReponse<List<Data<CommentItem>>>> getComments(
+            @Header("Authorization") String authKey,
             @Query("article_uuid") String uuid,
             @Query("limit") int limit,
             @Query("offset") int offset
     );
+
+
 
 }

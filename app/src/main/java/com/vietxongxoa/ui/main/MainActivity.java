@@ -91,6 +91,7 @@ public class MainActivity extends BaseActivity implements MainMvpView, PostAdapt
         mMainPresenter.detachView();
 
     }
+
     @Override
     public void showData(final List<Data<PostItem>> data) {
         final List<Object> baseItems = new ArrayList<>();

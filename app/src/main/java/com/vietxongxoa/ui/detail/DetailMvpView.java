@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface DetailMvpView extends MvpView {
 
-    void showData(PostItem data);
+    void showData(Data<PostItem> data);
 
     void showError(String error);
 

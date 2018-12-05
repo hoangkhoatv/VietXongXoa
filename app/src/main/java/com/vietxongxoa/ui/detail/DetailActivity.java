@@ -3,11 +3,13 @@ package com.vietxongxoa.ui.detail;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import com.vietxongxoa.R;
 import com.vietxongxoa.data.local.PreferencesHelper;
 import com.vietxongxoa.model.BaseItem;
+import com.vietxongxoa.model.CommentItem;
 import com.vietxongxoa.model.Data;
 import com.vietxongxoa.model.PostItem;
 import com.vietxongxoa.ui.adapter.CommentAdapter;
@@ -22,6 +25,7 @@ import com.vietxongxoa.ui.adapter.PostAdapter;
 import com.vietxongxoa.ui.base.BaseActivity;
 import com.vietxongxoa.ui.create.CreateMvpView;
 import com.vietxongxoa.ui.main.ItemInteractiveListener;
+import com.vietxongxoa.ui.main.MainActivity;
 import com.vietxongxoa.ui.viewholder.EndlessRecyclerViewScrollListener;
 
 import java.util.ArrayList;
@@ -43,6 +47,10 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
 
     @Inject
     DetailPresenter<DetailMvpView> mDetailPresenter;
+    Data<PostItem> dataTupe;
+    int limit = 10;
+    int currentPage  = 0;
+    int endPage = -1;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, DetailActivity.class);
@@ -58,13 +66,22 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
         setActionBar();
         ButterKnife.bind(this);
         mDetailPresenter.attachView(this);
-        setupRecyclerView();
         getData();
+        setupRecyclerView();
+
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mDetailPresenter.detachView();
+
+    }
+
     public void getData(){
         Intent intent = getIntent();
-        Data<PostItem> dataTupe = new Data<PostItem>();
+        dataTupe = new Data<PostItem>();
         dataTupe.attributes = new PostItem();
         dataTupe.uuid = intent.getStringExtra(PreferencesHelper.KEY_ID);
         dataTupe.attributes.author = intent.getStringExtra(PreferencesHelper.KEY_AUTHOR);
@@ -74,18 +91,61 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
         dataTupe.attributes.loved = intent.getBooleanExtra(PreferencesHelper.KEY_LOVED,false);
         dataTupe.attributes.comment = intent.getIntExtra(PreferencesHelper.KEY_COMMET,0);
         dataTupe.attributes.type = BaseItem.HEADER_TYPE;
-        List<Object> baseItem = new ArrayList<>();
-        baseItem.add(dataTupe);
-        adapter.add(baseItem);
     }
 
     @Override
-    public void showData(PostItem data) {
-
+    public void showData(Data<PostItem> data) {
+        final List<Object> baseItems = new ArrayList<>();
+        data.attributes.type = BaseItem.HEADER_TYPE;
+        baseItems.add(data);
+        DetailActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (swipeRefreshLayout.isRefreshing()){
+                    adapter.clear();
+                    swipeRefreshLayout .setRefreshing(false);
+                }
+                if (baseItems.size()  != 0){
+                    adapter.add(baseItems);
+                } else {
+                    adapter.onHidden();
+                }
+                loadMore(currentPage);
+            }
+        });
     }
 
     @Override
     public void showError(String error) {
+
+    }
+
+    @Override
+    public void showDataCommets(List<Data<CommentItem>> commens) {
+
+        final List<Object> baseItems = new ArrayList<>();
+        for (int i = 0; i < commens.size(); i++){
+            commens.get(i).attributes.type = BaseItem.SECOND_TYPE;
+            baseItems.add(commens.get(i));
+        }
+        DetailActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (swipeRefreshLayout.isRefreshing()){
+                    adapter.clear();
+                    swipeRefreshLayout .setRefreshing(false);
+                }
+                if (baseItems.size()  != 0){
+                    adapter.add(baseItems);
+                } else {
+                    adapter.onHidden();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void showErrorCommets(String error) {
 
     }
 
@@ -113,6 +173,7 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
         TextView txtTitle = (TextView) view.findViewById(R.id.text_title);
         txtTitle.setText(getString(R.string.title_detail));
     }
+
     private void setupRecyclerView() {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
@@ -122,7 +183,8 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager){
             @Override
             public void onLoadMore(final int page) {
-
+                currentPage = page;
+                loadMore(page);
             }
         };
         recyclerView.addOnScrollListener(endlessRecyclerViewScrollListener);
@@ -134,10 +196,14 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
             public void onRefresh() {
                 if(adapter!=null){
                     endlessRecyclerViewScrollListener.resetState();
-
+                    currentPage = 0;
+                    mDetailPresenter.getData(dataTupe.uuid);
                 }
             }
         });
+        List<Object> baseItem = new ArrayList<>();
+        baseItem.add(dataTupe);
+        adapter.add(baseItem);
 
     }
 
@@ -153,6 +219,21 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
 
     @Override
     public void onRetryLoadMore() {
+        loadMore(currentPage);
 
+    }
+
+    private void loadMore(final int page){
+        adapter.startLoadMore();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(page == endPage){
+                    adapter.onReachEnd();
+                    return;
+                }
+                mDetailPresenter.getComment(dataTupe.uuid, limit, page);
+            }
+        }, 500);
     }
 }

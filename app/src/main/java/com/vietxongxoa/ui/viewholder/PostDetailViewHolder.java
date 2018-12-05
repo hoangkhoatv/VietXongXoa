@@ -58,6 +58,7 @@ public class PostDetailViewHolder extends RecyclerView.ViewHolder implements Vie
         textName.setText(userName);
         textDate.setText(strDate);
         numLoved.setText(postItem.love);
+        numComment.setText(String.valueOf(postItem.comment));
 
         if (postItem.loved) {
             numLoved.setTextColor(context.getResources().getColor(R.color.heart));
