@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class CommentItem extends BaseItem {
-
     @SerializedName("author")
     @Expose
     public String author;
@@ -20,5 +19,4 @@ public class CommentItem extends BaseItem {
     @SerializedName("like")
     @Expose
     public int like;
-
 }

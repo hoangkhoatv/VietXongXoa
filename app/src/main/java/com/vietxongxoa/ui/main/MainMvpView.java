@@ -17,7 +17,6 @@
 package com.vietxongxoa.ui.main;
 
 import com.vietxongxoa.model.Data;
-import com.vietxongxoa.model.DataReponse;
 import com.vietxongxoa.model.PostItem;
 import com.vietxongxoa.ui.base.MvpView;
 
@@ -32,5 +31,5 @@ public interface MainMvpView extends MvpView {
 
     void showLove(String status, int position);
 
-    void showUnlove(String status, int position);
+    void showUnLove(String status, int position);
 }

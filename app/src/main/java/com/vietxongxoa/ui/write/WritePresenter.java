@@ -9,7 +9,7 @@ import com.vietxongxoa.ui.base.BasePresenter;
 
 import javax.inject.Inject;
 
-public class WritePresenter <V extends WriteMvpView> extends BasePresenter<V> implements WriteMvpPresenter<V> {
+public class WritePresenter<V extends WriteMvpView> extends BasePresenter<V> implements WriteMvpPresenter<V> {
 
     private final DataManager mDataManager;
 
@@ -33,7 +33,7 @@ public class WritePresenter <V extends WriteMvpView> extends BasePresenter<V> im
                 getMvpView().hideLoading();
                 getMvpView().showError(error);
             }
-        },content);
+        }, content);
     }
 }
 

@@ -16,15 +16,14 @@
 
 package com.vietxongxoa.ui.main;
 
-import com.vietxongxoa.data.listeners.DataListener;
+import com.google.gson.JsonObject;
 import com.vietxongxoa.data.DataManager;
+import com.vietxongxoa.data.listeners.DataListener;
 import com.vietxongxoa.data.listeners.LoveListener;
 import com.vietxongxoa.model.Data;
 import com.vietxongxoa.model.PostItem;
 import com.vietxongxoa.ui.base.BasePresenter;
 
-
-import com.google.gson.JsonObject;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -42,18 +41,13 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
     @Override
     public void getData(int limit, int page) {
 
-//        getMvpView().showLoading();
-
         mDataManager.getData(new DataListener() {
             @Override
             public void onResponse(List<Data<PostItem>> data) {
-//                getMvpView().hideLoading();
                 getMvpView().showData(data);
             }
-
             @Override
             public void onError(String error) {
-//                getMvpView().hideLoading();
                 getMvpView().showError(error);
             }
         }, page, limit);
@@ -68,14 +62,13 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
             @Override
             public void onLoved(String status) {
                 getMvpView().showLove(status, position);
-
             }
 
             @Override
-            public void onUnlove(String status) {
+            public void onUnLove(String status) {
 
             }
-        },content);
+        }, content);
     }
 
     @Override
@@ -88,9 +81,9 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
             }
 
             @Override
-            public void onUnlove(String status) {
-                getMvpView().showUnlove(status, position);
+            public void onUnLove(String status) {
+                getMvpView().showUnLove(status, position);
             }
-        },content);
+        }, content);
     }
 }

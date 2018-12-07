@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.vietxongxoa.R;
 import com.vietxongxoa.model.BaseItem;
@@ -16,7 +15,6 @@ import com.vietxongxoa.ui.main.ItemInteractiveListener;
 import com.vietxongxoa.ui.viewholder.CommentViewHolder;
 import com.vietxongxoa.ui.viewholder.LoadMoreRecyclerViewAdapter;
 import com.vietxongxoa.ui.viewholder.PostDetailViewHolder;
-import com.vietxongxoa.ui.viewholder.WriteViewHolder;
 
 public class CommentAdapter extends LoadMoreRecyclerViewAdapter<Object> {
 
@@ -71,7 +69,7 @@ public class CommentAdapter extends LoadMoreRecyclerViewAdapter<Object> {
                 }
             });
             ((PostDetailViewHolder) holder).setData(item, mContext);
-        } else if (holder instanceof  CommentViewHolder){
+        } else if (holder instanceof CommentViewHolder) {
             Data<CommentItem> dataTupe = (Data<CommentItem>) mDataList.get(position);
             CommentItem item = dataTupe.attributes;
             ((CommentViewHolder) holder).setItemClickListener(new com.vietxongxoa.ui.viewholder.ItemClickListener() {
@@ -94,26 +92,26 @@ public class CommentAdapter extends LoadMoreRecyclerViewAdapter<Object> {
         }
 
 
-            super.onBindViewHolder(holder, position);
+        super.onBindViewHolder(holder, position);
     }
 
-    public void loved(int pos){
-        ((Data<PostItem> ) mDataList.get(pos)).attributes.loved = true;
-        int love = Integer.parseInt(((Data<PostItem> ) mDataList.get(pos)).attributes.love) + 1;
-        ((Data<PostItem> ) mDataList.get(pos)).attributes.love = String.valueOf(love);
+    public void loved(int pos) {
+        ((Data<PostItem>) mDataList.get(pos)).attributes.loved = true;
+        int love = Integer.parseInt(((Data<PostItem>) mDataList.get(pos)).attributes.love) + 1;
+        ((Data<PostItem>) mDataList.get(pos)).attributes.love = String.valueOf(love);
         notifyItemChanged(pos);
     }
 
-    public void unLove(int pos){
-        ((Data<PostItem> ) mDataList.get(pos)).attributes.loved = false;
-        int love = Integer.parseInt(((Data<PostItem> ) mDataList.get(pos)).attributes.love) - 1;
-        ((Data<PostItem> ) mDataList.get(pos)).attributes.love = String.valueOf(love);
+    public void unLove(int pos) {
+        ((Data<PostItem>) mDataList.get(pos)).attributes.loved = false;
+        int love = Integer.parseInt(((Data<PostItem>) mDataList.get(pos)).attributes.love) - 1;
+        ((Data<PostItem>) mDataList.get(pos)).attributes.love = String.valueOf(love);
         notifyItemChanged(pos);
     }
 
-    public void increaseComment(){
-        int comment= ((Data<PostItem> ) mDataList.get(0)).attributes.comment + 1;
-        ((Data<PostItem> ) mDataList.get(0)).attributes.comment = comment;
+    public void increaseComment() {
+        int comment = ((Data<PostItem>) mDataList.get(0)).attributes.comment + 1;
+        ((Data<PostItem>) mDataList.get(0)).attributes.comment = comment;
         notifyItemChanged(0);
     }
 }

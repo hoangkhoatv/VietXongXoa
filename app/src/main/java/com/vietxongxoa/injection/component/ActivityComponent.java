@@ -33,8 +33,11 @@ import dagger.Component;
 public interface ActivityComponent {
 
     void inject(MainActivity mainActivity);
+
     void inject(CreateActivity activity);
+
     void inject(WriteActivity activity);
+
     void inject(DetailActivity activity);
 
 

@@ -42,4 +42,5 @@
     <string name="enter_comment">Nhập bình luận...</string>
     <string name="answer">Trả lời</string>
     <string name="commnet">Bình luận</string>
+    <string name="zero">0</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.vietxongxoa.ui.create;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,8 +27,7 @@ public class CreateActivity extends BaseActivity implements CreateMvpView {
     CreatePresenter<CreateMvpView> mCreatePresenter;
 
     public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, CreateActivity.class);
-        return intent;
+        return new Intent(context, CreateActivity.class);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class CreateActivity extends BaseActivity implements CreateMvpView {
         setActionBar();
         ButterKnife.bind(this);
         mCreatePresenter.attachView(this);
-        if(mCreatePresenter.getUserName()!=null){
+        if (mCreatePresenter.getUserName() != null) {
             startActivity(MainActivity.getStartIntent(getBaseContext()));
             finish();
         }
@@ -48,7 +48,7 @@ public class CreateActivity extends BaseActivity implements CreateMvpView {
 
     @Override
     public void showData(Users data) {
-        if(data!=null){
+        if (data != null) {
             mCreatePresenter.setUsersName(data);
             startActivity(MainActivity.getStartIntent(getBaseContext()));
             finish();
@@ -65,23 +65,30 @@ public class CreateActivity extends BaseActivity implements CreateMvpView {
 
     @OnClick(R.id.btnCreate)
     public void onCreateUser(View view) {
-        if (!edtName.getText().toString().matches("")){
+        if (!edtName.getText().toString().matches("")) {
             mCreatePresenter.postData(Users.getJson(String.valueOf(edtName.getText())));
         } else {
-            Toast.makeText(getApplicationContext(),getString(R.string.toast_emtry_name),Toast.LENGTH_SHORT).show();
+            Toast.makeText(
+                    getApplicationContext(),
+                    getString(R.string.toast_emtry_name),
+                    Toast.LENGTH_SHORT
+            ).show();
         }
     }
 
     @Override
     public void setActionBar() {
         ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
-        View view = getLayoutInflater().inflate(R.layout.action_bar_layout,
-                null);
-        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
-                ActionBar.LayoutParams.MATCH_PARENT);
+        @SuppressLint("InflateParams")
+        View view = getLayoutInflater().inflate(R.layout.action_bar_layout, null);
+        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(
+                ActionBar.LayoutParams.MATCH_PARENT,
+                ActionBar.LayoutParams.MATCH_PARENT
+        );
         actionBar.setCustomView(view, layoutParams);
         Toolbar parent = (Toolbar) view.getParent();
         parent.setContentInsetsAbsolute(0, 0);

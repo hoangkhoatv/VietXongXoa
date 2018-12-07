@@ -10,7 +10,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.vietxongxoa.R;
-import com.vietxongxoa.ui.main.ItemInteractiveListener;
 
 public abstract class LoadMoreRecyclerViewAdapter<T> extends BaseRecyclerViewAdapter<T> {
     private static final int TYPE_PROGRESS = 0xFFFF;
@@ -108,6 +107,7 @@ public abstract class LoadMoreRecyclerViewAdapter<T> extends BaseRecyclerViewAda
 
         notifyDataSetChanged();
     }
+
     /**
      * It help visible layout retry when load more failed
      */
@@ -119,7 +119,7 @@ public abstract class LoadMoreRecyclerViewAdapter<T> extends BaseRecyclerViewAda
 
     }
 
-    public void onHidden(){
+    public void onHidden() {
         mLoadHidden = true;
         notifyDataSetChanged();
     }

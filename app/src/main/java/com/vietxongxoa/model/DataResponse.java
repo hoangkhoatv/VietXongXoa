@@ -3,9 +3,7 @@ package com.vietxongxoa.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
-public class DataReponse<T> {
+public class DataResponse<T> {
     @SerializedName("data")
     @Expose
     public T data;
@@ -21,5 +19,4 @@ public class DataReponse<T> {
     @SerializedName("message")
     @Expose
     public String message;
-
 }

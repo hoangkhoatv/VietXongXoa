@@ -8,7 +8,7 @@ import com.vietxongxoa.ui.base.BasePresenter;
 
 import javax.inject.Inject;
 
-public class CreatePresenter <V extends CreateMvpView> extends BasePresenter<V> implements CreateMvpPresenter<V> {
+public class CreatePresenter<V extends CreateMvpView> extends BasePresenter<V> implements CreateMvpPresenter<V> {
     private final DataManager mDataManager;
 
     @Inject
@@ -31,7 +31,7 @@ public class CreatePresenter <V extends CreateMvpView> extends BasePresenter<V> 
                 getMvpView().hideLoading();
                 getMvpView().showError(error);
             }
-        },username);
+        }, username);
     }
 
     @Override

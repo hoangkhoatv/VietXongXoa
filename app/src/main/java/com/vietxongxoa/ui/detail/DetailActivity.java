@@ -1,5 +1,6 @@
 package com.vietxongxoa.ui.detail;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +10,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -22,11 +22,8 @@ import com.vietxongxoa.model.CommentItem;
 import com.vietxongxoa.model.Data;
 import com.vietxongxoa.model.PostItem;
 import com.vietxongxoa.ui.adapter.CommentAdapter;
-import com.vietxongxoa.ui.adapter.PostAdapter;
 import com.vietxongxoa.ui.base.BaseActivity;
-import com.vietxongxoa.ui.create.CreateMvpView;
 import com.vietxongxoa.ui.main.ItemInteractiveListener;
-import com.vietxongxoa.ui.main.MainActivity;
 import com.vietxongxoa.ui.viewholder.EndlessRecyclerViewScrollListener;
 
 import java.util.ArrayList;
@@ -56,13 +53,11 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
     DetailPresenter<DetailMvpView> mDetailPresenter;
     Data<PostItem> dataTupe;
     int limit = 10;
-    int currentPage  = 0;
+    int currentPage = 0;
     int endPage = -1;
 
     public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, DetailActivity.class);
-        return intent;
-
+        return new Intent(context, DetailActivity.class);
     }
 
     @Override
@@ -86,7 +81,7 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
 
     }
 
-    public void getData(){
+    public void getData() {
         Intent intent = getIntent();
         dataTupe = new Data<PostItem>();
         dataTupe.attributes = new PostItem();
@@ -95,8 +90,8 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
         dataTupe.attributes.content = intent.getStringExtra(PreferencesHelper.KEY_CONTENT);
         dataTupe.attributes.created = intent.getStringExtra(PreferencesHelper.KEY_DATE);
         dataTupe.attributes.love = intent.getStringExtra(PreferencesHelper.KEY_NUM_LOVE);
-        dataTupe.attributes.loved = intent.getBooleanExtra(PreferencesHelper.KEY_LOVED,false);
-        dataTupe.attributes.comment = intent.getIntExtra(PreferencesHelper.KEY_COMMET,0);
+        dataTupe.attributes.loved = intent.getBooleanExtra(PreferencesHelper.KEY_LOVED, false);
+        dataTupe.attributes.comment = intent.getIntExtra(PreferencesHelper.KEY_COMMENT, 0);
         dataTupe.attributes.type = BaseItem.HEADER_TYPE;
     }
 
@@ -108,11 +103,11 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
         DetailActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (swipeRefreshLayout.isRefreshing()){
+                if (swipeRefreshLayout.isRefreshing()) {
                     adapter.clear();
-                    swipeRefreshLayout .setRefreshing(false);
+                    swipeRefreshLayout.setRefreshing(false);
                 }
-                if (baseItems.size()  != 0){
+                if (baseItems.size() != 0) {
                     adapter.add(baseItems);
                 } else {
                     adapter.onHidden();
@@ -128,21 +123,21 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
     }
 
     @Override
-    public void showDataCommets(List<Data<CommentItem>> commens) {
+    public void showDataComments(List<Data<CommentItem>> commens) {
 
         final List<Object> baseItems = new ArrayList<>();
-        for (int i = 0; i < commens.size(); i++){
+        for (int i = 0; i < commens.size(); i++) {
             commens.get(i).attributes.type = BaseItem.SECOND_TYPE;
             baseItems.add(commens.get(i));
         }
         DetailActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (swipeRefreshLayout.isRefreshing()){
+                if (swipeRefreshLayout.isRefreshing()) {
                     adapter.clear();
-                    swipeRefreshLayout .setRefreshing(false);
+                    swipeRefreshLayout.setRefreshing(false);
                 }
-                if (baseItems.size()  != 0){
+                if (baseItems.size() != 0) {
                     adapter.add(baseItems);
                 } else {
                     adapter.onHidden();
@@ -152,7 +147,7 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
     }
 
     @Override
-    public void showErrorCommets(String error) {
+    public void showErrorComments(String error) {
 
     }
 
@@ -164,7 +159,7 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
         DetailActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (baseItems.size()  != 0){
+                if (baseItems.size() != 0) {
                     adapter.add(baseItems);
                 } else {
                     adapter.onHidden();
@@ -184,14 +179,14 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
 
     @Override
     public void showLove(String status, int position) {
-        if (status.matches("success")){
+        if (status.matches("success")) {
             adapter.loved(position);
         }
     }
 
     @Override
-    public void showUnlove(String status, int position) {
-        if (status.matches("success")){
+    public void showUnLove(String status, int position) {
+        if (status.matches("success")) {
             adapter.unLove(position);
         }
     }
@@ -200,13 +195,16 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
     @Override
     public void setActionBar() {
         ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
-        View view = getLayoutInflater().inflate(R.layout.action_bar_back_layout,
-                null);
-        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
-                ActionBar.LayoutParams.MATCH_PARENT);
+        @SuppressLint("InflateParams")
+        View view = getLayoutInflater().inflate(R.layout.action_bar_back_layout, null);
+        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(
+                ActionBar.LayoutParams.MATCH_PARENT,
+                ActionBar.LayoutParams.MATCH_PARENT
+        );
         actionBar.setCustomView(view, layoutParams);
         Toolbar parent = (Toolbar) view.getParent();
         parent.setContentInsetsAbsolute(0, 0);
@@ -223,12 +221,15 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
     }
 
     private void setupRecyclerView() {
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(
+                getApplicationContext(),
+                LinearLayoutManager.VERTICAL,
+                false
+        );
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new CommentAdapter(this, this, this,this);
+        adapter = new CommentAdapter(this, this, this, this);
         recyclerView.setAdapter(adapter);
-        endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager){
+        endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(final int page) {
                 currentPage = page;
@@ -237,12 +238,10 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
         };
         recyclerView.addOnScrollListener(endlessRecyclerViewScrollListener);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
-
-
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if(adapter!=null){
+                if (adapter != null) {
                     endlessRecyclerViewScrollListener.resetState();
                     currentPage = 0;
                     mDetailPresenter.getData(dataTupe.uuid);
@@ -252,12 +251,11 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
         List<Object> baseItem = new ArrayList<>();
         baseItem.add(dataTupe);
         adapter.add(baseItem);
-
     }
 
     @Override
     public void onLove(String idPost, boolean isLove, int position) {
-        if(!isLove){
+        if (!isLove) {
             mDetailPresenter.postLove(idPost, position);
         } else {
             mDetailPresenter.deleteLove(idPost, position);
@@ -275,12 +273,12 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
 
     }
 
-    private void loadMore(final int page){
+    private void loadMore(final int page) {
         adapter.startLoadMore();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(page == endPage){
+                if (page == endPage) {
                     adapter.onReachEnd();
                     return;
                 }

@@ -16,9 +16,7 @@
 
 package com.vietxongxoa.data.remote;
 
-import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.interceptors.HttpLoggingInterceptor;
-import com.androidnetworking.interfaces.StringRequestListener;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -35,6 +33,7 @@ public class ApiHelper {
 
     private static final String BASE_URL = "https://api.vietxongxoa.cottect.com/";
     private static Retrofit retrofit = null;
+
     @Inject
     public ApiHelper() {
 

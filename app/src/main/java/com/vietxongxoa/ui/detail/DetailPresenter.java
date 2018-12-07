@@ -1,7 +1,5 @@
 package com.vietxongxoa.ui.detail;
 
-import android.os.Handler;
-
 import com.google.gson.JsonObject;
 import com.vietxongxoa.data.DataManager;
 import com.vietxongxoa.data.listeners.CommentListener;
@@ -44,7 +42,7 @@ public class DetailPresenter<V extends DetailMvpView> extends BasePresenter<V> i
         mDataManager.getComments(new CommentListener() {
             @Override
             public void onResponse(List<Data<CommentItem>> dataReponse) {
-                getMvpView().showDataCommets(dataReponse);
+                getMvpView().showDataComments(dataReponse);
             }
 
             @Override
@@ -54,11 +52,11 @@ public class DetailPresenter<V extends DetailMvpView> extends BasePresenter<V> i
             }
 
             @Override
-            public void onCommnetResponse(Data<CommentItem> dataReponse) {
+            public void onCommentResponse(Data<CommentItem> dataReponse) {
             }
 
             @Override
-            public void onCommnetError(String error) {
+            public void onCommentError(String error) {
 
             }
         }, uuid, limit, offset);
@@ -81,15 +79,15 @@ public class DetailPresenter<V extends DetailMvpView> extends BasePresenter<V> i
             }
 
             @Override
-            public void onCommnetResponse(Data<CommentItem> dataReponse) {
+            public void onCommentResponse(Data<CommentItem> dataReponse) {
                 getMvpView().showPostComment(dataReponse);
             }
 
             @Override
-            public void onCommnetError(String error) {
+            public void onCommentError(String error) {
                 getMvpView().showError(error);
             }
-        },json);
+        }, json);
 
 
     }
@@ -107,10 +105,10 @@ public class DetailPresenter<V extends DetailMvpView> extends BasePresenter<V> i
             }
 
             @Override
-            public void onUnlove(String status) {
+            public void onUnLove(String status) {
 
             }
-        },content);
+        }, content);
     }
 
     @Override
@@ -123,10 +121,10 @@ public class DetailPresenter<V extends DetailMvpView> extends BasePresenter<V> i
             }
 
             @Override
-            public void onUnlove(String status) {
-                getMvpView().showUnlove(status, position);
+            public void onUnLove(String status) {
+                getMvpView().showUnLove(status, position);
             }
-        },content);
+        }, content);
     }
 
 }

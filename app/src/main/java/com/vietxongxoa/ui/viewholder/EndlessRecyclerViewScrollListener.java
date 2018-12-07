@@ -4,7 +4,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 
 
 public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnScrollListener {
@@ -31,8 +30,7 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
         for (int i = 0; i < lastVisibleItemPositions.length; i++) {
             if (i == 0) {
                 maxSize = lastVisibleItemPositions[i];
-            }
-            else if (lastVisibleItemPositions[i] > maxSize) {
+            } else if (lastVisibleItemPositions[i] > maxSize) {
                 maxSize = lastVisibleItemPositions[i];
             }
         }
@@ -79,8 +77,8 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
 //
 //        Log.d("lastVisibleItemPosition",String.valueOf(lastVisibleItemPosition));
 //        Log.d("Loadinf",String.valueOf(loading));
-        if (loading && (lastVisibleItemPosition == totalItemCount -1) && (currentPage  >= totalItemCount)){
-            currentPage = currentPage -  visibleThreshold;
+        if (loading && (lastVisibleItemPosition == totalItemCount - 1) && (currentPage >= totalItemCount)) {
+            currentPage = currentPage - visibleThreshold;
             loading = false;
         }
 
@@ -91,8 +89,8 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
         // threshold should reflect how many total columns there are too
 
         if (!loading && (lastVisibleItemPosition + visibleThreshold) > totalItemCount) {
-            currentPage = currentPage +  visibleThreshold;
-            if ( currentPage < 0 ){
+            currentPage = currentPage + visibleThreshold;
+            if (currentPage < 0) {
                 currentPage = 1;
             }
             onLoadMore(currentPage);

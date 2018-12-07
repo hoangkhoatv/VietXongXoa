@@ -1,20 +1,16 @@
 package com.vietxongxoa.data.remote;
 
-import android.support.annotation.RawRes;
-
 import com.google.gson.JsonObject;
 import com.vietxongxoa.model.CommentItem;
 import com.vietxongxoa.model.Data;
-import com.vietxongxoa.model.DataReponse;
+import com.vietxongxoa.model.DataResponse;
 import com.vietxongxoa.model.PostItem;
 import com.vietxongxoa.model.Users;
 
 import java.util.List;
 
-
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
 import retrofit2.http.Header;
@@ -25,7 +21,7 @@ import retrofit2.http.Query;
 public interface ApiInterface {
 
     @GET("articles")
-    Call<DataReponse<List<Data<PostItem>>>> getListPost(
+    Call<DataResponse<List<Data<PostItem>>>> getListPost(
             @Header("Authorization") String authKey,
             @Query("limit") String limit,
             @Query("offset") String offset,
@@ -33,36 +29,36 @@ public interface ApiInterface {
     );
 
     @POST("users")
-    Call<DataReponse<Data<Users>>> postCreateUser(
+    Call<DataResponse<Data<Users>>> postCreateUser(
             @Body JsonObject username
     );
 
     @POST("articles")
-    Call<DataReponse<Data<PostItem>>> postWirte(
+    Call<DataResponse<Data<PostItem>>> postWirte(
             @Header("Authorization") String authKey,
             @Body JsonObject content
     );
 
     @GET("articles/{idPost}")
-    Call<DataReponse<Data<PostItem>>> getDetail(
+    Call<DataResponse<Data<PostItem>>> getDetail(
             @Header("Authorization") String authKey,
             @Path("idPost") String idPost
     );
 
     @POST("love")
-    Call<DataReponse<Boolean>> postLove(
+    Call<DataResponse<Boolean>> postLove(
             @Header("Authorization") String authKey,
             @Body JsonObject content
     );
 
     @HTTP(method = "DELETE", path = "love", hasBody = true)
-    Call<DataReponse<Boolean>> deleteLove(
+    Call<DataResponse<Boolean>> deleteLove(
             @Header("Authorization") String authKey,
             @Body JsonObject content
     );
 
     @GET("comment")
-    Call<DataReponse<List<Data<CommentItem>>>> getComments(
+    Call<DataResponse<List<Data<CommentItem>>>> getComments(
             @Header("Authorization") String authKey,
             @Query("article_uuid") String uuid,
             @Query("limit") int limit,
@@ -70,13 +66,10 @@ public interface ApiInterface {
     );
 
     @POST("comment")
-    Call<DataReponse<Data<CommentItem>>> postCommet(
+    Call<DataResponse<Data<CommentItem>>> postCommet(
             @Header("Authorization") String authKey,
             @Body JsonObject content
     );
-
-
-
 
 
 }

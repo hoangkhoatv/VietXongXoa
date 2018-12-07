@@ -29,12 +29,15 @@ import com.vietxongxoa.data.remote.ErrorUtils;
 import com.vietxongxoa.model.ApiError;
 import com.vietxongxoa.model.CommentItem;
 import com.vietxongxoa.model.Data;
-import com.vietxongxoa.model.DataReponse;
+import com.vietxongxoa.model.DataResponse;
 import com.vietxongxoa.model.PostItem;
 import com.vietxongxoa.model.Users;
+
 import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -71,26 +74,26 @@ public class DataManager {
     }
 
     public void postWrite(final WriteListener listener, JsonObject content) {
-        ApiInterface apiService = mApiHelper.getCient().create(ApiInterface.class);
-        Call<DataReponse<Data<PostItem>>> call = apiService.postWirte(
+        ApiInterface apiService = ApiHelper.getCient().create(ApiInterface.class);
+        Call<DataResponse<Data<PostItem>>> call = apiService.postWirte(
                 mPreferencesHelper.getKeyToken(),
                 content
         );
-        call.enqueue(new Callback<DataReponse<Data<PostItem>>>() {
+        call.enqueue(new Callback<DataResponse<Data<PostItem>>>() {
             @Override
-            public void onResponse(Call<DataReponse<Data<PostItem>>> call, Response<DataReponse<Data<PostItem>>> response) {
-                if (response.isSuccessful() && response.body().status.toString().matches("success")) {
+            public void onResponse(Call<DataResponse<Data<PostItem>>> call, Response<DataResponse<Data<PostItem>>> response) {
+                if (response.isSuccessful() && response.body().status.matches("success")) {
                     listener.onResponse(response.body().data);
                 } else {
                     ApiError apiError = ErrorUtils.parseError(response);
-                    if(apiError!=null){
+                    if (apiError != null) {
                         listener.onError(apiError.message);
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<DataReponse<Data<PostItem>>> call, Throwable t) {
+            public void onFailure(Call<DataResponse<Data<PostItem>>> call, Throwable t) {
 
             }
         });
@@ -106,74 +109,67 @@ public class DataManager {
             return;
         }
 
-        ApiInterface apiService = mApiHelper.getCient().create(ApiInterface.class);
-        Call<DataReponse<Data<Users>>> call = apiService.postCreateUser(username);
-        call.enqueue(new Callback<DataReponse<Data<Users>>>() {
+        ApiInterface apiService = ApiHelper.getCient().create(ApiInterface.class);
+        Call<DataResponse<Data<Users>>> call = apiService.postCreateUser(username);
+        call.enqueue(new Callback<DataResponse<Data<Users>>>() {
             @Override
-            public void onResponse(Call<DataReponse<Data<Users>>> call, Response<DataReponse<Data<Users>>> response) {
-                if (response.isSuccessful() && response.body().status.toString().matches("success")) {
+            public void onResponse(Call<DataResponse<Data<Users>>> call, Response<DataResponse<Data<Users>>> response) {
+                if (response.isSuccessful() && response.body().status.matches("success")) {
                     listener.onResponse(response.body().data.attributes);
                 } else {
                     ApiError apiError = ErrorUtils.parseError(response);
-                    if(apiError!=null){
+                    if (apiError != null) {
                         listener.onError(apiError.message);
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<DataReponse<Data<Users>>> call, Throwable t) {
+            public void onFailure(Call<DataResponse<Data<Users>>> call, Throwable t) {
                 listener.onError(t.getMessage());
             }
         });
     }
 
-    public void getDetail(final WriteListener listener, String idPost){
-        ApiInterface apiService = mApiHelper.getCient().create(ApiInterface.class);
-        Call<DataReponse<Data<PostItem>>> call = apiService.getDetail(mPreferencesHelper.getKeyToken(), idPost);
-        call.enqueue(new Callback<DataReponse<Data<PostItem>>>() {
+    public void getDetail(final WriteListener listener, String idPost) {
+        ApiInterface apiService = ApiHelper.getCient().create(ApiInterface.class);
+        Call<DataResponse<Data<PostItem>>> call = apiService.getDetail(mPreferencesHelper.getKeyToken(), idPost);
+        call.enqueue(new Callback<DataResponse<Data<PostItem>>>() {
             @Override
-            public void onResponse(Call<DataReponse<Data<PostItem>>> call, Response<DataReponse<Data<PostItem>>> response) {
-                if (response.isSuccessful() && response.body().status.toString().matches("success")) {
+            public void onResponse(Call<DataResponse<Data<PostItem>>> call, Response<DataResponse<Data<PostItem>>> response) {
+                if (response.isSuccessful() && response.body().status.matches("success")) {
                     listener.onResponse(response.body().data);
                 } else {
                     ApiError apiError = ErrorUtils.parseError(response);
-                    if(apiError!=null){
+                    if (apiError != null) {
                         listener.onError(apiError.message);
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<DataReponse<Data<PostItem>>> call, Throwable t) {
+            public void onFailure(Call<DataResponse<Data<PostItem>>> call, Throwable t) {
                 listener.onError(t.getMessage());
             }
         });
     }
 
     public void getData(final DataListener listener, int offset, int limit) {
-//
-//        final String data = mPreferencesHelper.getData();
-//
-//        if (data != null) {
-//            listener.onResponse(data);
-//            return;
-//        }
-        ApiInterface apiService = mApiHelper.getCient().create(ApiInterface.class);
-        Call<DataReponse<List<Data<PostItem>>>> call = apiService.getListPost(
+        ApiInterface apiService = ApiHelper.getCient().create(ApiInterface.class);
+        Call<DataResponse<List<Data<PostItem>>>> call = apiService.getListPost(
                 mPreferencesHelper.getKeyToken(),
                 String.valueOf(limit),
                 String.valueOf(offset),
                 "#trending"
         );
-        call.enqueue(new Callback<DataReponse<List<Data<PostItem>>>>() {
+        call.enqueue(new Callback<DataResponse<List<Data<PostItem>>>>() {
             @Override
-            public void onResponse(Call<DataReponse<List<Data<PostItem>>>> call, Response<DataReponse<List<Data<PostItem>>>> response) {
-                if (response.isSuccessful() && response.body().status.toString().matches("success")) {
+            public void onResponse(Call<DataResponse<List<Data<PostItem>>>> call, Response<DataResponse<List<Data<PostItem>>>> response) {
+                if (response.isSuccessful() && response.body().status.matches("success")) {
                     listener.onResponse(response.body().data);
                 } else {
                     ApiError apiError = ErrorUtils.parseError(response);
-                    if(apiError!=null){
+                    if (apiError != null) {
                         listener.onError(apiError.message);
 
                     }
@@ -181,102 +177,102 @@ public class DataManager {
             }
 
             @Override
-            public void onFailure(Call<DataReponse<List<Data<PostItem>>>> call, Throwable t) {
+            public void onFailure(Call<DataResponse<List<Data<PostItem>>>> call, Throwable t) {
                 listener.onError(t.getMessage());
             }
         });
 
     }
 
-    public void postLove(final LoveListener listener, JsonObject content){
-        ApiInterface apiService = mApiHelper.getCient().create(ApiInterface.class);
-        Call<DataReponse<Boolean>> call = apiService.postLove(
+    public void postLove(final LoveListener listener, JsonObject content) {
+        ApiInterface apiService = ApiHelper.getCient().create(ApiInterface.class);
+        Call<DataResponse<Boolean>> call = apiService.postLove(
                 mPreferencesHelper.getKeyToken(),
                 content
         );
-        call.enqueue(new Callback<DataReponse<Boolean>>() {
+        call.enqueue(new Callback<DataResponse<Boolean>>() {
             @Override
-            public void onResponse(Call<DataReponse<Boolean>> call, Response<DataReponse<Boolean>> response) {
+            public void onResponse(Call<DataResponse<Boolean>> call, Response<DataResponse<Boolean>> response) {
                 if (response.isSuccessful()) {
-                    listener.onLoved(response.body().status.toString());
+                    listener.onLoved(response.body().status);
                 }
             }
 
             @Override
-            public void onFailure(Call<DataReponse<Boolean>> call, Throwable t) {
+            public void onFailure(Call<DataResponse<Boolean>> call, Throwable t) {
 
             }
         });
     }
 
-    public  void deleteLove(final  LoveListener listener, JsonObject content){
-        ApiInterface apiService = mApiHelper.getCient().create(ApiInterface.class);
-        Call<DataReponse<Boolean>> call = apiService.deleteLove(
+    public void deleteLove(final LoveListener listener, JsonObject content) {
+        ApiInterface apiService = ApiHelper.getCient().create(ApiInterface.class);
+        Call<DataResponse<Boolean>> call = apiService.deleteLove(
                 mPreferencesHelper.getKeyToken(),
                 content
         );
-        call.enqueue(new Callback<DataReponse<Boolean>>() {
+        call.enqueue(new Callback<DataResponse<Boolean>>() {
             @Override
-            public void onResponse(Call<DataReponse<Boolean>> call, Response<DataReponse<Boolean>> response) {
+            public void onResponse(Call<DataResponse<Boolean>> call, Response<DataResponse<Boolean>> response) {
                 if (response.isSuccessful()) {
-                    listener.onUnlove(response.body().status.toString());
+                    listener.onUnLove(response.body().status);
                 }
             }
 
             @Override
-            public void onFailure(Call<DataReponse<Boolean>> call, Throwable t) {
+            public void onFailure(Call<DataResponse<Boolean>> call, Throwable t) {
 
             }
         });
 
     }
 
-    public void getComments(final CommentListener listener, String uuid , int limit, int offset){
-        ApiInterface apiService = mApiHelper.getCient().create(ApiInterface.class);
-        Call<DataReponse<List<Data<CommentItem>>>> call = apiService.getComments(
+    public void getComments(final CommentListener listener, String uuid, int limit, int offset) {
+        ApiInterface apiService = ApiHelper.getCient().create(ApiInterface.class);
+        Call<DataResponse<List<Data<CommentItem>>>> call = apiService.getComments(
                 mPreferencesHelper.getKeyToken(),
                 uuid,
                 limit,
                 offset);
-       call.enqueue(new Callback<DataReponse<List<Data<CommentItem>>>>() {
-           @Override
-           public void onResponse(Call<DataReponse<List<Data<CommentItem>>>> call, Response<DataReponse<List<Data<CommentItem>>>> response) {
-               if (response.isSuccessful() && response.body().status.toString().matches("success")) {
-                   listener.onResponse(response.body().data);
-               } else {
-                   ApiError apiError = ErrorUtils.parseError(response);
-                   if(apiError!=null){
-                       listener.onError(apiError.message);
-                   }
-               }
-           }
-
-           @Override
-           public void onFailure(Call<DataReponse<List<Data<CommentItem>>>> call, Throwable t) {
-               listener.onError(t.getMessage());
-           }
-       });
-    }
-
-    public void postComment(final CommentListener listener, JsonObject content){
-
-        ApiInterface apiService = mApiHelper.getCient().create(ApiInterface.class);
-        Call<DataReponse<Data<CommentItem>>> call = apiService.postCommet(
-                mPreferencesHelper.getKeyToken(),
-                content
-        );
-        call.enqueue(new Callback<DataReponse<Data<CommentItem>>>() {
+        call.enqueue(new Callback<DataResponse<List<Data<CommentItem>>>>() {
             @Override
-            public void onResponse(Call<DataReponse<Data<CommentItem>>> call, Response<DataReponse<Data<CommentItem>>> response) {
-                if (response.isSuccessful()) {
-                    if (response.isSuccessful() && response.body().status.toString().matches("success")) {
-                        listener.onCommnetResponse(response.body().data);
+            public void onResponse(Call<DataResponse<List<Data<CommentItem>>>> call, Response<DataResponse<List<Data<CommentItem>>>> response) {
+                if (response.isSuccessful() && response.body().status.matches("success")) {
+                    listener.onResponse(response.body().data);
+                } else {
+                    ApiError apiError = ErrorUtils.parseError(response);
+                    if (apiError != null) {
+                        listener.onError(apiError.message);
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<DataReponse<Data<CommentItem>>> call, Throwable t) {
+            public void onFailure(Call<DataResponse<List<Data<CommentItem>>>> call, Throwable t) {
+                listener.onError(t.getMessage());
+            }
+        });
+    }
+
+    public void postComment(final CommentListener listener, JsonObject content) {
+
+        ApiInterface apiService = ApiHelper.getCient().create(ApiInterface.class);
+        Call<DataResponse<Data<CommentItem>>> call = apiService.postCommet(
+                mPreferencesHelper.getKeyToken(),
+                content
+        );
+        call.enqueue(new Callback<DataResponse<Data<CommentItem>>>() {
+            @Override
+            public void onResponse(Call<DataResponse<Data<CommentItem>>> call, Response<DataResponse<Data<CommentItem>>> response) {
+                if (response.isSuccessful()) {
+                    if (response.isSuccessful() && response.body().status.matches("success")) {
+                        listener.onCommentResponse(response.body().data);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DataResponse<Data<CommentItem>>> call, Throwable t) {
 
             }
         });

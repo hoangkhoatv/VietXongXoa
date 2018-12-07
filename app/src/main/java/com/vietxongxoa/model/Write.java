@@ -8,9 +8,10 @@ public class Write {
     @SerializedName("content")
     @Expose
     public String content;
-    public static JsonObject getJson(String content){
+
+    public static JsonObject getJson(String content) {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("content",content);
+        jsonObject.addProperty("content", content);
         return jsonObject;
     }
 }

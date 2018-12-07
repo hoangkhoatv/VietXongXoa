@@ -16,13 +16,16 @@
 
 package com.vietxongxoa.ui.main;
 
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -36,7 +39,7 @@ import com.vietxongxoa.R;
 import com.vietxongxoa.model.BaseItem;
 import com.vietxongxoa.model.Data;
 import com.vietxongxoa.model.PostItem;
-import com.vietxongxoa.model.WirteItem;
+import com.vietxongxoa.model.WriteItem;
 import com.vietxongxoa.ui.adapter.PostAdapter;
 import com.vietxongxoa.ui.base.BaseActivity;
 import com.vietxongxoa.ui.viewholder.EndlessRecyclerViewScrollListener;
@@ -49,7 +52,11 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity implements MainMvpView, PostAdapter.ItemClickListener, PostAdapter.RetryLoadMoreListener, ItemInteractiveListener {
+public class MainActivity extends BaseActivity
+        implements MainMvpView,
+        PostAdapter.ItemClickListener,
+        PostAdapter.RetryLoadMoreListener,
+        ItemInteractiveListener {
 
     @Inject
     MainPresenter<MainMvpView> mMainPresenter;
@@ -60,16 +67,14 @@ public class MainActivity extends BaseActivity implements MainMvpView, PostAdapt
     SwipeRefreshLayout swipeRefreshLayout;
 
     int limit = 10;
-    int currentPage  = 0;
+    int currentPage = 0;
     int endPage = -1;
     private PostAdapter adapter;
     private EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
     private boolean isWrite = true;
 
     public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, MainActivity.class);
-        return intent;
-
+        return new Intent(context, MainActivity.class);
     }
 
     @Override
@@ -95,25 +100,19 @@ public class MainActivity extends BaseActivity implements MainMvpView, PostAdapt
     @Override
     public void showData(final List<Data<PostItem>> data) {
         final List<Object> baseItems = new ArrayList<>();
-        for (int i = 0; i < data.size() - 1; i++){
+        for (int i = 0; i < data.size() - 1; i++) {
             data.get(i).attributes.type = BaseItem.SECOND_TYPE;
             baseItems.add(data.get(i));
         }
-//        for(Data<PostItem> temp : data){
-//            PostItem postItem = (PostItem) temp.attributes;
-//            postItem.type = BaseItem.SECOND_TYPE;
-//            baseItems.add(postItem);
-//
-//        }
         MainActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (swipeRefreshLayout.isRefreshing()){
+                if (swipeRefreshLayout.isRefreshing()) {
                     adapter.clear();
-                    swipeRefreshLayout .setRefreshing(false);
+                    swipeRefreshLayout.setRefreshing(false);
                 }
                 setWritePost();
-                if (baseItems.size()  != 0){
+                if (baseItems.size() != 0) {
                     adapter.add(baseItems);
                 } else {
                     adapter.onHidden();
@@ -122,24 +121,25 @@ public class MainActivity extends BaseActivity implements MainMvpView, PostAdapt
         });
     }
 
-    protected void showDialogRate(){
+    protected void showDialogRate() {
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.title_dialog))
                 .setMessage(getString(R.string.content_dialog))
                 .setPositiveButton(getString(R.string.yes_dialog), new DialogInterface.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                     public void onClick(DialogInterface dialog, int which) {
                         Uri uri = Uri.parse("market://details?id=" + getBaseContext().getPackageName());
                         Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
-
                         goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
                                 Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
                                 Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
                         try {
                             startActivity(goToMarket);
                         } catch (ActivityNotFoundException e) {
+                            String CHPlayUrl = "http://play.google.com/store/apps/details?id=";
                             startActivity(new Intent(Intent.ACTION_VIEW,
-                                    Uri.parse("http://play.google.com/store/apps/details?id=" + getBaseContext().getPackageName())));
+                                    Uri.parse(CHPlayUrl + getBaseContext().getPackageName())));
                         }
                     }
                 })
@@ -149,8 +149,6 @@ public class MainActivity extends BaseActivity implements MainMvpView, PostAdapt
                     }
                 })
                 .show();
-
-
     }
 
     @Override
@@ -160,33 +158,33 @@ public class MainActivity extends BaseActivity implements MainMvpView, PostAdapt
 
     @Override
     public void showError(String error) {
-        if(adapter!=null){
+        if (adapter != null) {
             adapter.onLoadMoreFailed();
         }
-        if (swipeRefreshLayout.isRefreshing()){
+        if (swipeRefreshLayout.isRefreshing()) {
             swipeRefreshLayout.setRefreshing(false);
         }
     }
 
     @Override
     public void showLove(String status, int position) {
-        if (status.matches("success")){
+        if (status.matches("success")) {
             adapter.loved(position);
         }
     }
 
     @Override
-    public void showUnlove(String status, int position) {
-        if (status.matches("success")){
+    public void showUnLove(String status, int position) {
+        if (status.matches("success")) {
             adapter.unLove(position);
         }
     }
 
 
-    private void setWritePost(){
-        if (isWrite){
-            Data<WirteItem> dataItem = new Data<WirteItem>();
-            dataItem.attributes = new WirteItem();
+    private void setWritePost() {
+        if (isWrite) {
+            Data<WriteItem> dataItem = new Data<WriteItem>();
+            dataItem.attributes = new WriteItem();
             dataItem.attributes.type = BaseItem.HEADER_TYPE;
 
             List<Object> baseItem = new ArrayList<>();
@@ -199,12 +197,15 @@ public class MainActivity extends BaseActivity implements MainMvpView, PostAdapt
 
 
     private void setupRecyclerView() {
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(
+                getApplicationContext(),
+                LinearLayoutManager.VERTICAL,
+                false
+        );
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new PostAdapter(this, this, this,this);
+        adapter = new PostAdapter(this, this, this, this);
         recyclerView.setAdapter(adapter);
-        endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager){
+        endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(final int page) {
                 currentPage = page;
@@ -213,12 +214,10 @@ public class MainActivity extends BaseActivity implements MainMvpView, PostAdapt
         };
         recyclerView.addOnScrollListener(endlessRecyclerViewScrollListener);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
-
-
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if(adapter!=null){
+                if (adapter != null) {
                     isWrite = true;
                     endlessRecyclerViewScrollListener.resetState();
                     currentPage = 0;
@@ -227,7 +226,6 @@ public class MainActivity extends BaseActivity implements MainMvpView, PostAdapt
                 }
             }
         });
-
     }
 
     private void updateAdapter() {
@@ -246,16 +244,16 @@ public class MainActivity extends BaseActivity implements MainMvpView, PostAdapt
 
     }
 
-    private void loadMore(final int page){
+    private void loadMore(final int page) {
         adapter.startLoadMore();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(page == endPage){
+                if (page == endPage) {
                     adapter.onReachEnd();
                     return;
                 }
-                mMainPresenter.getData(limit,page);
+                mMainPresenter.getData(limit, page);
             }
         }, 500);
     }
@@ -264,13 +262,16 @@ public class MainActivity extends BaseActivity implements MainMvpView, PostAdapt
     @Override
     public void setActionBar() {
         ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
-        View view = getLayoutInflater().inflate(R.layout.action_bar_layout,
-                null);
-        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
-                ActionBar.LayoutParams.MATCH_PARENT);
+        @SuppressLint("InflateParams")
+        View view = getLayoutInflater().inflate(R.layout.action_bar_layout, null);
+        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(
+                ActionBar.LayoutParams.MATCH_PARENT,
+                ActionBar.LayoutParams.MATCH_PARENT
+        );
         actionBar.setCustomView(view, layoutParams);
         Toolbar parent = (Toolbar) view.getParent();
         parent.setContentInsetsAbsolute(0, 0);
@@ -280,7 +281,7 @@ public class MainActivity extends BaseActivity implements MainMvpView, PostAdapt
 
     @Override
     public void onLove(String idPost, boolean isLove, int position) {
-        if(!isLove){
+        if (!isLove) {
             mMainPresenter.postLove(idPost, position);
         } else {
             mMainPresenter.deleteLove(idPost, position);

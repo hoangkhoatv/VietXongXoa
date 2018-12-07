@@ -19,11 +19,10 @@ package com.vietxongxoa;
 import android.app.Application;
 import android.content.Context;
 
+import com.androidnetworking.AndroidNetworking;
 import com.vietxongxoa.injection.component.ApplicationComponent;
 import com.vietxongxoa.injection.component.DaggerApplicationComponent;
 import com.vietxongxoa.injection.module.ApplicationModule;
-import com.androidnetworking.AndroidNetworking;
-
 
 
 public class MyApplication extends Application {

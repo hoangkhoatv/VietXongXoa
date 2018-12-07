@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.vietxongxoa.R;
 import com.vietxongxoa.model.CommentItem;
 
-public class CommentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener  {
+public class CommentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private TextView textName;
     private TextView textComment;
@@ -29,7 +29,7 @@ public class CommentViewHolder extends RecyclerView.ViewHolder implements View.O
         this.itemClickListener = itemClickListener;
     }
 
-    public void setData(Object item){
+    public void setData(Object item) {
         CommentItem commentItem = (CommentItem) item;
         textName.setText(commentItem.author);
         textComment.setText(commentItem.content);
@@ -39,6 +39,6 @@ public class CommentViewHolder extends RecyclerView.ViewHolder implements View.O
 
     @Override
     public void onClick(View view) {
-        itemClickListener.onClick(view,getAdapterPosition(),false);
+        itemClickListener.onClick(view, getAdapterPosition(), false);
     }
 }

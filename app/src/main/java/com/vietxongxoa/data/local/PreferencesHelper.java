@@ -41,7 +41,7 @@ public class PreferencesHelper {
     public static final String KEY_DATE = "date";
     public static final String KEY_NUM_LOVE = "number love";
     public static final String KEY_LOVED = "loved";
-    public static final String KEY_COMMET = "comment";
+    public static final String KEY_COMMENT = "comment";
 
     @Inject
     public PreferencesHelper(@ApplicationContext Context context) {
@@ -52,7 +52,7 @@ public class PreferencesHelper {
         mPref.edit().clear().apply();
     }
 
-    public void putData(String key,String data) {
+    public void putData(String key, String data) {
         mPref.edit().putString(key, data).apply();
     }
 
@@ -64,5 +64,4 @@ public class PreferencesHelper {
         return "Bearer " + mPref.getString(KEY_TOKEN, null);
 
     }
-
 }

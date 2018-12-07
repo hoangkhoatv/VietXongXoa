@@ -1,13 +1,10 @@
 package com.vietxongxoa.ui.adapter;
 
 import android.content.Context;
-
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.vietxongxoa.R;
 import com.vietxongxoa.data.local.PreferencesHelper;
@@ -16,26 +13,19 @@ import com.vietxongxoa.model.Data;
 import com.vietxongxoa.model.PostItem;
 import com.vietxongxoa.ui.detail.DetailActivity;
 import com.vietxongxoa.ui.main.ItemInteractiveListener;
-import com.vietxongxoa.ui.main.MainActivity;
-import com.vietxongxoa.ui.viewholder.CommentViewHolder;
-import com.vietxongxoa.ui.viewholder.ItemClickListener;
 import com.vietxongxoa.ui.viewholder.LoadMoreRecyclerViewAdapter;
-import com.vietxongxoa.ui.viewholder.PostDetailViewHolder;
 import com.vietxongxoa.ui.viewholder.PostViewHolder;
 import com.vietxongxoa.ui.viewholder.WriteViewHolder;
 import com.vietxongxoa.ui.write.WriteActivity;
-
-import java.util.List;
-
-import static android.media.CamcorderProfile.get;
 
 
 public class PostAdapter extends LoadMoreRecyclerViewAdapter<Object> {
 
     private Context mContext;
     private ItemInteractiveListener itemInteractiveListener;
+
     public PostAdapter(Context context, ItemClickListener itemClickListener,
-                       RetryLoadMoreListener retryLoadMoreListener, ItemInteractiveListener itemInteractiveListener ) {
+                       RetryLoadMoreListener retryLoadMoreListener, ItemInteractiveListener itemInteractiveListener) {
         super(context, itemClickListener, retryLoadMoreListener);
         mContext = context;
         this.itemInteractiveListener = itemInteractiveListener;
@@ -47,7 +37,7 @@ public class PostAdapter extends LoadMoreRecyclerViewAdapter<Object> {
         if (viewType == BaseItem.HEADER_TYPE) {
             View view = mInflater.inflate(R.layout.write_item, parent, false);
             return new WriteViewHolder(view);
-        } else if (viewType == BaseItem.SECOND_TYPE){
+        } else if (viewType == BaseItem.SECOND_TYPE) {
             View view = mInflater.inflate(R.layout.post_item, parent, false);
             return new PostViewHolder(view);
         }
@@ -65,25 +55,25 @@ public class PostAdapter extends LoadMoreRecyclerViewAdapter<Object> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof PostViewHolder) {
-            final Data<PostItem> dataTupe= (Data<PostItem>) mDataList.get(position);
+            final Data<PostItem> dataTupe = (Data<PostItem>) mDataList.get(position);
             final PostItem item = dataTupe.attributes;
             ((PostViewHolder) holder).setItemClickListener(new com.vietxongxoa.ui.viewholder.ItemClickListener() {
                 @Override
                 public void onClick(View view, int position, boolean isLongClick) {
                     Intent intent = DetailActivity.getStartIntent(mContext);
                     intent.putExtra(PreferencesHelper.KEY_ID, dataTupe.uuid);
-                    intent.putExtra(PreferencesHelper.KEY_AUTHOR,item.author);
-                    intent.putExtra(PreferencesHelper.KEY_CONTENT,item.content);
-                    intent.putExtra(PreferencesHelper.KEY_DATE,item.created);
-                    intent.putExtra(PreferencesHelper.KEY_NUM_LOVE,item.love);
-                    intent.putExtra(PreferencesHelper.KEY_COMMET, item.comment);
+                    intent.putExtra(PreferencesHelper.KEY_AUTHOR, item.author);
+                    intent.putExtra(PreferencesHelper.KEY_CONTENT, item.content);
+                    intent.putExtra(PreferencesHelper.KEY_DATE, item.created);
+                    intent.putExtra(PreferencesHelper.KEY_NUM_LOVE, item.love);
+                    intent.putExtra(PreferencesHelper.KEY_COMMENT, item.comment);
                     intent.putExtra(PreferencesHelper.KEY_LOVED, item.loved);
                     mContext.startActivity(intent);
                 }
 
                 @Override
                 public void onLove(View view, int pos, boolean isLove) {
-                    final Data<PostItem> dataTupe= (Data<PostItem>) mDataList.get(pos);
+                    final Data<PostItem> dataTupe = (Data<PostItem>) mDataList.get(pos);
                     itemInteractiveListener.onLove(dataTupe.uuid, isLove, position);
                 }
 
@@ -93,7 +83,7 @@ public class PostAdapter extends LoadMoreRecyclerViewAdapter<Object> {
                 }
             });
             ((PostViewHolder) holder).setData(item, mContext);
-        } else if(holder instanceof  WriteViewHolder){
+        } else if (holder instanceof WriteViewHolder) {
             ((WriteViewHolder) holder).setItemClickListener(new com.vietxongxoa.ui.viewholder.ItemClickListener() {
                 @Override
                 public void onClick(View view, int position, boolean isLongClick) {
@@ -115,17 +105,17 @@ public class PostAdapter extends LoadMoreRecyclerViewAdapter<Object> {
 
     }
 
-    public void loved(int pos){
-        ((Data<PostItem> ) mDataList.get(pos)).attributes.loved = true;
-        int love = Integer.parseInt(((Data<PostItem> ) mDataList.get(pos)).attributes.love) + 1;
-        ((Data<PostItem> ) mDataList.get(pos)).attributes.love = String.valueOf(love);
+    public void loved(int pos) {
+        ((Data<PostItem>) mDataList.get(pos)).attributes.loved = true;
+        int love = Integer.parseInt(((Data<PostItem>) mDataList.get(pos)).attributes.love) + 1;
+        ((Data<PostItem>) mDataList.get(pos)).attributes.love = String.valueOf(love);
         notifyItemChanged(pos);
     }
 
-    public void unLove(int pos){
-        ((Data<PostItem> ) mDataList.get(pos)).attributes.loved = false;
-        int love = Integer.parseInt(((Data<PostItem> ) mDataList.get(pos)).attributes.love) - 1;
-        ((Data<PostItem> ) mDataList.get(pos)).attributes.love = String.valueOf(love);
+    public void unLove(int pos) {
+        ((Data<PostItem>) mDataList.get(pos)).attributes.loved = false;
+        int love = Integer.parseInt(((Data<PostItem>) mDataList.get(pos)).attributes.love) - 1;
+        ((Data<PostItem>) mDataList.get(pos)).attributes.love = String.valueOf(love);
         notifyItemChanged(pos);
     }
 

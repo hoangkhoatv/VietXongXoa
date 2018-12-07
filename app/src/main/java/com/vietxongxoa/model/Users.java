@@ -14,9 +14,9 @@ public class Users {
     @Expose
     public String token;
 
-    public static JsonObject getJson(String username){
+    public static JsonObject getJson(String username) {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("username",username);
+        jsonObject.addProperty("username", username);
         return jsonObject;
     }
 }

@@ -21,9 +21,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -54,8 +52,8 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    protected void  showToast(String message){
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    protected void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     public ActivityComponent activityComponent() {
@@ -67,6 +65,7 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
         }
         return mActivityComponent;
     }
+
     public ActivityComponent getActivityComponent() {
         return mActivityComponent;
     }

@@ -24,11 +24,9 @@ import android.graphics.drawable.ColorDrawable;
 import com.vietxongxoa.R;
 
 
-
 public class DialogUtils {
 
     private DialogUtils() {
-        // This utility class is not publicly instantiable
     }
 
     public static ProgressDialog showLoadingDialog(Context context) {
