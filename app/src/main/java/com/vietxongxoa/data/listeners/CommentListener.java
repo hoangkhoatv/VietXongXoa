@@ -7,12 +7,11 @@ import java.util.List;
 
 public interface CommentListener {
 
-    void onResponse(List<Data<CommentItem>> dataReponse);
+    void onResponse(List<Data<CommentItem>> dataResponse);
 
     void onError(String error);
 
-    void onCommentResponse(Data<CommentItem> dataReponse);
+    void onCommentResponse(Data<CommentItem> dataResponse);
 
     void onCommentError(String error);
 }
-

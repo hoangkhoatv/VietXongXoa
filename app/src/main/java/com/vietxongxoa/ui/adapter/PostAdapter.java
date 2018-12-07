@@ -31,7 +31,6 @@ public class PostAdapter extends LoadMoreRecyclerViewAdapter<Object> {
         this.itemInteractiveListener = itemInteractiveListener;
     }
 
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == BaseItem.HEADER_TYPE) {
@@ -50,7 +49,6 @@ public class PostAdapter extends LoadMoreRecyclerViewAdapter<Object> {
         Data<BaseItem> baseItem = (Data<BaseItem>) mDataList.get(position);
         return baseItem.attributes.type;
     }
-
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
@@ -118,6 +116,4 @@ public class PostAdapter extends LoadMoreRecyclerViewAdapter<Object> {
         ((Data<PostItem>) mDataList.get(pos)).attributes.love = String.valueOf(love);
         notifyItemChanged(pos);
     }
-
-
 }

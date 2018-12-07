@@ -66,10 +66,8 @@ public interface ApiInterface {
     );
 
     @POST("comment")
-    Call<DataResponse<Data<CommentItem>>> postCommet(
+    Call<DataResponse<Data<CommentItem>>> postComment(
             @Header("Authorization") String authKey,
             @Body JsonObject content
     );
-
-
 }

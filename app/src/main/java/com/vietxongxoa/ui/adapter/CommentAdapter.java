@@ -21,11 +21,15 @@ public class CommentAdapter extends LoadMoreRecyclerViewAdapter<Object> {
     private Context mContext;
     private ItemInteractiveListener itemInteractiveListener;
 
-    public CommentAdapter(@NonNull Context context, ItemClickListener itemClickListener, @NonNull RetryLoadMoreListener retryLoadMoreListener, ItemInteractiveListener itemInteractiveListener) {
+    public CommentAdapter(
+            @NonNull Context context,
+            ItemClickListener itemClickListener,
+            @NonNull RetryLoadMoreListener retryLoadMoreListener,
+            ItemInteractiveListener itemInteractiveListener
+    ) {
         super(context, itemClickListener, retryLoadMoreListener);
         this.itemInteractiveListener = itemInteractiveListener;
         mContext = context;
-
     }
 
     @Override

@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class PostItem extends BaseItem {
-
     @SerializedName("author")
     @Expose
     public String author;
@@ -28,5 +27,4 @@ public class PostItem extends BaseItem {
     @SerializedName("love")
     @Expose
     public String love;
-
 }

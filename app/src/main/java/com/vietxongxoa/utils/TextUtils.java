@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 
 public class TextUtils {
+
     private static void makeTextViewResizable(
             final TextView tv,
             final int maxLine,
@@ -58,12 +59,12 @@ public class TextUtils {
             final Spanned strSpanned,
             final TextView tv,
             final int maxLine,
-            final String spanableText,
+            final String spanAbleText,
             final boolean viewMore
     ) {
         String str = strSpanned.toString();
         SpannableStringBuilder ssb = new SpannableStringBuilder(strSpanned);
-        if (str.contains(spanableText)) {
+        if (str.contains(spanAbleText)) {
             ssb.setSpan(new MySpannable(false) {
                 @Override
                 public void onClick(@NonNull View widget) {
@@ -76,7 +77,7 @@ public class TextUtils {
                         makeTextViewResizable(tv, 5, "...xem thêm", true);
                     }
                 }
-            }, str.indexOf(spanableText), str.indexOf(spanableText) + spanableText.length(), 0);
+            }, str.indexOf(spanAbleText), str.indexOf(spanAbleText) + spanAbleText.length(), 0);
 
         }
         return ssb;

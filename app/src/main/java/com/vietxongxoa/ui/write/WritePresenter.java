@@ -23,9 +23,9 @@ public class WritePresenter<V extends WriteMvpView> extends BasePresenter<V> imp
         getMvpView().showLoading();
         mDataManager.postWrite(new WriteListener() {
             @Override
-            public void onResponse(Data<PostItem> dataReponse) {
+            public void onResponse(Data<PostItem> dataResponse) {
                 getMvpView().hideLoading();
-                getMvpView().showData(dataReponse);
+                getMvpView().showData(dataResponse);
             }
 
             @Override

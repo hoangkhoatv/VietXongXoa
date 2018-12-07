@@ -26,8 +26,8 @@ public class DetailPresenter<V extends DetailMvpView> extends BasePresenter<V> i
     public void getData(String idPost) {
         mDataManager.getDetail(new WriteListener() {
             @Override
-            public void onResponse(Data<PostItem> dataReponse) {
-                getMvpView().showData(dataReponse);
+            public void onResponse(Data<PostItem> dataResponse) {
+                getMvpView().showData(dataResponse);
             }
 
             @Override
@@ -41,8 +41,8 @@ public class DetailPresenter<V extends DetailMvpView> extends BasePresenter<V> i
     public void getComment(String uuid, int limit, int offset) {
         mDataManager.getComments(new CommentListener() {
             @Override
-            public void onResponse(List<Data<CommentItem>> dataReponse) {
-                getMvpView().showDataComments(dataReponse);
+            public void onResponse(List<Data<CommentItem>> dataResponse) {
+                getMvpView().showDataComments(dataResponse);
             }
 
             @Override
@@ -52,7 +52,7 @@ public class DetailPresenter<V extends DetailMvpView> extends BasePresenter<V> i
             }
 
             @Override
-            public void onCommentResponse(Data<CommentItem> dataReponse) {
+            public void onCommentResponse(Data<CommentItem> dataResponse) {
             }
 
             @Override
@@ -69,7 +69,7 @@ public class DetailPresenter<V extends DetailMvpView> extends BasePresenter<V> i
         json.addProperty("content", content);
         mDataManager.postComment(new CommentListener() {
             @Override
-            public void onResponse(List<Data<CommentItem>> dataReponse) {
+            public void onResponse(List<Data<CommentItem>> dataResponse) {
 
             }
 
@@ -79,8 +79,8 @@ public class DetailPresenter<V extends DetailMvpView> extends BasePresenter<V> i
             }
 
             @Override
-            public void onCommentResponse(Data<CommentItem> dataReponse) {
-                getMvpView().showPostComment(dataReponse);
+            public void onCommentResponse(Data<CommentItem> dataResponse) {
+                getMvpView().showPostComment(dataResponse);
             }
 
             @Override

@@ -51,7 +51,7 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
 
     @Inject
     DetailPresenter<DetailMvpView> mDetailPresenter;
-    Data<PostItem> dataTupe;
+    Data<PostItem> data;
     int limit = 10;
     int currentPage = 0;
     int endPage = -1;
@@ -83,16 +83,16 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
 
     public void getData() {
         Intent intent = getIntent();
-        dataTupe = new Data<PostItem>();
-        dataTupe.attributes = new PostItem();
-        dataTupe.uuid = intent.getStringExtra(PreferencesHelper.KEY_ID);
-        dataTupe.attributes.author = intent.getStringExtra(PreferencesHelper.KEY_AUTHOR);
-        dataTupe.attributes.content = intent.getStringExtra(PreferencesHelper.KEY_CONTENT);
-        dataTupe.attributes.created = intent.getStringExtra(PreferencesHelper.KEY_DATE);
-        dataTupe.attributes.love = intent.getStringExtra(PreferencesHelper.KEY_NUM_LOVE);
-        dataTupe.attributes.loved = intent.getBooleanExtra(PreferencesHelper.KEY_LOVED, false);
-        dataTupe.attributes.comment = intent.getIntExtra(PreferencesHelper.KEY_COMMENT, 0);
-        dataTupe.attributes.type = BaseItem.HEADER_TYPE;
+        data = new Data<PostItem>();
+        data.attributes = new PostItem();
+        data.uuid = intent.getStringExtra(PreferencesHelper.KEY_ID);
+        data.attributes.author = intent.getStringExtra(PreferencesHelper.KEY_AUTHOR);
+        data.attributes.content = intent.getStringExtra(PreferencesHelper.KEY_CONTENT);
+        data.attributes.created = intent.getStringExtra(PreferencesHelper.KEY_DATE);
+        data.attributes.love = intent.getStringExtra(PreferencesHelper.KEY_NUM_LOVE);
+        data.attributes.loved = intent.getBooleanExtra(PreferencesHelper.KEY_LOVED, false);
+        data.attributes.comment = intent.getIntExtra(PreferencesHelper.KEY_COMMENT, 0);
+        data.attributes.type = BaseItem.HEADER_TYPE;
     }
 
     @Override
@@ -244,12 +244,12 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
                 if (adapter != null) {
                     endlessRecyclerViewScrollListener.resetState();
                     currentPage = 0;
-                    mDetailPresenter.getData(dataTupe.uuid);
+                    mDetailPresenter.getData(data.uuid);
                 }
             }
         });
         List<Object> baseItem = new ArrayList<>();
-        baseItem.add(dataTupe);
+        baseItem.add(data);
         adapter.add(baseItem);
     }
 
@@ -282,7 +282,7 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
                     adapter.onReachEnd();
                     return;
                 }
-                mDetailPresenter.getComment(dataTupe.uuid, limit, page);
+                mDetailPresenter.getComment(data.uuid, limit, page);
             }
         }, 500);
     }
@@ -292,7 +292,7 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
         if (!edtComment.getText().toString().matches("")) {
             btnComment.setEnabled(false);
             BaseActivity.hideKeyboard(this);
-            mDetailPresenter.postComment(dataTupe.uuid, edtComment.getText().toString());
+            mDetailPresenter.postComment(data.uuid, edtComment.getText().toString());
         }
     }
 }
