@@ -35,10 +35,10 @@ public class PostAdapter extends LoadMoreRecyclerViewAdapter<Object> {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == BaseItem.HEADER_TYPE) {
-            View view = mInflater.inflate(R.layout.write_item, parent, false);
+            View view = mInflater.inflate(R.layout.item_write_new_post, parent, false);
             return new WriteViewHolder(view);
         } else if (viewType == BaseItem.SECOND_TYPE) {
-            View view = mInflater.inflate(R.layout.post_item, parent, false);
+            View view = mInflater.inflate(R.layout.item_post_in_list, parent, false);
             return new PostViewHolder(view);
         }
         return super.onCreateViewHolder(parent, viewType);

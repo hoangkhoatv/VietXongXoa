@@ -35,10 +35,10 @@ public class CommentAdapter extends LoadMoreRecyclerViewAdapter<Object> {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == BaseItem.HEADER_TYPE) {
-            View view = mInflater.inflate(R.layout.post_detail_item, parent, false);
+            View view = mInflater.inflate(R.layout.item_post_detail, parent, false);
             return new PostDetailViewHolder(view);
         } else if (viewType == BaseItem.SECOND_TYPE) {
-            View view = mInflater.inflate(R.layout.comment_item, parent, false);
+            View view = mInflater.inflate(R.layout.item_comment, parent, false);
             return new CommentViewHolder(view);
         }
         return super.onCreateViewHolder(parent, viewType);
