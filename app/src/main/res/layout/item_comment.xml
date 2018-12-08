@@ -46,27 +46,44 @@
         android:layout_marginRight="@dimen/primaryPadding"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/text_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:text="@string/text_time"
-            android:textSize="@dimen/textFontSize"
-            tools:ignore="RtlHardcoded" />
-
         <Button
-            android:id="@+id/btnAnswer"
+            android:id="@+id/btnLove"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:gravity="left"
-            android:paddingLeft="@dimen/primaryPadding"
+            android:text="@string/love"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/textFontSize"
+            android:typeface="normal"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+        <Button
+            android:id="@+id/btnAnswer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:gravity="left"
             android:text="@string/answer"
             android:textAllCaps="false"
-            android:textColor="@color/darkColor"
+            android:textColor="@color/colorPrimary"
             android:textSize="@dimen/textFontSize"
+            android:typeface="normal"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+        <TextView
+            android:id="@+id/text_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:paddingLeft="@dimen/primaryPadding"
+            android:text="@string/text_time"
+            android:textSize="@dimen/textFontSize"
+            android:typeface="normal"
             tools:ignore="RtlHardcoded,RtlSymmetry" />
     </LinearLayout>
 
