@@ -1,33 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:weightSum="1.0"
+    android:background="@color/colorPrimary"
     android:orientation="horizontal"
-    android:background="@color/colorPrimary">
-
-    <TableRow>
-
-
-
+    android:weightSum="1.0">
+    <TableRow tools:ignore="UselessParent">
         <TextView
+            android:id="@+id/text_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/text_title"
-            android:text="@string/app_name"
-            android:gravity="center_horizontal"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textStyle="bold"
-            android:textColor="@color/cardview_light_background"
-            android:padding="@dimen/activity_vertical_margin"
-            android:layout_alignParentTop="true"
             android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/activity_vertical_margin"
+            android:text="@string/app_name"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/cardview_light_background"
             android:textSize="@dimen/activity_vertical_margin"
-            />
-
-
-
-
+            android:textStyle="bold" />
     </TableRow>
-
 </TableLayout>

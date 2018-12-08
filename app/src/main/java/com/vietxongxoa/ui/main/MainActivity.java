@@ -143,7 +143,7 @@ public class MainActivity extends BaseActivity
                         }
                     }
                 })
-                .setNegativeButton(getString(R.string.no_didalog), new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.no_dialog), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
                     }

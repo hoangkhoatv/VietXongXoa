@@ -17,30 +17,36 @@
 <resources>
     <string name="app_name">VXX</string>
     <string name="load_data">Load Data</string>
-    <string name="hint_write">Viết để xóa đi...</string>
+    <string name="hint_write">Viết để xóa đi…</string>
     <string name="name_user">\@someome</string>
-    <string name="text_post">Đang tải...</string>
+    <string name="text_post">Better use a 9 patch in this case. just draw the upper and lower borders and leave the right and left borders transparent. Of course, excluding the 9 patch markers.</string>
     <string name="text_hint">\@someone</string>
-    <string name="create_hint">Một cái tên nào đó...</string>
+    <string name="text_time">Vừa xong</string>
+    <string name="create_hint">Một cái tên nào đó…</string>
 
-    <string name="hint_writing">Viết để xóa đi...</string>
+    <string name="hint_writing">Viết để xóa đi…</string>
     <string name="text_create">Vào để viết</string>
     <string name="text_delete">Xóa đi</string>
-    <string name="toast_emtry_name">Tên người dùng trống.</string>
+    <string name="toast_entry_name">Tên người dùng trống.</string>
     <string name="btn_back">Quay lại</string>
     <string name="error">Đã có lỗi xảy ra!</string>
     <string name="title_dialog">Hãy đánh 5 * cho ứng dụng được tốt hơn</string>
     <string name="content_dialog">Những đánh giá và ý kiến đóng góp của bạn sẽ được chúng tôi lắng nghe và phát triển ứng dụng ngày càng tốt hơn.</string>
     <string name="yes_dialog">Có</string>
-    <string name="no_didalog">Thoát</string>
+    <string name="no_dialog">Thoát</string>
     <string name="view_more">Xem thêm</string>
 
     <string name="title_create">Chỉ là một cái tên</string>
     <string name="title_main">#trending</string>
-    <string name="title_detail">Viết để xóa đi...</string>
+    <string name="title_detail">Viết để xóa đi…</string>
+    <string name="title_comment">Bình luận</string>
     <string name="empty_comment">Tham gia bình luận cho hoạt động này</string>
-    <string name="enter_comment">Nhập bình luận...</string>
+    <string name="enter_comment">Nhập bình luận…</string>
     <string name="answer">Trả lời</string>
-    <string name="commnet">Bình luận</string>
+    <string name="comment">bình luận</string>
     <string name="zero">0</string>
+    <string name="send">Send</string>
+    <string name="read_more">…Xem thêm</string>
+    <string name="no_data">Hiện chưa có dữ liệu!</string>
+    <string name="retry">Thử lại</string>
 </resources>

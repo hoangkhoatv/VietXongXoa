@@ -2,6 +2,5 @@
 <resources>
     <string name="fa_icon_love">\uf004</string>
     <string name="fa_icon_comment">\uf27a</string>
-
-
+    <string name="fa_icon_back">\uf27a</string>
 </resources>

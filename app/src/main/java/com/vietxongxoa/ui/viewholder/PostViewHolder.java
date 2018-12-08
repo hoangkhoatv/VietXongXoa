@@ -7,6 +7,7 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ public class PostViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     private TextView textName;
     private TextView textPost;
     private TextView textDate;
+    private TextView commentNumber;
     private ItemClickListener itemClickListener;
     private IconTextView iconLove;
     private TextView numLoved;
@@ -34,6 +36,7 @@ public class PostViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         Button btnComment = itemView.findViewById(R.id.btnComment);
         iconLove = itemView.findViewById(R.id.iconLove);
         numLoved = itemView.findViewById(R.id.numLoved);
+        commentNumber =  itemView.findViewById(R.id.commentNumber);
         itemView.setOnClickListener(this);
         btnLove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +66,7 @@ public class PostViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         textName.setText(userName);
         textDate.setText(strDate);
         numLoved.setText(postItem.love);
+        commentNumber.setText(String.valueOf(postItem.comment));
         if (postItem.loved) {
             numLoved.setTextColor(context.getResources().getColor(R.color.heart));
             iconLove.setLove();
@@ -72,7 +76,8 @@ public class PostViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         }
         if (strPost.length() > 280) {
             String temp = strPost.substring(0, 280);
-            String viewMore = temp + "...xem thêm";
+            String readMoreString = context.getString(R.string.read_more);
+            String viewMore = temp + readMoreString;
             Spannable span = SpannableStringBuilder.valueOf(viewMore);
             span.setSpan(
                     new MySpannable(false) {
@@ -81,8 +86,8 @@ public class PostViewHolder extends RecyclerView.ViewHolder implements View.OnCl
                             textPost.setText(strPost);
                         }
                     },
-                    viewMore.indexOf("...xem thêm"),
-                    viewMore.indexOf("...xem thêm") + "...xem thêm".length(),
+                    viewMore.indexOf(readMoreString),
+                    viewMore.indexOf(readMoreString) + readMoreString.length(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             );
             textPost.setText(span);

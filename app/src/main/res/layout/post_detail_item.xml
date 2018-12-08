@@ -1,81 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/cardview_light_background"
-    android:layout_marginTop="@dimen/activity_vertical_margin"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/primaryPadding"
+    android:background="@color/white"
+    android:orientation="vertical">
+
     <TextView
         android:id="@+id/text_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/name_user"
         android:layout_gravity="left"
-        android:textStyle="bold"
+        android:paddingLeft="@dimen/primaryPadding"
+        android:paddingTop="@dimen/primaryPadding"
+        android:paddingRight="@dimen/primaryPadding"
+        android:text="@string/name_user"
         android:textColor="@color/text_name"
-        android:textSize="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_vertical_margin"
-        android:paddingRight="@dimen/activity_vertical_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"/>
+        android:textSize="@dimen/textFontSize"
+        android:textStyle="bold"
+        tools:ignore="RtlHardcoded" />
+
     <TextView
         android:id="@+id/text_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/name_user"
         android:layout_gravity="left"
-        android:paddingLeft="@dimen/activity_vertical_margin"
-        android:paddingRight="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin"/>
+        android:paddingLeft="@dimen/primaryPadding"
+        android:paddingRight="@dimen/primaryPadding"
+        android:paddingBottom="@dimen/primaryPadding"
+        android:text="@string/text_time"
+        android:textSize="@dimen/textFontSize"
+        tools:ignore="RtlHardcoded" />
+
     <TextView
+        android:id="@+id/text_post"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/primaryPadding"
+        android:paddingRight="@dimen/primaryPadding"
+        android:paddingBottom="@dimen/primaryPadding"
         android:text="@string/text_post"
-        android:id="@+id/text_post"
-        android:paddingLeft="@dimen/activity_vertical_margin"
-        android:paddingRight="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:textColorLink="@color/text_post"
-        android:textColor="@color/text_post">
-    </TextView>
+        android:textColor="@color/black"
+        android:textSize="@dimen/textFontSize"
+        android:lineSpacingExtra="@dimen/textLineHeight"
+        android:textColorLink="@color/black" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="@dimen/articleDetailFooter"
         android:background="@drawable/border_top"
+        android:baselineAligned="false"
         android:orientation="horizontal"
         android:weightSum="2">
+
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:paddingLeft="@dimen/activity_vertical_margin"
-            android:paddingTop="@dimen/cardview_default_radius"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:paddingStart="@dimen/primaryPadding"
+            android:paddingLeft="@dimen/primaryPadding"
+            android:paddingTop="@dimen/primaryPadding"
+            tools:ignore="RtlSymmetry">
+
             <Button
+                android:id="@+id/btnLove"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:id="@+id/btnLove"
-                android:background="@android:color/transparent">
-            </Button>
+                android:background="@android:color/transparent" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:orientation="horizontal">
+
                 <com.vietxongxoa.utils.IconTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/iconLove"
-                    android:textColor="@color/heart"
-                    android:text="@string/fa_icon_love"/>
-                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/heart"
+                    android:text="@string/fa_icon_love"
+                    android:textSize="@dimen/textFontSize"
+                    android:textColor="@color/heart" />
+
+                <TextView
                     android:id="@+id/numLoved"
-                    android:text="0"
-                    android:layout_marginLeft="@dimen/cardview_default_radius"
-                    android:textSize="@dimen/activity_vertical_margin" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spaceSize"
+                    android:layout_marginLeft="@dimen/spaceSize"
+                    android:text="@string/zero"
+                    android:textColor="@color/heart"
+                    android:textSize="@dimen/textFontSize" />
             </LinearLayout>
 
 
@@ -84,25 +102,34 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:paddingRight="@dimen/activity_vertical_margin"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:paddingEnd="@dimen/primaryPadding"
+            android:paddingRight="@dimen/primaryPadding"
+            tools:ignore="RtlSymmetry">
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/commnet"
                 android:id="@+id/comment"
-                android:textColor="@color/colorPrimary"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"/>
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"
-                android:layout_toLeftOf="@id/comment"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:textColor="@color/colorPrimary"
-                android:layout_marginRight="@dimen/cardview_default_radius"
-                android:id="@+id/numberComment"/>
+                android:text="@string/comment"
+                android:textSize="@dimen/textFontSize"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/numberComment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/spaceSize"
+                android:layout_marginRight="@dimen/spaceSize"
+                android:layout_toStartOf="@id/comment"
+                android:layout_toLeftOf="@id/comment"
+                android:text="@string/zero"
+                android:textSize="@dimen/textFontSize"
+                android:textColor="@color/black" />
 
         </RelativeLayout>
     </LinearLayout>

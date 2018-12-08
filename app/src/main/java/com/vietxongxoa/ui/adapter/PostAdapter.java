@@ -1,5 +1,6 @@
 package com.vietxongxoa.ui.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -51,15 +52,15 @@ public class PostAdapter extends LoadMoreRecyclerViewAdapter<Object> {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         if (holder instanceof PostViewHolder) {
-            final Data<PostItem> dataTupe = (Data<PostItem>) mDataList.get(position);
-            final PostItem item = dataTupe.attributes;
+            final Data<PostItem> data = (Data<PostItem>) mDataList.get(position);
+            final PostItem item = data.attributes;
             ((PostViewHolder) holder).setItemClickListener(new com.vietxongxoa.ui.viewholder.ItemClickListener() {
                 @Override
                 public void onClick(View view, int position, boolean isLongClick) {
                     Intent intent = DetailActivity.getStartIntent(mContext);
-                    intent.putExtra(PreferencesHelper.KEY_ID, dataTupe.uuid);
+                    intent.putExtra(PreferencesHelper.KEY_ID, data.uuid);
                     intent.putExtra(PreferencesHelper.KEY_AUTHOR, item.author);
                     intent.putExtra(PreferencesHelper.KEY_CONTENT, item.content);
                     intent.putExtra(PreferencesHelper.KEY_DATE, item.created);
@@ -71,8 +72,8 @@ public class PostAdapter extends LoadMoreRecyclerViewAdapter<Object> {
 
                 @Override
                 public void onLove(View view, int pos, boolean isLove) {
-                    final Data<PostItem> dataTupe = (Data<PostItem>) mDataList.get(pos);
-                    itemInteractiveListener.onLove(dataTupe.uuid, isLove, position);
+                    final Data<PostItem> data = (Data<PostItem>) mDataList.get(pos);
+                    itemInteractiveListener.onLove(data.uuid, isLove, position);
                 }
 
                 @Override

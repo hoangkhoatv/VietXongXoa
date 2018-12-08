@@ -52,15 +52,13 @@ public abstract class LoadMoreRecyclerViewAdapter<T> extends BaseRecyclerViewAda
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof BottomViewHolder) {
-            ((BottomViewHolder) holder).mTvNoMoreItem.setVisibility(
-                    mIsReachEnd ? View.VISIBLE : View.GONE);
-
-            ((BottomViewHolder) holder).mProgressBar.setVisibility(
-                    mIsReachEnd ? View.GONE : mOnLoadMoreFailed ? View.GONE : View.VISIBLE);
-            ((BottomViewHolder) holder).mProgressBar.setVisibility(
-                    mLoadHidden ? View.GONE : View.VISIBLE);
-            ((BottomViewHolder) holder).layoutRetry.setVisibility(
-                    mIsReachEnd ? View.GONE : mOnLoadMoreFailed ? View.VISIBLE : View.GONE);
+            BottomViewHolder viewHolder = (BottomViewHolder) holder;
+            viewHolder.mTvNoMoreItem.setVisibility(mIsReachEnd ? View.VISIBLE : View.GONE);
+            viewHolder.mProgressBar.setVisibility(mLoadHidden ? View.GONE : View.VISIBLE);
+            if(mOnLoadMoreFailed){
+                viewHolder.mProgressBar.setVisibility(View.GONE);
+            }
+            viewHolder.layoutRetry.setVisibility(mIsReachEnd ? View.GONE : mOnLoadMoreFailed ? View.VISIBLE : View.GONE);
         }
     }
 
@@ -83,17 +81,14 @@ public abstract class LoadMoreRecyclerViewAdapter<T> extends BaseRecyclerViewAda
             layoutRetry = itemView.findViewById(R.id.layout_retry);
             mBtnRetry = (Button) itemView.findViewById(R.id.button_retry);
             mTvNoMoreItem = (TextView) itemView.findViewById(R.id.text_no_more_item);
-
             layoutRetry.setVisibility(View.GONE); // gone layout retry as default
             mTvNoMoreItem.setVisibility(View.GONE); // gone text view no more item as default
-
             mBtnRetry.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mRetryLoadMoreListener.onRetryLoadMore();
                 }
             });
-
         }
     }
 

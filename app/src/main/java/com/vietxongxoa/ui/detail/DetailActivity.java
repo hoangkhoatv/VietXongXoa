@@ -43,7 +43,7 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
     RecyclerView recyclerView;
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
-    @BindView(R.id.editCommnent)
+    @BindView(R.id.editComment)
     TextView edtComment;
     @BindView(R.id.btnComment)
     ImageButton btnComment;
@@ -217,7 +217,7 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
             }
         });
         TextView txtTitle = (TextView) view.findViewById(R.id.text_title);
-        txtTitle.setText(getString(R.string.title_detail));
+        txtTitle.setText(getString(R.string.title_comment));
     }
 
     private void setupRecyclerView() {

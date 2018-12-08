@@ -70,7 +70,7 @@ public class CreateActivity extends BaseActivity implements CreateMvpView {
         } else {
             Toast.makeText(
                     getApplicationContext(),
-                    getString(R.string.toast_emtry_name),
+                    getString(R.string.toast_entry_name),
                     Toast.LENGTH_SHORT
             ).show();
         }
