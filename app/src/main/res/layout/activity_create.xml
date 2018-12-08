@@ -1,43 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/primaryPadding"
+    android:background="@color/background"
     android:orientation="vertical"
-    android:background="@color/background">
+    android:padding="@dimen/primaryPadding">
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/primaryPadding"
         android:background="@color/white">
+
         <EditText
+            android:id="@+id/edtName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edtName"
+            android:autofillHints="@string/create_hint"
             android:background="@android:color/transparent"
             android:hint="@string/create_hint"
-            android:padding="@dimen/primaryPadding"
-            android:autofillHints="@string/create_hint"
-            android:textSize="@dimen/textFontSize"
-            tools:ignore="UnusedAttribute"
+            android:inputType="text"
             android:maxLines="1"
-            android:inputType="text" />
+            android:padding="@dimen/primaryPadding"
+            android:textSize="@dimen/textFontSize"
+            tools:ignore="UnusedAttribute" />
     </RelativeLayout>
+
     <Button
+        android:id="@+id/btnCreate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/text_create"
-        android:id="@+id/btnCreate"
-        android:paddingRight="@dimen/bigPadding"
-        android:paddingLeft="@dimen/bigPadding"
-        android:onClick="onCreateUser"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/bigPadding"
-        android:textColor="@color/white"
-        android:textSize="@dimen/textFontSize"
         android:background="@color/colorPrimary"
+        android:onClick="onCreateUser"
+        android:paddingLeft="@dimen/bigPadding"
+        android:paddingRight="@dimen/bigPadding"
+        android:text="@string/text_create"
         android:textAllCaps="false"
-        android:layout_gravity="center_horizontal" />
+        android:textColor="@color/white"
+        android:textSize="@dimen/textFontSize" />
 </LinearLayout>
-

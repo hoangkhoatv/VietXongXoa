@@ -68,7 +68,7 @@ public class WriteActivity extends BaseActivity implements WriteMvpView {
 
     }
 
-    @OnClick(R.id.btnDelelte)
+    @OnClick(R.id.btnDelete)
     public void onDeleteWrite(View view) {
         if (!editWrite.getText().toString().matches("")) {
             mWritePresenter.postData(

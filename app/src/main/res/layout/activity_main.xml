@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.vietxongxoa.ui.main.MainActivity">
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
@@ -13,9 +14,9 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
-            android:scrollbars="none"
-            android:background="@color/background"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:background="@color/background"
+            android:scrollbars="none" />
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

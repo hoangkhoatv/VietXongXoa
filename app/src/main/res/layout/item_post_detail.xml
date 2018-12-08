@@ -37,14 +37,14 @@
         android:id="@+id/text_post"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:lineSpacingExtra="@dimen/textLineHeight"
         android:paddingLeft="@dimen/primaryPadding"
         android:paddingRight="@dimen/primaryPadding"
         android:paddingBottom="@dimen/primaryPadding"
         android:text="@string/text_post"
         android:textColor="@color/black"
-        android:textSize="@dimen/textFontSize"
-        android:lineSpacingExtra="@dimen/textLineHeight"
-        android:textColorLink="@color/black" />
+        android:textColorLink="@color/black"
+        android:textSize="@dimen/textFontSize" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -82,8 +82,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/fa_icon_love"
-                    android:textSize="@dimen/textFontSize"
-                    android:textColor="@color/heart" />
+                    android:textColor="@color/heart"
+                    android:textSize="@dimen/textFontSize" />
 
                 <TextView
                     android:id="@+id/numLoved"
@@ -115,8 +115,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:text="@string/comment"
-                android:textSize="@dimen/textFontSize"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/textFontSize" />
 
             <TextView
                 android:id="@+id/numberComment"
@@ -128,8 +128,8 @@
                 android:layout_toStartOf="@id/comment"
                 android:layout_toLeftOf="@id/comment"
                 android:text="@string/zero"
-                android:textSize="@dimen/textFontSize"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/textFontSize" />
 
         </RelativeLayout>
     </LinearLayout>

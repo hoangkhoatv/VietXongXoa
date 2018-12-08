@@ -1,45 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
-    >
+    android:background="@color/background">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        tools:ignore="UselessParent">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:background="@color/cardview_light_background">
+                android:layout_marginTop="@dimen/primaryPadding"
+                android:background="@color/white">
+
                 <EditText
+                    android:id="@+id/edtWrite"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="150dp"
-                    android:id="@+id/edtWrite"
-                    android:gravity="top"
+                    android:autofillHints="@string/hint_writing"
                     android:background="@android:color/transparent"
+                    android:gravity="top"
                     android:hint="@string/hint_writing"
-                    android:padding="@dimen/activity_vertical_margin"/>
+                    android:inputType="text"
+                    android:minHeight="@dimen/minHeightTextEditor"
+                    android:padding="@dimen/primaryPadding"
+                    android:textSize="@dimen/textFontSize"
+                    tools:targetApi="o" />
             </RelativeLayout>
+
             <Button
+                android:id="@+id/btnDelete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_delete"
-                android:id="@+id/btnDelelte"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:onClick="onDeleteWrite"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:textColor="@color/cardview_light_background"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/primaryPadding"
+                android:layout_marginBottom="@dimen/primaryPadding"
                 android:background="@color/colorPrimary"
-                android:layout_gravity="center_horizontal" />
+                android:onClick="onDeleteWrite"
+                android:paddingLeft="@dimen/bigPadding"
+                android:paddingRight="@dimen/bigPadding"
+                android:text="@string/text_delete"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
         </LinearLayout>
 
     </ScrollView>

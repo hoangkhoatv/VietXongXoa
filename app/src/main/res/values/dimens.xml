@@ -1,12 +1,15 @@
 <resources>
     <dimen name="activity_horizontal_margin">16sp</dimen>
     <dimen name="activity_vertical_margin">16sp</dimen>
-    <dimen name="bigPadding">20sp</dimen>
+    <dimen name="bigPadding">18sp</dimen>
+    <dimen name="titlePadding">16sp</dimen>
     <dimen name="primaryPadding">10sp</dimen>
     <dimen name="secondaryPadding">5sp</dimen>
+    <dimen name="textFontSizeTitle">18sp</dimen>
     <dimen name="textFontSize">15sp</dimen>
     <dimen name="textHeight">20sp</dimen>
     <dimen name="textLineHeight">4sp</dimen>
     <dimen name="spaceSize">2sp</dimen>
     <dimen name="articleDetailFooter">40sp</dimen>
+    <dimen name="minHeightTextEditor">100dp</dimen>
 </resources>
