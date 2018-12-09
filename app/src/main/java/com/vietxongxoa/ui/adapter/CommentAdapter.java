@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.vietxongxoa.R;
-import com.vietxongxoa.model.BaseIModel;
+import com.vietxongxoa.model.BaseModel;
 import com.vietxongxoa.model.Comment;
 import com.vietxongxoa.model.Data;
 import com.vietxongxoa.model.Article;
@@ -34,10 +34,10 @@ public class CommentAdapter extends LoadMoreRecyclerViewAdapter<Object> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == BaseIModel.HEADER_TYPE) {
+        if (viewType == BaseModel.HEADER_TYPE) {
             View view = mInflater.inflate(R.layout.item_article_detail, parent, false);
             return new PostDetailViewHolder(view);
-        } else if (viewType == BaseIModel.SECOND_TYPE) {
+        } else if (viewType == BaseModel.SECOND_TYPE) {
             View view = mInflater.inflate(R.layout.item_comment, parent, false);
             return new CommentViewHolder(view);
         }
@@ -47,7 +47,7 @@ public class CommentAdapter extends LoadMoreRecyclerViewAdapter<Object> {
 
     @Override
     protected int getCustomItemViewType(int position) {
-        Data<BaseIModel> baseItem = (Data<BaseIModel>) mDataList.get(position);
+        Data<BaseModel> baseItem = (Data<BaseModel>) mDataList.get(position);
         return baseItem.attributes.type;
     }
 

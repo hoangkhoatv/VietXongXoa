@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 
 import com.vietxongxoa.R;
 import com.vietxongxoa.data.local.PreferencesHelper;
-import com.vietxongxoa.model.BaseIModel;
+import com.vietxongxoa.model.BaseModel;
 import com.vietxongxoa.model.Data;
 import com.vietxongxoa.model.Article;
-import com.vietxongxoa.ui.article.detail.ArticleArticleDetailActivity;
+import com.vietxongxoa.ui.article.detail.ArticleDetailActivity;
 import com.vietxongxoa.ui.article.list.ItemInteractiveListener;
 import com.vietxongxoa.ui.viewholder.LoadMoreRecyclerViewAdapter;
 import com.vietxongxoa.ui.viewholder.PostViewHolder;
@@ -38,10 +38,10 @@ public class PostAdapter extends LoadMoreRecyclerViewAdapter<Object> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == BaseIModel.HEADER_TYPE) {
+        if (viewType == BaseModel.HEADER_TYPE) {
             View view = mInflater.inflate(R.layout.item_write_new_post, parent, false);
             return new WriteViewHolder(view);
-        } else if (viewType == BaseIModel.SECOND_TYPE) {
+        } else if (viewType == BaseModel.SECOND_TYPE) {
             View view = mInflater.inflate(R.layout.item_article_in_list, parent, false);
             return new PostViewHolder(view);
         }
@@ -50,7 +50,7 @@ public class PostAdapter extends LoadMoreRecyclerViewAdapter<Object> {
 
     @Override
     protected int getCustomItemViewType(int position) {
-        Data<BaseIModel> baseItem = (Data<BaseIModel>) mDataList.get(position);
+        Data<BaseModel> baseItem = (Data<BaseModel>) mDataList.get(position);
         return baseItem.attributes.type;
     }
 
@@ -63,8 +63,8 @@ public class PostAdapter extends LoadMoreRecyclerViewAdapter<Object> {
                     new com.vietxongxoa.ui.viewholder.ItemClickListener() {
                         @Override
                         public void onClick(View view, int position, boolean isLongClick) {
-                            Intent intent = ArticleArticleDetailActivity.getStartIntent(mContext);
-                            intent.putExtra(PreferencesHelper.KEY_ID, data.uuid);
+                            Intent intent = ArticleDetailActivity.getStartIntent(mContext);
+                            intent.putExtra(PreferencesHelper.KEY_ARTICLE_UUID, data.uuid);
                             intent.putExtra(PreferencesHelper.KEY_AUTHOR, item.author);
                             intent.putExtra(PreferencesHelper.KEY_CONTENT, item.content);
                             intent.putExtra(PreferencesHelper.KEY_DATE, item.created);

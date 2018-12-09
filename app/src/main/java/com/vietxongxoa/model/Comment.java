@@ -3,7 +3,7 @@ package com.vietxongxoa.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Comment extends BaseIModel {
+public class Comment extends BaseModel {
     @SerializedName("author")
     @Expose
     public String author;

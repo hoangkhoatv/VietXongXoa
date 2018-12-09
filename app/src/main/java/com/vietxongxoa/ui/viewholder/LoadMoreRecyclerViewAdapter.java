@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.vietxongxoa.R;
 
 public abstract class LoadMoreRecyclerViewAdapter<T> extends BaseRecyclerViewAdapter<T> {
+
     private static final int TYPE_PROGRESS = 0xFFFF;
     private RetryLoadMoreListener mRetryLoadMoreListener;
     private boolean mOnLoadMoreFailed;
@@ -21,7 +22,7 @@ public abstract class LoadMoreRecyclerViewAdapter<T> extends BaseRecyclerViewAda
     protected LoadMoreRecyclerViewAdapter(@NonNull Context context,
                                           ItemClickListener itemClickListener,
                                           @NonNull RetryLoadMoreListener retryLoadMoreListener) {
-        super(context, itemClickListener);
+        super(context);
         mRetryLoadMoreListener = retryLoadMoreListener;
     }
 

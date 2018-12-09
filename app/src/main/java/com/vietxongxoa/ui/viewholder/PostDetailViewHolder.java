@@ -17,17 +17,15 @@ public class PostDetailViewHolder extends RecyclerView.ViewHolder implements Vie
     private TextView textDate;
     private ItemClickListener itemClickListener;
     private IconTextView iconLove;
-    private Button btnLove;
     private TextView numLoved;
     private TextView numComment;
-    private Context context;
 
     public PostDetailViewHolder(final View itemView) {
         super(itemView);
         textName = (TextView) itemView.findViewById(R.id.text_name);
         textPost = (TextView) itemView.findViewById(R.id.text_post);
         textDate = (TextView) itemView.findViewById(R.id.text_date);
-        btnLove = (Button) itemView.findViewById(R.id.btnLove);
+        Button btnLove = (Button) itemView.findViewById(R.id.btnLove);
         iconLove = (IconTextView) itemView.findViewById(R.id.iconLove);
         numLoved = (TextView) itemView.findViewById(R.id.numLoved);
         numComment = (TextView) itemView.findViewById(R.id.numberComment);
@@ -39,8 +37,6 @@ public class PostDetailViewHolder extends RecyclerView.ViewHolder implements Vie
                 itemClickListener.onLove(itemView, getAdapterPosition(), iconLove.isLove());
             }
         });
-
-
     }
 
 
@@ -50,7 +46,6 @@ public class PostDetailViewHolder extends RecyclerView.ViewHolder implements Vie
 
 
     public void setData(Object item, Context context) {
-        this.context = context;
         Article article = (Article) item;
         String userName = article.author;
         String strPost = article.content;
@@ -59,7 +54,6 @@ public class PostDetailViewHolder extends RecyclerView.ViewHolder implements Vie
         textDate.setText(strDate);
         numLoved.setText(article.love);
         numComment.setText(String.valueOf(article.comment));
-
         if (article.loved) {
             numLoved.setTextColor(context.getResources().getColor(R.color.heart));
             iconLove.setLove();
@@ -67,11 +61,8 @@ public class PostDetailViewHolder extends RecyclerView.ViewHolder implements Vie
             numLoved.setTextColor(context.getResources().getColor(R.color.comment));
             iconLove.setNotLove();
         }
-
         textPost.setText(strPost);
-
     }
-
 
     @Override
     public void onClick(View view) {

@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.vietxongxoa.R;
-import com.vietxongxoa.model.BaseIModel;
+import com.vietxongxoa.model.BaseModel;
 import com.vietxongxoa.model.Data;
 import com.vietxongxoa.model.Article;
 import com.vietxongxoa.model.NewArticleModel;
@@ -77,7 +77,7 @@ public class ArticleListActivity extends BaseActivity
     public void showData(final List<Data<Article>> data) {
         final List<Object> baseItems = new ArrayList<>();
         for (int i = 0; i < data.size() - 1; i++) {
-            data.get(i).attributes.type = BaseIModel.SECOND_TYPE;
+            data.get(i).attributes.type = BaseModel.SECOND_TYPE;
             baseItems.add(data.get(i));
         }
         ArticleListActivity.this.runOnUiThread(new Runnable() {
@@ -131,7 +131,7 @@ public class ArticleListActivity extends BaseActivity
         if (isWrite) {
             Data<NewArticleModel> dataItem = new Data<NewArticleModel>();
             dataItem.attributes = new NewArticleModel();
-            dataItem.attributes.type = BaseIModel.HEADER_TYPE;
+            dataItem.attributes.type = BaseModel.HEADER_TYPE;
 
             List<Object> baseItem = new ArrayList<>();
             baseItem.add(dataItem);

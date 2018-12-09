@@ -1,9 +1,10 @@
 package com.vietxongxoa.ui.article.list;
 
 import com.google.gson.JsonObject;
-import com.vietxongxoa.data.DataManager;
 import com.vietxongxoa.data.listeners.DataListener;
 import com.vietxongxoa.data.listeners.LoveListener;
+import com.vietxongxoa.data.manager.ArticleDataManager;
+import com.vietxongxoa.data.manager.LoveDataManager;
 import com.vietxongxoa.model.Data;
 import com.vietxongxoa.model.Article;
 import com.vietxongxoa.ui.base.BasePresenter;
@@ -15,17 +16,22 @@ import javax.inject.Inject;
 
 public class ArticleListPresenter<V extends ArticleListMvpView> extends BasePresenter<V> implements ArticleListMvpPresenter<V> {
 
-    private final DataManager mDataManager;
+    private final ArticleDataManager articleDataManager;
+    private final LoveDataManager loveDataManager;
 
     @Inject
-    ArticleListPresenter(DataManager dataManager) {
-        this.mDataManager = dataManager;
+    ArticleListPresenter(
+            ArticleDataManager articleDataManager,
+            LoveDataManager loveDataManager
+    ) {
+        this.articleDataManager = articleDataManager;
+        this.loveDataManager = loveDataManager;
     }
 
     @Override
     public void getData(int limit, int page) {
 
-        mDataManager.getData(new DataListener() {
+        articleDataManager.getData(new DataListener() {
             @Override
             public void onResponse(List<Data<Article>> data) {
                 getMvpView().showData(data);
@@ -42,7 +48,7 @@ public class ArticleListPresenter<V extends ArticleListMvpView> extends BasePres
         JsonObject content = new JsonObject();
         content.addProperty("article_uuid", uuid);
 
-        mDataManager.postLove(new LoveListener() {
+        loveDataManager.postLove(new LoveListener() {
             @Override
             public void onLoved(String status) {
                 getMvpView().showLove(status, position);
@@ -59,7 +65,7 @@ public class ArticleListPresenter<V extends ArticleListMvpView> extends BasePres
     public void deleteLove(String uuid, final int position) {
         JsonObject content = new JsonObject();
         content.addProperty("article_uuid", uuid);
-        mDataManager.deleteLove(new LoveListener() {
+        loveDataManager.deleteLove(new LoveListener() {
             @Override
             public void onLoved(String status) {
             }

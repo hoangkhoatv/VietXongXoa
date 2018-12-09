@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.vietxongxoa.R;
 import com.vietxongxoa.data.local.PreferencesHelper;
-import com.vietxongxoa.model.BaseIModel;
+import com.vietxongxoa.model.BaseModel;
 import com.vietxongxoa.model.Comment;
 import com.vietxongxoa.model.Data;
 import com.vietxongxoa.model.Article;
@@ -35,7 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ArticleArticleDetailActivity
+public class ArticleDetailActivity
         extends BaseActivity
         implements ArticleDetailMvpView,
         CommentAdapter.ItemClickListener,
@@ -62,7 +62,7 @@ public class ArticleArticleDetailActivity
     int endPage = -1;
 
     public static Intent getStartIntent(Context context) {
-        return new Intent(context, ArticleArticleDetailActivity.class);
+        return new Intent(context, ArticleDetailActivity.class);
     }
 
     @Override
@@ -90,22 +90,22 @@ public class ArticleArticleDetailActivity
         Intent intent = getIntent();
         data = new Data<Article>();
         data.attributes = new Article();
-        data.uuid = intent.getStringExtra(PreferencesHelper.KEY_ID);
+        data.uuid = intent.getStringExtra(PreferencesHelper.KEY_ARTICLE_UUID);
         data.attributes.author = intent.getStringExtra(PreferencesHelper.KEY_AUTHOR);
         data.attributes.content = intent.getStringExtra(PreferencesHelper.KEY_CONTENT);
         data.attributes.created = intent.getStringExtra(PreferencesHelper.KEY_DATE);
         data.attributes.love = intent.getStringExtra(PreferencesHelper.KEY_NUM_LOVE);
         data.attributes.loved = intent.getBooleanExtra(PreferencesHelper.KEY_LOVED, false);
         data.attributes.comment = intent.getIntExtra(PreferencesHelper.KEY_COMMENT, 0);
-        data.attributes.type = BaseIModel.HEADER_TYPE;
+        data.attributes.type = BaseModel.HEADER_TYPE;
     }
 
     @Override
     public void showData(Data<Article> data) {
         final List<Object> baseItems = new ArrayList<>();
-        data.attributes.type = BaseIModel.HEADER_TYPE;
+        data.attributes.type = BaseModel.HEADER_TYPE;
         baseItems.add(data);
-        ArticleArticleDetailActivity.this.runOnUiThread(new Runnable() {
+        ArticleDetailActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (swipeRefreshLayout.isRefreshing()) {
@@ -132,10 +132,10 @@ public class ArticleArticleDetailActivity
 
         final List<Object> baseItems = new ArrayList<>();
         for (int i = 0; i < commens.size(); i++) {
-            commens.get(i).attributes.type = BaseIModel.SECOND_TYPE;
+            commens.get(i).attributes.type = BaseModel.SECOND_TYPE;
             baseItems.add(commens.get(i));
         }
-        ArticleArticleDetailActivity.this.runOnUiThread(new Runnable() {
+        ArticleDetailActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (swipeRefreshLayout.isRefreshing()) {
@@ -159,9 +159,9 @@ public class ArticleArticleDetailActivity
     @Override
     public void showPostComment(Data<Comment> comment) {
         final List<Object> baseItems = new ArrayList<>();
-        comment.attributes.type = BaseIModel.SECOND_TYPE;
+        comment.attributes.type = BaseModel.SECOND_TYPE;
         baseItems.add(comment);
-        ArticleArticleDetailActivity.this.runOnUiThread(new Runnable() {
+        ArticleDetailActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (baseItems.size() != 0) {

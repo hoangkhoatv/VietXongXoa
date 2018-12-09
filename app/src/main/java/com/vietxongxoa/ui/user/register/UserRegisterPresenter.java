@@ -1,8 +1,8 @@
 package com.vietxongxoa.ui.user.register;
 
 import com.google.gson.JsonObject;
-import com.vietxongxoa.data.DataManager;
-import com.vietxongxoa.data.listeners.CreateListener;
+import com.vietxongxoa.data.listeners.UserRegisterListener;
+import com.vietxongxoa.data.manager.UserDataManager;
 import com.vietxongxoa.model.User;
 import com.vietxongxoa.ui.base.BasePresenter;
 
@@ -13,18 +13,18 @@ public class UserRegisterPresenter<V
         extends BasePresenter<V>
         implements UserRegisterMvpPresenter<V> {
 
-    private final DataManager mDataManager;
+    private final UserDataManager userDataManager;
 
     @Inject
-    UserRegisterPresenter(DataManager dataManager) {
-        this.mDataManager = dataManager;
+    UserRegisterPresenter(UserDataManager dataManager) {
+        this.userDataManager = dataManager;
     }
 
     @Override
     public void postData(JsonObject username) {
         getMvpView().showLoading();
-        mDataManager.postCreateUser(
-                new CreateListener() {
+        userDataManager.postCreateUser(
+                new UserRegisterListener() {
                     @Override
                     public void onResponse(User user) {
                         getMvpView().hideLoading();
@@ -42,11 +42,11 @@ public class UserRegisterPresenter<V
 
     @Override
     public User getUserName() {
-        return mDataManager.getUserName();
+        return userDataManager.getUserName();
     }
 
     @Override
     public void setUsersName(User user) {
-        mDataManager.setUSerName(user);
+        userDataManager.setUSerName(user);
     }
 }

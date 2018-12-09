@@ -11,9 +11,9 @@ public class PreferencesHelper {
 
     private static final String PREF_FILE_NAME = "vietxongxoa";
     private final SharedPreferences mPref;
-    public static final String KEY_USER = "nameuser";
+    public static final String KEY_USERNAME = "username";
     public static final String KEY_TOKEN = "token";
-    public static final String KEY_ID = "id post";
+    public static final String KEY_ARTICLE_UUID = "article_uuid";
     public static final String KEY_AUTHOR = "author";
     public static final String KEY_CONTENT = "content";
     public static final String KEY_DATE = "date";

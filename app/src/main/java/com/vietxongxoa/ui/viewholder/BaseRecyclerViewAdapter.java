@@ -11,14 +11,12 @@ import java.util.List;
 
 public abstract class BaseRecyclerViewAdapter<T>
         extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
     protected LayoutInflater mInflater;
     protected List<T> mDataList;
-    protected ItemClickListener mItemClickListener;
 
-    protected BaseRecyclerViewAdapter(@NonNull Context context,
-                                      ItemClickListener itemClickListener) {
+    BaseRecyclerViewAdapter(@NonNull Context context) {
         mInflater = LayoutInflater.from(context);
-        mItemClickListener = itemClickListener;
         mDataList = new ArrayList<>();
     }
 

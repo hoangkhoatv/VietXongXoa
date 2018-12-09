@@ -16,10 +16,10 @@ public class CommentViewHolder extends RecyclerView.ViewHolder implements View.O
 
     public CommentViewHolder(View itemView) {
         super(itemView);
-        textName = (TextView) itemView.findViewById(R.id.text_name);
-        textComment = (TextView) itemView.findViewById(R.id.text_comment);
-        TextView numLoved = (TextView) itemView.findViewById(R.id.numLoved);
-        textDate = (TextView) itemView.findViewById(R.id.text_date);
+        textName = itemView.findViewById(R.id.text_name);
+        textComment = itemView.findViewById(R.id.text_comment);
+        TextView numLoved = itemView.findViewById(R.id.numLoved);
+        textDate = itemView.findViewById(R.id.text_date);
         itemView.setOnClickListener(this);
     }
 

@@ -29,7 +29,7 @@
             android:name=".ui.article.create.ArticleCreateActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.article.detail.ArticleArticleDetailActivity"
+            android:name=".ui.article.detail.ArticleDetailActivity"
             android:screenOrientation="portrait" />
     </application>
 </manifest>

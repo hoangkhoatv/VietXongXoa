@@ -15,8 +15,8 @@ import com.vietxongxoa.R;
 import com.vietxongxoa.data.local.PreferencesHelper;
 import com.vietxongxoa.model.Data;
 import com.vietxongxoa.model.Article;
-import com.vietxongxoa.model.NewArticle;
-import com.vietxongxoa.ui.article.detail.ArticleArticleDetailActivity;
+import com.vietxongxoa.model.ArticleCreate;
+import com.vietxongxoa.ui.article.detail.ArticleDetailActivity;
 import com.vietxongxoa.ui.base.BaseActivity;
 
 import javax.inject.Inject;
@@ -52,8 +52,8 @@ public class ArticleCreateActivity extends BaseActivity implements ArticleCreate
     @Override
     public void showData(Data<Article> data) {
         if (data != null) {
-            Intent intent = ArticleArticleDetailActivity.getStartIntent(getBaseContext());
-            intent.putExtra(PreferencesHelper.KEY_ID, data.uuid);
+            Intent intent = ArticleDetailActivity.getStartIntent(getBaseContext());
+            intent.putExtra(PreferencesHelper.KEY_ARTICLE_UUID, data.uuid);
             intent.putExtra(PreferencesHelper.KEY_CONTENT, data.attributes.content);
             intent.putExtra(PreferencesHelper.KEY_AUTHOR, data.attributes.author);
             intent.putExtra(PreferencesHelper.KEY_DATE, data.attributes.created);
@@ -72,7 +72,7 @@ public class ArticleCreateActivity extends BaseActivity implements ArticleCreate
     public void onDeleteWrite(View view) {
         if (!editWrite.getText().toString().matches("")) {
             mWritePresenter.postData(
-                    NewArticle.getJson(String.valueOf(editWrite.getText()))
+                    ArticleCreate.getJson(String.valueOf(editWrite.getText()))
             );
 
         }
