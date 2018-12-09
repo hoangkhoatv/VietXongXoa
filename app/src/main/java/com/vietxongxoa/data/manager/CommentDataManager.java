@@ -23,7 +23,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @Singleton
-public class CommentDataManager extends BaseManager {
+public class CommentDataManager extends BaseDataManager {
 
     @Inject
     CommentDataManager(PreferencesHelper preferencesHelper) {

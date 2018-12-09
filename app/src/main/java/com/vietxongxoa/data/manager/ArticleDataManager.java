@@ -24,7 +24,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @Singleton
-public class ArticleDataManager extends BaseManager {
+public class ArticleDataManager extends BaseDataManager {
 
     @Inject
     ArticleDataManager(PreferencesHelper preferencesHelper) {

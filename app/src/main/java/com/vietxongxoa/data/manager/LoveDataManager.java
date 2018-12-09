@@ -17,7 +17,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @Singleton
-public class LoveDataManager extends BaseManager {
+public class LoveDataManager extends BaseDataManager {
 
     @Inject
     LoveDataManager(PreferencesHelper preferencesHelper) {

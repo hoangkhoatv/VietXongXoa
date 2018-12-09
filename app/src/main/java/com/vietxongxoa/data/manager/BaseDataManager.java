@@ -2,10 +2,10 @@ package com.vietxongxoa.data.manager;
 
 import com.vietxongxoa.data.local.PreferencesHelper;
 
-class BaseManager {
+class BaseDataManager {
 
     PreferencesHelper mPreferencesHelper;
-    BaseManager(PreferencesHelper preferencesHelper) {
+    BaseDataManager(PreferencesHelper preferencesHelper) {
         this.mPreferencesHelper = preferencesHelper;
     }
 }
