@@ -5,8 +5,8 @@ import com.vietxongxoa.data.listeners.DataListener;
 import com.vietxongxoa.data.listeners.LoveListener;
 import com.vietxongxoa.data.manager.ArticleDataManager;
 import com.vietxongxoa.data.manager.LoveDataManager;
-import com.vietxongxoa.model.Data;
 import com.vietxongxoa.model.Article;
+import com.vietxongxoa.model.Data;
 import com.vietxongxoa.ui.base.BasePresenter;
 
 import java.util.List;

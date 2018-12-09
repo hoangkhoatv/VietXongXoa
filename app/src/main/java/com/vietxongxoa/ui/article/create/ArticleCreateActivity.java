@@ -13,9 +13,9 @@ import android.widget.TextView;
 
 import com.vietxongxoa.R;
 import com.vietxongxoa.data.local.PreferencesHelper;
-import com.vietxongxoa.model.Data;
 import com.vietxongxoa.model.Article;
 import com.vietxongxoa.model.ArticleCreate;
+import com.vietxongxoa.model.Data;
 import com.vietxongxoa.ui.article.detail.ArticleDetailActivity;
 import com.vietxongxoa.ui.base.BaseActivity;
 

@@ -7,10 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.vietxongxoa.R;
+import com.vietxongxoa.model.Article;
 import com.vietxongxoa.model.BaseModel;
 import com.vietxongxoa.model.Comment;
 import com.vietxongxoa.model.Data;
-import com.vietxongxoa.model.Article;
 import com.vietxongxoa.ui.article.list.ItemInteractiveListener;
 import com.vietxongxoa.ui.viewholder.CommentViewHolder;
 import com.vietxongxoa.ui.viewholder.LoadMoreRecyclerViewAdapter;

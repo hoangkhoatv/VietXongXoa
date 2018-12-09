@@ -14,10 +14,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.vietxongxoa.R;
+import com.vietxongxoa.model.Article;
+import com.vietxongxoa.model.ArticleCreateModel;
 import com.vietxongxoa.model.BaseModel;
 import com.vietxongxoa.model.Data;
-import com.vietxongxoa.model.Article;
-import com.vietxongxoa.model.NewArticleModel;
 import com.vietxongxoa.ui.adapter.PostAdapter;
 import com.vietxongxoa.ui.base.BaseActivity;
 import com.vietxongxoa.ui.viewholder.EndlessRecyclerViewScrollListener;
@@ -129,8 +129,8 @@ public class ArticleListActivity extends BaseActivity
 
     private void setWritePost() {
         if (isWrite) {
-            Data<NewArticleModel> dataItem = new Data<NewArticleModel>();
-            dataItem.attributes = new NewArticleModel();
+            Data<ArticleCreateModel> dataItem = new Data<ArticleCreateModel>();
+            dataItem.attributes = new ArticleCreateModel();
             dataItem.attributes.type = BaseModel.HEADER_TYPE;
 
             List<Object> baseItem = new ArrayList<>();

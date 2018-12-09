@@ -2,7 +2,9 @@ package com.vietxongxoa.data.local;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
 import com.vietxongxoa.injection.annotation.ApplicationContext;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 

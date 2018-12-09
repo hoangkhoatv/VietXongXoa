@@ -1,10 +1,10 @@
 package com.vietxongxoa.ui.article.create;
 
 import com.google.gson.JsonObject;
-import com.vietxongxoa.data.manager.ArticleDataManager;
 import com.vietxongxoa.data.listeners.ArticleListener;
-import com.vietxongxoa.model.Data;
+import com.vietxongxoa.data.manager.ArticleDataManager;
 import com.vietxongxoa.model.Article;
+import com.vietxongxoa.model.Data;
 import com.vietxongxoa.ui.base.BasePresenter;
 
 import javax.inject.Inject;

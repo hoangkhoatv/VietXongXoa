@@ -17,13 +17,13 @@ import android.widget.TextView;
 
 import com.vietxongxoa.R;
 import com.vietxongxoa.data.local.PreferencesHelper;
+import com.vietxongxoa.model.Article;
 import com.vietxongxoa.model.BaseModel;
 import com.vietxongxoa.model.Comment;
 import com.vietxongxoa.model.Data;
-import com.vietxongxoa.model.Article;
 import com.vietxongxoa.ui.adapter.CommentAdapter;
-import com.vietxongxoa.ui.base.BaseActivity;
 import com.vietxongxoa.ui.article.list.ItemInteractiveListener;
+import com.vietxongxoa.ui.base.BaseActivity;
 import com.vietxongxoa.ui.viewholder.EndlessRecyclerViewScrollListener;
 
 import java.util.ArrayList;

@@ -9,15 +9,15 @@ import android.view.ViewGroup;
 
 import com.vietxongxoa.R;
 import com.vietxongxoa.data.local.PreferencesHelper;
+import com.vietxongxoa.model.Article;
 import com.vietxongxoa.model.BaseModel;
 import com.vietxongxoa.model.Data;
-import com.vietxongxoa.model.Article;
+import com.vietxongxoa.ui.article.create.ArticleCreateActivity;
 import com.vietxongxoa.ui.article.detail.ArticleDetailActivity;
 import com.vietxongxoa.ui.article.list.ItemInteractiveListener;
 import com.vietxongxoa.ui.viewholder.LoadMoreRecyclerViewAdapter;
 import com.vietxongxoa.ui.viewholder.PostViewHolder;
 import com.vietxongxoa.ui.viewholder.WriteViewHolder;
-import com.vietxongxoa.ui.article.create.ArticleCreateActivity;
 
 
 public class PostAdapter extends LoadMoreRecyclerViewAdapter<Object> {

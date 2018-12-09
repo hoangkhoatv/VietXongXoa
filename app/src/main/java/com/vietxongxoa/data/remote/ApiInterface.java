@@ -1,10 +1,10 @@
 package com.vietxongxoa.data.remote;
 
 import com.google.gson.JsonObject;
+import com.vietxongxoa.model.Article;
 import com.vietxongxoa.model.Comment;
 import com.vietxongxoa.model.Data;
 import com.vietxongxoa.model.DataResponse;
-import com.vietxongxoa.model.Article;
 import com.vietxongxoa.model.User;
 
 import java.util.List;

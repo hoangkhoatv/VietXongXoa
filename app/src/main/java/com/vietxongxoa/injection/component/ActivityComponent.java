@@ -2,10 +2,10 @@ package com.vietxongxoa.injection.component;
 
 import com.vietxongxoa.injection.annotation.PerActivity;
 import com.vietxongxoa.injection.module.ActivityModule;
-import com.vietxongxoa.ui.article.detail.ArticleDetailActivity;
-import com.vietxongxoa.ui.user.register.UserRegisterActivity;
-import com.vietxongxoa.ui.article.list.ArticleListActivity;
 import com.vietxongxoa.ui.article.create.ArticleCreateActivity;
+import com.vietxongxoa.ui.article.detail.ArticleDetailActivity;
+import com.vietxongxoa.ui.article.list.ArticleListActivity;
+import com.vietxongxoa.ui.user.register.UserRegisterActivity;
 
 import dagger.Component;
 

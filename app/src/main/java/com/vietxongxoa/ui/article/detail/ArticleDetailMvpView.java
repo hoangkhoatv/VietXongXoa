@@ -1,8 +1,8 @@
 package com.vietxongxoa.ui.article.detail;
 
+import com.vietxongxoa.model.Article;
 import com.vietxongxoa.model.Comment;
 import com.vietxongxoa.model.Data;
-import com.vietxongxoa.model.Article;
 import com.vietxongxoa.ui.base.MvpView;
 
 import java.util.List;

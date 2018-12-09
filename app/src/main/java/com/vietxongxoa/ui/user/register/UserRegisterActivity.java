@@ -13,8 +13,8 @@ import android.widget.Toast;
 
 import com.vietxongxoa.R;
 import com.vietxongxoa.model.User;
-import com.vietxongxoa.ui.base.BaseActivity;
 import com.vietxongxoa.ui.article.list.ArticleListActivity;
+import com.vietxongxoa.ui.base.BaseActivity;
 
 import javax.inject.Inject;
 

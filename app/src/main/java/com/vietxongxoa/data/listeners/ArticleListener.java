@@ -1,7 +1,7 @@
 package com.vietxongxoa.data.listeners;
 
-import com.vietxongxoa.model.Data;
 import com.vietxongxoa.model.Article;
+import com.vietxongxoa.model.Data;
 
 public interface ArticleListener {
 
