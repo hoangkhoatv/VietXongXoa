@@ -34,7 +34,7 @@ public class ArticleDataManager extends BaseDataManager {
     public void getData(final DataListener listener, int offset, int limit) {
         ApiInterface apiService = ApiHelper.getClient().create(ApiInterface.class);
         Call<DataResponse<List<Data<Article>>>> call = apiService.getListPost(
-                mPreferencesHelper.getKeyToken(),
+                mPreferencesHelper.getToken(),
                 String.valueOf(limit),
                 String.valueOf(offset),
                 "#trending"
@@ -71,7 +71,7 @@ public class ArticleDataManager extends BaseDataManager {
     public void postWrite(final ArticleListener listener, JsonObject content) {
         ApiInterface apiService = ApiHelper.getClient().create(ApiInterface.class);
         Call<DataResponse<Data<Article>>> call = apiService.postWirte(
-                mPreferencesHelper.getKeyToken(),
+                mPreferencesHelper.getToken(),
                 content
         );
         call.enqueue(new Callback<DataResponse<Data<Article>>>() {
@@ -104,7 +104,7 @@ public class ArticleDataManager extends BaseDataManager {
     public void getDetail(final ArticleListener listener, String idPost) {
         ApiInterface apiService = ApiHelper.getClient().create(ApiInterface.class);
         Call<DataResponse<Data<Article>>> call = apiService.getDetail(
-                mPreferencesHelper.getKeyToken(),
+                mPreferencesHelper.getToken(),
                 idPost
         );
         call.enqueue(new Callback<DataResponse<Data<Article>>>() {

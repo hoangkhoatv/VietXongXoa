@@ -33,7 +33,7 @@ public class CommentDataManager extends BaseDataManager {
     public void getComments(final CommentListener listener, String uuid, int limit, int offset) {
         ApiInterface apiService = ApiHelper.getClient().create(ApiInterface.class);
         Call<DataResponse<List<Data<Comment>>>> call = apiService.getComments(
-                mPreferencesHelper.getKeyToken(),
+                mPreferencesHelper.getToken(),
                 uuid,
                 limit,
                 offset);
@@ -68,7 +68,7 @@ public class CommentDataManager extends BaseDataManager {
 
         ApiInterface apiService = ApiHelper.getClient().create(ApiInterface.class);
         Call<DataResponse<Data<Comment>>> call = apiService.postComment(
-                mPreferencesHelper.getKeyToken(),
+                mPreferencesHelper.getToken(),
                 content
         );
         call.enqueue(new Callback<DataResponse<Data<Comment>>>() {

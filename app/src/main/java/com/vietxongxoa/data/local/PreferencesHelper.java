@@ -40,7 +40,11 @@ public class PreferencesHelper {
         return mPref.getString(key, null);
     }
 
-    public String getKeyToken() {
+    public String getToken() {
         return "Bearer " + mPref.getString(KEY_TOKEN, null);
+    }
+
+    public String getUserName() {
+        return mPref.getString(KEY_USERNAME, null);
     }
 }

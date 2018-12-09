@@ -30,11 +30,10 @@ public class UserDataManager extends BaseDataManager {
 
     public User getUserName() {
         User user = null;
-        final String data = mPreferencesHelper.getData(PreferencesHelper.KEY_USERNAME);
+        final String data = mPreferencesHelper.getUserName();
         if (data != null) {
             user = new User();
             user.username = data;
-
         }
         return user;
     }
@@ -45,7 +44,7 @@ public class UserDataManager extends BaseDataManager {
     }
 
     public void postCreateUser(final UserListener listener, JsonObject username) {
-        final String data = mPreferencesHelper.getData(PreferencesHelper.KEY_USERNAME);
+        final String data = mPreferencesHelper.getUserName();
         if (data != null) {
             User user = new User();
             user.username = data;

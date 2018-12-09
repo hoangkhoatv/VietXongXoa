@@ -27,7 +27,7 @@ public class LoveDataManager extends BaseDataManager {
     public void postLove(final LoveListener listener, JsonObject content) {
         ApiInterface apiService = ApiHelper.getClient().create(ApiInterface.class);
         Call<DataResponse<Boolean>> call = apiService.postLove(
-                mPreferencesHelper.getKeyToken(),
+                mPreferencesHelper.getToken(),
                 content
         );
         call.enqueue(new Callback<DataResponse<Boolean>>() {
@@ -55,7 +55,7 @@ public class LoveDataManager extends BaseDataManager {
     public void deleteLove(final LoveListener listener, JsonObject content) {
         ApiInterface apiService = ApiHelper.getClient().create(ApiInterface.class);
         Call<DataResponse<Boolean>> call = apiService.deleteLove(
-                mPreferencesHelper.getKeyToken(),
+                mPreferencesHelper.getToken(),
                 content
         );
         call.enqueue(new Callback<DataResponse<Boolean>>() {
