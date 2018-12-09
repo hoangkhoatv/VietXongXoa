@@ -2,7 +2,7 @@ package com.vietxongxoa.data.listeners;
 
 import com.vietxongxoa.model.User;
 
-public interface UserRegisterListener {
+public interface UserListener {
 
     void onResponse(User user);
 

@@ -2,7 +2,7 @@ package com.vietxongxoa.ui.article.create;
 
 import com.google.gson.JsonObject;
 import com.vietxongxoa.data.manager.ArticleDataManager;
-import com.vietxongxoa.data.listeners.ArticleCreateListener;
+import com.vietxongxoa.data.listeners.ArticleListener;
 import com.vietxongxoa.model.Data;
 import com.vietxongxoa.model.Article;
 import com.vietxongxoa.ui.base.BasePresenter;
@@ -21,7 +21,7 @@ public class ArticleCreatePresenter<V extends ArticleCreateMvpView> extends Base
     @Override
     public void postData(JsonObject content) {
         getMvpView().showLoading();
-        articleDataManager.postWrite(new ArticleCreateListener() {
+        articleDataManager.postWrite(new ArticleListener() {
             @Override
             public void onResponse(Data<Article> dataResponse) {
                 getMvpView().hideLoading();

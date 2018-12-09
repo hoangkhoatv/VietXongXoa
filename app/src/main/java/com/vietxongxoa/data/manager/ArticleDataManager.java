@@ -3,7 +3,7 @@ package com.vietxongxoa.data.manager;
 import android.support.annotation.NonNull;
 
 import com.google.gson.JsonObject;
-import com.vietxongxoa.data.listeners.ArticleCreateListener;
+import com.vietxongxoa.data.listeners.ArticleListener;
 import com.vietxongxoa.data.listeners.DataListener;
 import com.vietxongxoa.data.local.PreferencesHelper;
 import com.vietxongxoa.data.remote.ApiHelper;
@@ -68,7 +68,7 @@ public class ArticleDataManager extends BaseDataManager {
 
     }
 
-    public void postWrite(final ArticleCreateListener listener, JsonObject content) {
+    public void postWrite(final ArticleListener listener, JsonObject content) {
         ApiInterface apiService = ApiHelper.getClient().create(ApiInterface.class);
         Call<DataResponse<Data<Article>>> call = apiService.postWirte(
                 mPreferencesHelper.getKeyToken(),
@@ -101,7 +101,7 @@ public class ArticleDataManager extends BaseDataManager {
         });
     }
 
-    public void getDetail(final ArticleCreateListener listener, String idPost) {
+    public void getDetail(final ArticleListener listener, String idPost) {
         ApiInterface apiService = ApiHelper.getClient().create(ApiInterface.class);
         Call<DataResponse<Data<Article>>> call = apiService.getDetail(
                 mPreferencesHelper.getKeyToken(),

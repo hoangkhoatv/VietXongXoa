@@ -3,7 +3,7 @@ package com.vietxongxoa.data.manager;
 import android.support.annotation.NonNull;
 
 import com.google.gson.JsonObject;
-import com.vietxongxoa.data.listeners.UserRegisterListener;
+import com.vietxongxoa.data.listeners.UserListener;
 import com.vietxongxoa.data.local.PreferencesHelper;
 import com.vietxongxoa.data.remote.ApiHelper;
 import com.vietxongxoa.data.remote.ApiInterface;
@@ -44,7 +44,7 @@ public class UserDataManager extends BaseDataManager {
         mPreferencesHelper.putData(PreferencesHelper.KEY_TOKEN, user.token);
     }
 
-    public void postCreateUser(final UserRegisterListener listener, JsonObject username) {
+    public void postCreateUser(final UserListener listener, JsonObject username) {
         final String data = mPreferencesHelper.getData(PreferencesHelper.KEY_USERNAME);
         if (data != null) {
             User user = new User();
