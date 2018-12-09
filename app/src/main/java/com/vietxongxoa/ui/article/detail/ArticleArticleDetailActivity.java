@@ -1,4 +1,4 @@
-package com.vietxongxoa.ui.detail;
+package com.vietxongxoa.ui.article.detail;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -17,13 +17,13 @@ import android.widget.TextView;
 
 import com.vietxongxoa.R;
 import com.vietxongxoa.data.local.PreferencesHelper;
-import com.vietxongxoa.model.BaseItem;
-import com.vietxongxoa.model.CommentItem;
+import com.vietxongxoa.model.BaseIModel;
+import com.vietxongxoa.model.Comment;
 import com.vietxongxoa.model.Data;
-import com.vietxongxoa.model.PostItem;
+import com.vietxongxoa.model.Article;
 import com.vietxongxoa.ui.adapter.CommentAdapter;
 import com.vietxongxoa.ui.base.BaseActivity;
-import com.vietxongxoa.ui.main.ItemInteractiveListener;
+import com.vietxongxoa.ui.article.list.ItemInteractiveListener;
 import com.vietxongxoa.ui.viewholder.EndlessRecyclerViewScrollListener;
 
 import java.util.ArrayList;
@@ -35,7 +35,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DetailActivity extends BaseActivity implements DetailMvpView, CommentAdapter.ItemClickListener, CommentAdapter.RetryLoadMoreListener, ItemInteractiveListener {
+public class ArticleArticleDetailActivity
+        extends BaseActivity
+        implements ArticleDetailMvpView,
+        CommentAdapter.ItemClickListener,
+        CommentAdapter.RetryLoadMoreListener,
+        ItemInteractiveListener {
 
     private CommentAdapter adapter;
     private EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
@@ -50,21 +55,21 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
 
 
     @Inject
-    DetailPresenter<DetailMvpView> mDetailPresenter;
-    Data<PostItem> data;
+    ArticleDetailPresenter<ArticleDetailMvpView> mDetailPresenter;
+    Data<Article> data;
     int limit = 10;
     int currentPage = 0;
     int endPage = -1;
 
     public static Intent getStartIntent(Context context) {
-        return new Intent(context, DetailActivity.class);
+        return new Intent(context, ArticleArticleDetailActivity.class);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityComponent().inject(this);
-        setContentView(R.layout.activity_detail);
+        setContentView(R.layout.activity_article_detail);
         setActionBar();
         ButterKnife.bind(this);
         mDetailPresenter.attachView(this);
@@ -83,8 +88,8 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
 
     public void getData() {
         Intent intent = getIntent();
-        data = new Data<PostItem>();
-        data.attributes = new PostItem();
+        data = new Data<Article>();
+        data.attributes = new Article();
         data.uuid = intent.getStringExtra(PreferencesHelper.KEY_ID);
         data.attributes.author = intent.getStringExtra(PreferencesHelper.KEY_AUTHOR);
         data.attributes.content = intent.getStringExtra(PreferencesHelper.KEY_CONTENT);
@@ -92,15 +97,15 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
         data.attributes.love = intent.getStringExtra(PreferencesHelper.KEY_NUM_LOVE);
         data.attributes.loved = intent.getBooleanExtra(PreferencesHelper.KEY_LOVED, false);
         data.attributes.comment = intent.getIntExtra(PreferencesHelper.KEY_COMMENT, 0);
-        data.attributes.type = BaseItem.HEADER_TYPE;
+        data.attributes.type = BaseIModel.HEADER_TYPE;
     }
 
     @Override
-    public void showData(Data<PostItem> data) {
+    public void showData(Data<Article> data) {
         final List<Object> baseItems = new ArrayList<>();
-        data.attributes.type = BaseItem.HEADER_TYPE;
+        data.attributes.type = BaseIModel.HEADER_TYPE;
         baseItems.add(data);
-        DetailActivity.this.runOnUiThread(new Runnable() {
+        ArticleArticleDetailActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (swipeRefreshLayout.isRefreshing()) {
@@ -123,14 +128,14 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
     }
 
     @Override
-    public void showDataComments(List<Data<CommentItem>> commens) {
+    public void showDataComments(List<Data<Comment>> commens) {
 
         final List<Object> baseItems = new ArrayList<>();
         for (int i = 0; i < commens.size(); i++) {
-            commens.get(i).attributes.type = BaseItem.SECOND_TYPE;
+            commens.get(i).attributes.type = BaseIModel.SECOND_TYPE;
             baseItems.add(commens.get(i));
         }
-        DetailActivity.this.runOnUiThread(new Runnable() {
+        ArticleArticleDetailActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (swipeRefreshLayout.isRefreshing()) {
@@ -152,11 +157,11 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
     }
 
     @Override
-    public void showPostComment(Data<CommentItem> comment) {
+    public void showPostComment(Data<Comment> comment) {
         final List<Object> baseItems = new ArrayList<>();
-        comment.attributes.type = BaseItem.SECOND_TYPE;
+        comment.attributes.type = BaseIModel.SECOND_TYPE;
         baseItems.add(comment);
-        DetailActivity.this.runOnUiThread(new Runnable() {
+        ArticleArticleDetailActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (baseItems.size() != 0) {
@@ -200,7 +205,7 @@ public class DetailActivity extends BaseActivity implements DetailMvpView, Comme
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
         @SuppressLint("InflateParams")
-        View view = getLayoutInflater().inflate(R.layout.action_bar_back_layout, null);
+        View view = getLayoutInflater().inflate(R.layout.action_bar_layout_with_back_btn, null);
         ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(
                 ActionBar.LayoutParams.MATCH_PARENT,
                 ActionBar.LayoutParams.MATCH_PARENT

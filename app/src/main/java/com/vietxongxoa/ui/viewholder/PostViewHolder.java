@@ -7,13 +7,12 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.vietxongxoa.R;
-import com.vietxongxoa.model.PostItem;
+import com.vietxongxoa.model.Article;
 import com.vietxongxoa.utils.IconTextView;
 import com.vietxongxoa.utils.MySpannable;
 
@@ -59,15 +58,15 @@ public class PostViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
 
     public void setData(Object item, Context context) {
-        PostItem postItem = (PostItem) item;
-        String userName = postItem.author;
-        final String strPost = postItem.content;
-        String strDate = postItem.created;
+        Article article = (Article) item;
+        String userName = article.author;
+        final String strPost = article.content;
+        String strDate = article.created;
         textName.setText(userName);
         textDate.setText(strDate);
-        numLoved.setText(postItem.love);
-        commentNumber.setText(String.valueOf(postItem.comment));
-        if (postItem.loved) {
+        numLoved.setText(article.love);
+        commentNumber.setText(String.valueOf(article.comment));
+        if (article.loved) {
             numLoved.setTextColor(context.getResources().getColor(R.color.heart));
             iconLove.setLove();
         } else {

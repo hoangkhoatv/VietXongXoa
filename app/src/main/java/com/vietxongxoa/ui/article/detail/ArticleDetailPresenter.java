@@ -1,24 +1,24 @@
-package com.vietxongxoa.ui.detail;
+package com.vietxongxoa.ui.article.detail;
 
 import com.google.gson.JsonObject;
 import com.vietxongxoa.data.DataManager;
 import com.vietxongxoa.data.listeners.CommentListener;
 import com.vietxongxoa.data.listeners.LoveListener;
 import com.vietxongxoa.data.listeners.WriteListener;
-import com.vietxongxoa.model.CommentItem;
+import com.vietxongxoa.model.Comment;
 import com.vietxongxoa.model.Data;
-import com.vietxongxoa.model.PostItem;
+import com.vietxongxoa.model.Article;
 import com.vietxongxoa.ui.base.BasePresenter;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-public class DetailPresenter<V extends DetailMvpView> extends BasePresenter<V> implements DetailMvpPresenter<V> {
+public class ArticleDetailPresenter<V extends ArticleDetailMvpView> extends BasePresenter<V> implements ArticleDetailMvpPresenter<V> {
     private final DataManager mDataManager;
 
     @Inject
-    public DetailPresenter(DataManager dataManager) {
+    public ArticleDetailPresenter(DataManager dataManager) {
         this.mDataManager = dataManager;
     }
 
@@ -26,7 +26,7 @@ public class DetailPresenter<V extends DetailMvpView> extends BasePresenter<V> i
     public void getData(String idPost) {
         mDataManager.getDetail(new WriteListener() {
             @Override
-            public void onResponse(Data<PostItem> dataResponse) {
+            public void onResponse(Data<Article> dataResponse) {
                 getMvpView().showData(dataResponse);
             }
 
@@ -41,7 +41,7 @@ public class DetailPresenter<V extends DetailMvpView> extends BasePresenter<V> i
     public void getComment(String uuid, int limit, int offset) {
         mDataManager.getComments(new CommentListener() {
             @Override
-            public void onResponse(List<Data<CommentItem>> dataResponse) {
+            public void onResponse(List<Data<Comment>> dataResponse) {
                 getMvpView().showDataComments(dataResponse);
             }
 
@@ -52,7 +52,7 @@ public class DetailPresenter<V extends DetailMvpView> extends BasePresenter<V> i
             }
 
             @Override
-            public void onCommentResponse(Data<CommentItem> dataResponse) {
+            public void onCommentResponse(Data<Comment> dataResponse) {
             }
 
             @Override
@@ -69,7 +69,7 @@ public class DetailPresenter<V extends DetailMvpView> extends BasePresenter<V> i
         json.addProperty("content", content);
         mDataManager.postComment(new CommentListener() {
             @Override
-            public void onResponse(List<Data<CommentItem>> dataResponse) {
+            public void onResponse(List<Data<Comment>> dataResponse) {
 
             }
 
@@ -79,7 +79,7 @@ public class DetailPresenter<V extends DetailMvpView> extends BasePresenter<V> i
             }
 
             @Override
-            public void onCommentResponse(Data<CommentItem> dataResponse) {
+            public void onCommentResponse(Data<Comment> dataResponse) {
                 getMvpView().showPostComment(dataResponse);
             }
 

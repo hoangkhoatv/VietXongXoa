@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.vietxongxoa.R;
-import com.vietxongxoa.model.PostItem;
+import com.vietxongxoa.model.Article;
 import com.vietxongxoa.utils.IconTextView;
 
 public class PostDetailViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -51,16 +51,16 @@ public class PostDetailViewHolder extends RecyclerView.ViewHolder implements Vie
 
     public void setData(Object item, Context context) {
         this.context = context;
-        PostItem postItem = (PostItem) item;
-        String userName = postItem.author;
-        String strPost = postItem.content;
-        String strDate = postItem.created;
+        Article article = (Article) item;
+        String userName = article.author;
+        String strPost = article.content;
+        String strDate = article.created;
         textName.setText(userName);
         textDate.setText(strDate);
-        numLoved.setText(postItem.love);
-        numComment.setText(String.valueOf(postItem.comment));
+        numLoved.setText(article.love);
+        numComment.setText(String.valueOf(article.comment));
 
-        if (postItem.loved) {
+        if (article.loved) {
             numLoved.setTextColor(context.getResources().getColor(R.color.heart));
             iconLove.setLove();
         } else {

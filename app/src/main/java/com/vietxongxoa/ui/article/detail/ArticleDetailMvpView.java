@@ -1,23 +1,23 @@
-package com.vietxongxoa.ui.detail;
+package com.vietxongxoa.ui.article.detail;
 
-import com.vietxongxoa.model.CommentItem;
+import com.vietxongxoa.model.Comment;
 import com.vietxongxoa.model.Data;
-import com.vietxongxoa.model.PostItem;
+import com.vietxongxoa.model.Article;
 import com.vietxongxoa.ui.base.MvpView;
 
 import java.util.List;
 
-public interface DetailMvpView extends MvpView {
+public interface ArticleDetailMvpView extends MvpView {
 
-    void showData(Data<PostItem> data);
+    void showData(Data<Article> data);
 
     void showError(String error);
 
-    void showDataComments(List<Data<CommentItem>> commens);
+    void showDataComments(List<Data<Comment>> commens);
 
     void showErrorComments(String error);
 
-    void showPostComment(Data<CommentItem> comment);
+    void showPostComment(Data<Comment> comment);
 
     void showErrorPostComment(String error);
 

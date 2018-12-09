@@ -18,10 +18,10 @@ package com.vietxongxoa.injection.component;
 
 import com.vietxongxoa.injection.annotation.PerActivity;
 import com.vietxongxoa.injection.module.ActivityModule;
-import com.vietxongxoa.ui.create.CreateActivity;
-import com.vietxongxoa.ui.detail.DetailActivity;
-import com.vietxongxoa.ui.main.MainActivity;
-import com.vietxongxoa.ui.write.WriteActivity;
+import com.vietxongxoa.ui.article.detail.ArticleArticleDetailActivity;
+import com.vietxongxoa.ui.user.register.UserRegisterActivity;
+import com.vietxongxoa.ui.article.list.ArticleListActivity;
+import com.vietxongxoa.ui.article.create.ArticleCreateActivity;
 
 import dagger.Component;
 
@@ -32,13 +32,13 @@ import dagger.Component;
 @Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)
 public interface ActivityComponent {
 
-    void inject(MainActivity mainActivity);
+    void inject(ArticleListActivity articleListActivity);
 
-    void inject(CreateActivity activity);
+    void inject(UserRegisterActivity activity);
 
-    void inject(WriteActivity activity);
+    void inject(ArticleCreateActivity activity);
 
-    void inject(DetailActivity activity);
+    void inject(ArticleArticleDetailActivity activity);
 
 
 }

@@ -1,10 +1,10 @@
 package com.vietxongxoa.data.listeners;
 
-import com.vietxongxoa.model.Users;
+import com.vietxongxoa.model.User;
 
 public interface CreateListener {
 
-    void onResponse(Users users);
+    void onResponse(User user);
 
     void onError(String error);
 }

@@ -11,12 +11,13 @@ import com.vietxongxoa.data.local.PreferencesHelper;
 import com.vietxongxoa.data.remote.ApiHelper;
 import com.vietxongxoa.data.remote.ApiInterface;
 import com.vietxongxoa.data.remote.ErrorUtils;
-import com.vietxongxoa.model.ApiError;
-import com.vietxongxoa.model.CommentItem;
+import com.vietxongxoa.model.Error;
+import com.vietxongxoa.model.Comment;
 import com.vietxongxoa.model.Data;
 import com.vietxongxoa.model.DataResponse;
-import com.vietxongxoa.model.PostItem;
-import com.vietxongxoa.model.Users;
+import com.vietxongxoa.model.Article;
+import com.vietxongxoa.model.User;
+
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -34,48 +35,48 @@ public class DataManager {
         this.mPreferencesHelper = preferencesHelper;
     }
 
-    public Users getUserName() {
-        Users users = null;
+    public User getUserName() {
+        User user = null;
         final String data = mPreferencesHelper.getData(PreferencesHelper.KEY_USER);
         if (data != null) {
-            users = new Users();
-            users.username = data;
+            user = new User();
+            user.username = data;
 
         }
-        return users;
+        return user;
     }
 
-    public void setUSerName(Users users) {
-        mPreferencesHelper.putData(PreferencesHelper.KEY_USER, users.username);
-        mPreferencesHelper.putData(PreferencesHelper.KEY_TOKEN, users.token);
+    public void setUSerName(User user) {
+        mPreferencesHelper.putData(PreferencesHelper.KEY_USER, user.username);
+        mPreferencesHelper.putData(PreferencesHelper.KEY_TOKEN, user.token);
     }
 
     public void postWrite(final WriteListener listener, JsonObject content) {
         ApiInterface apiService = ApiHelper.getClient().create(ApiInterface.class);
-        Call<DataResponse<Data<PostItem>>> call = apiService.postWirte(
+        Call<DataResponse<Data<Article>>> call = apiService.postWirte(
                 mPreferencesHelper.getKeyToken(),
                 content
         );
-        call.enqueue(new Callback<DataResponse<Data<PostItem>>>() {
+        call.enqueue(new Callback<DataResponse<Data<Article>>>() {
             @Override
             public void onResponse(
-                    @NonNull Call<DataResponse<Data<PostItem>>> call,
-                    @NonNull Response<DataResponse<Data<PostItem>>> response
+                    @NonNull Call<DataResponse<Data<Article>>> call,
+                    @NonNull Response<DataResponse<Data<Article>>> response
             ) {
                 assert response.body() != null;
                 if (response.isSuccessful() && response.body().status.matches("success")) {
                     listener.onResponse(response.body().data);
                 } else {
-                    ApiError apiError = ErrorUtils.parseError(response);
-                    if (apiError != null) {
-                        listener.onError(apiError.message);
+                    Error error = ErrorUtils.parseError(response);
+                    if (error != null) {
+                        listener.onError(error.message);
                     }
                 }
             }
 
             @Override
             public void onFailure(
-                    @NonNull Call<DataResponse<Data<PostItem>>> call,
+                    @NonNull Call<DataResponse<Data<Article>>> call,
                     @NonNull Throwable t
             ) {
 
@@ -86,33 +87,33 @@ public class DataManager {
     public void postCreateUser(final CreateListener listener, JsonObject username) {
         final String data = mPreferencesHelper.getData(PreferencesHelper.KEY_USER);
         if (data != null) {
-            Users users = new Users();
-            users.username = data;
-            listener.onResponse(users);
+            User user = new User();
+            user.username = data;
+            listener.onResponse(user);
             return;
         }
         ApiInterface apiService = ApiHelper.getClient().create(ApiInterface.class);
-        Call<DataResponse<Data<Users>>> call = apiService.postCreateUser(username);
-        call.enqueue(new Callback<DataResponse<Data<Users>>>() {
+        Call<DataResponse<Data<User>>> call = apiService.postCreateUser(username);
+        call.enqueue(new Callback<DataResponse<Data<User>>>() {
             @Override
             public void onResponse(
-                    @NonNull Call<DataResponse<Data<Users>>> call,
-                    @NonNull Response<DataResponse<Data<Users>>> response
+                    @NonNull Call<DataResponse<Data<User>>> call,
+                    @NonNull Response<DataResponse<Data<User>>> response
             ) {
                 assert response.body() != null;
                 if (response.isSuccessful() && response.body().status.matches("success")) {
                     listener.onResponse(response.body().data.attributes);
                 } else {
-                    ApiError apiError = ErrorUtils.parseError(response);
-                    if (apiError != null) {
-                        listener.onError(apiError.message);
+                    Error error = ErrorUtils.parseError(response);
+                    if (error != null) {
+                        listener.onError(error.message);
                     }
                 }
             }
 
             @Override
             public void onFailure(
-                    @NonNull Call<DataResponse<Data<Users>>> call,
+                    @NonNull Call<DataResponse<Data<User>>> call,
                     @NonNull Throwable t
             ) {
                 listener.onError(t.getMessage());
@@ -122,30 +123,30 @@ public class DataManager {
 
     public void getDetail(final WriteListener listener, String idPost) {
         ApiInterface apiService = ApiHelper.getClient().create(ApiInterface.class);
-        Call<DataResponse<Data<PostItem>>> call = apiService.getDetail(
+        Call<DataResponse<Data<Article>>> call = apiService.getDetail(
                 mPreferencesHelper.getKeyToken(),
                 idPost
         );
-        call.enqueue(new Callback<DataResponse<Data<PostItem>>>() {
+        call.enqueue(new Callback<DataResponse<Data<Article>>>() {
             @Override
             public void onResponse(
-                    @NonNull Call<DataResponse<Data<PostItem>>> call,
-                    @NonNull Response<DataResponse<Data<PostItem>>> response
+                    @NonNull Call<DataResponse<Data<Article>>> call,
+                    @NonNull Response<DataResponse<Data<Article>>> response
             ) {
                 assert response.body() != null;
                 if (response.isSuccessful() && response.body().status.matches("success")) {
                     listener.onResponse(response.body().data);
                 } else {
-                    ApiError apiError = ErrorUtils.parseError(response);
-                    if (apiError != null) {
-                        listener.onError(apiError.message);
+                    Error error = ErrorUtils.parseError(response);
+                    if (error != null) {
+                        listener.onError(error.message);
                     }
                 }
             }
 
             @Override
             public void onFailure(
-                    @NonNull Call<DataResponse<Data<PostItem>>> call,
+                    @NonNull Call<DataResponse<Data<Article>>> call,
                     @NonNull Throwable t
             ) {
                 listener.onError(t.getMessage());
@@ -155,25 +156,25 @@ public class DataManager {
 
     public void getData(final DataListener listener, int offset, int limit) {
         ApiInterface apiService = ApiHelper.getClient().create(ApiInterface.class);
-        Call<DataResponse<List<Data<PostItem>>>> call = apiService.getListPost(
+        Call<DataResponse<List<Data<Article>>>> call = apiService.getListPost(
                 mPreferencesHelper.getKeyToken(),
                 String.valueOf(limit),
                 String.valueOf(offset),
                 "#trending"
         );
-        call.enqueue(new Callback<DataResponse<List<Data<PostItem>>>>() {
+        call.enqueue(new Callback<DataResponse<List<Data<Article>>>>() {
             @Override
             public void onResponse(
-                    @NonNull Call<DataResponse<List<Data<PostItem>>>> call,
-                    @NonNull Response<DataResponse<List<Data<PostItem>>>> response
+                    @NonNull Call<DataResponse<List<Data<Article>>>> call,
+                    @NonNull Response<DataResponse<List<Data<Article>>>> response
             ) {
                 assert response.body() != null;
                 if (response.isSuccessful() && response.body().status.matches("success")) {
                     listener.onResponse(response.body().data);
                 } else {
-                    ApiError apiError = ErrorUtils.parseError(response);
-                    if (apiError != null) {
-                        listener.onError(apiError.message);
+                    Error error = ErrorUtils.parseError(response);
+                    if (error != null) {
+                        listener.onError(error.message);
 
                     }
                 }
@@ -181,7 +182,7 @@ public class DataManager {
 
             @Override
             public void onFailure(
-                    @NonNull Call<DataResponse<List<Data<PostItem>>>> call,
+                    @NonNull Call<DataResponse<List<Data<Article>>>> call,
                     @NonNull Throwable t
             ) {
                 listener.onError(t.getMessage());
@@ -246,31 +247,31 @@ public class DataManager {
 
     public void getComments(final CommentListener listener, String uuid, int limit, int offset) {
         ApiInterface apiService = ApiHelper.getClient().create(ApiInterface.class);
-        Call<DataResponse<List<Data<CommentItem>>>> call = apiService.getComments(
+        Call<DataResponse<List<Data<Comment>>>> call = apiService.getComments(
                 mPreferencesHelper.getKeyToken(),
                 uuid,
                 limit,
                 offset);
-        call.enqueue(new Callback<DataResponse<List<Data<CommentItem>>>>() {
+        call.enqueue(new Callback<DataResponse<List<Data<Comment>>>>() {
             @Override
             public void onResponse(
-                    @NonNull Call<DataResponse<List<Data<CommentItem>>>> call,
-                    @NonNull Response<DataResponse<List<Data<CommentItem>>>> response
+                    @NonNull Call<DataResponse<List<Data<Comment>>>> call,
+                    @NonNull Response<DataResponse<List<Data<Comment>>>> response
             ) {
                 assert response.body() != null;
                 if (response.isSuccessful() && response.body().status.matches("success")) {
                     listener.onResponse(response.body().data);
                 } else {
-                    ApiError apiError = ErrorUtils.parseError(response);
-                    if (apiError != null) {
-                        listener.onError(apiError.message);
+                    Error error = ErrorUtils.parseError(response);
+                    if (error != null) {
+                        listener.onError(error.message);
                     }
                 }
             }
 
             @Override
             public void onFailure(
-                    @NonNull Call<DataResponse<List<Data<CommentItem>>>> call,
+                    @NonNull Call<DataResponse<List<Data<Comment>>>> call,
                     @NonNull Throwable t
             ) {
                 listener.onError(t.getMessage());
@@ -281,15 +282,15 @@ public class DataManager {
     public void postComment(final CommentListener listener, JsonObject content) {
 
         ApiInterface apiService = ApiHelper.getClient().create(ApiInterface.class);
-        Call<DataResponse<Data<CommentItem>>> call = apiService.postComment(
+        Call<DataResponse<Data<Comment>>> call = apiService.postComment(
                 mPreferencesHelper.getKeyToken(),
                 content
         );
-        call.enqueue(new Callback<DataResponse<Data<CommentItem>>>() {
+        call.enqueue(new Callback<DataResponse<Data<Comment>>>() {
             @Override
             public void onResponse(
-                    @NonNull Call<DataResponse<Data<CommentItem>>> call,
-                    @NonNull Response<DataResponse<Data<CommentItem>>> response
+                    @NonNull Call<DataResponse<Data<Comment>>> call,
+                    @NonNull Response<DataResponse<Data<Comment>>> response
             ) {
                 if (response.isSuccessful()) {
                     assert response.body() != null;
@@ -301,7 +302,7 @@ public class DataManager {
 
             @Override
             public void onFailure(
-                    @NonNull Call<DataResponse<Data<CommentItem>>> call,
+                    @NonNull Call<DataResponse<Data<Comment>>> call,
                     @NonNull Throwable t
             ) {
 

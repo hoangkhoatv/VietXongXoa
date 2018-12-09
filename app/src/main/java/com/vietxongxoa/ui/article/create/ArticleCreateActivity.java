@@ -1,4 +1,4 @@
-package com.vietxongxoa.ui.write;
+package com.vietxongxoa.ui.article.create;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -14,10 +14,10 @@ import android.widget.TextView;
 import com.vietxongxoa.R;
 import com.vietxongxoa.data.local.PreferencesHelper;
 import com.vietxongxoa.model.Data;
-import com.vietxongxoa.model.PostItem;
-import com.vietxongxoa.model.Write;
+import com.vietxongxoa.model.Article;
+import com.vietxongxoa.model.NewArticle;
+import com.vietxongxoa.ui.article.detail.ArticleArticleDetailActivity;
 import com.vietxongxoa.ui.base.BaseActivity;
-import com.vietxongxoa.ui.detail.DetailActivity;
 
 import javax.inject.Inject;
 
@@ -26,23 +26,23 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class WriteActivity extends BaseActivity implements WriteMvpView {
+public class ArticleCreateActivity extends BaseActivity implements ArticleCreateMvpView {
 
     @BindView(R.id.edtWrite)
     EditText editWrite;
 
     @Inject
-    WritePresenter<WriteMvpView> mWritePresenter;
+    ArticleCreatePresenter<ArticleCreateMvpView> mWritePresenter;
 
     public static Intent getStartIntent(Context context) {
-        return new Intent(context, WriteActivity.class);
+        return new Intent(context, ArticleCreateActivity.class);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityComponent().inject(this);
-        setContentView(R.layout.activity_write);
+        setContentView(R.layout.activity_article_create);
         setActionBar();
         ButterKnife.bind(this);
         ButterKnife.bind(this);
@@ -50,9 +50,9 @@ public class WriteActivity extends BaseActivity implements WriteMvpView {
     }
 
     @Override
-    public void showData(Data<PostItem> data) {
+    public void showData(Data<Article> data) {
         if (data != null) {
-            Intent intent = DetailActivity.getStartIntent(getBaseContext());
+            Intent intent = ArticleArticleDetailActivity.getStartIntent(getBaseContext());
             intent.putExtra(PreferencesHelper.KEY_ID, data.uuid);
             intent.putExtra(PreferencesHelper.KEY_CONTENT, data.attributes.content);
             intent.putExtra(PreferencesHelper.KEY_AUTHOR, data.attributes.author);
@@ -72,7 +72,7 @@ public class WriteActivity extends BaseActivity implements WriteMvpView {
     public void onDeleteWrite(View view) {
         if (!editWrite.getText().toString().matches("")) {
             mWritePresenter.postData(
-                    Write.getJson(String.valueOf(editWrite.getText()))
+                    NewArticle.getJson(String.valueOf(editWrite.getText()))
             );
 
         }
@@ -86,7 +86,7 @@ public class WriteActivity extends BaseActivity implements WriteMvpView {
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
         @SuppressLint("InflateParams")
-        View view = getLayoutInflater().inflate(R.layout.action_bar_back_layout, null);
+        View view = getLayoutInflater().inflate(R.layout.action_bar_layout_with_back_btn, null);
         ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(
                 ActionBar.LayoutParams.MATCH_PARENT,
                 ActionBar.LayoutParams.MATCH_PARENT

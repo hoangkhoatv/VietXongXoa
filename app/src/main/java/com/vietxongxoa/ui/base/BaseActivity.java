@@ -1,40 +1,27 @@
-/*
- *    Copyright (C) 2018 MINDORKS NEXTGEN PRIVATE LIMITED
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
- */
-
 package com.vietxongxoa.ui.base;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.vietxongxoa.MyApplication;
+import com.vietxongxoa.R;
 import com.vietxongxoa.injection.component.ActivityComponent;
 import com.vietxongxoa.injection.component.DaggerActivityComponent;
 import com.vietxongxoa.injection.module.ActivityModule;
 import com.vietxongxoa.utils.DialogUtils;
-
-/**
- * Created by amitshekhar on 13/01/17.
- */
 
 public abstract class BaseActivity extends AppCompatActivity implements MvpView {
 
@@ -45,7 +32,7 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         //Find the currently focused view, so we can grab the correct window token from it.
         View view = activity.getCurrentFocus();
-        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        //If no view currently has focus, new_user a new one, just so we can grab a window token from it
         if (view == null) {
             view = new View(activity);
         }
@@ -94,6 +81,36 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.cancel();
         }
+    }
+
+    public void showDialogRate() {
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.title_dialog))
+                .setMessage(getString(R.string.content_dialog))
+                .setPositiveButton(getString(R.string.yes_dialog), new DialogInterface.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                    public void onClick(DialogInterface dialog, int which) {
+                        Uri uri = Uri.parse("market://details?id=" + getBaseContext().getPackageName());
+                        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                                Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                                Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                        try {
+                            startActivity(goToMarket);
+                        } catch (ActivityNotFoundException e) {
+                            String CHPlayUrl = "http://play.google.com/store/apps/details?id=";
+                            startActivity(new Intent(Intent.ACTION_VIEW,
+                                    Uri.parse(CHPlayUrl + getBaseContext().getPackageName())));
+                        }
+                    }
+                })
+                .setNegativeButton(getString(R.string.no_dialog), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .show();
     }
 
     public abstract void setActionBar();

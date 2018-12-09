@@ -4,19 +4,14 @@ import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Users {
-
-    @SerializedName("username")
+public class NewArticle {
+    @SerializedName("content")
     @Expose
-    public String username;
+    public String content;
 
-    @SerializedName("token")
-    @Expose
-    public String token;
-
-    public static JsonObject getJson(String username) {
+    public static JsonObject getJson(String content) {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("username", username);
+        jsonObject.addProperty("content", content);
         return jsonObject;
     }
 }

@@ -14,17 +14,22 @@
  *    limitations under the License.
  */
 
-package com.vietxongxoa.ui.main;
+package com.vietxongxoa.ui.article.list;
 
-import com.vietxongxoa.ui.base.MvpPresenter;
+import com.vietxongxoa.model.Data;
+import com.vietxongxoa.model.Article;
+import com.vietxongxoa.ui.base.MvpView;
+
+import java.util.List;
 
 
-public interface MainMvpPresenter<V extends MainMvpView> extends MvpPresenter<V> {
+public interface ArticleListMvpView extends MvpView {
 
-    void getData(int page, int limit);
+    void showData(List<Data<Article>> data);
 
-    void postLove(String uuid, int position);
+    void showError(String error);
 
-    void deleteLove(String uuid, int position);
+    void showLove(String status, int position);
 
+    void showUnLove(String status, int position);
 }

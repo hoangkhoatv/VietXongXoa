@@ -1,8 +1,8 @@
-package com.vietxongxoa.ui.detail;
+package com.vietxongxoa.ui.article.detail;
 
 import com.vietxongxoa.ui.base.MvpPresenter;
 
-public interface DetailMvpPresenter<V extends DetailMvpView> extends MvpPresenter<V> {
+public interface ArticleDetailMvpPresenter<V extends ArticleDetailMvpView> extends MvpPresenter<V> {
 
     void getData(String idPost);
 

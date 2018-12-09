@@ -1,4 +1,4 @@
-package com.vietxongxoa.ui.create;
+package com.vietxongxoa.ui.user.register;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,9 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vietxongxoa.R;
-import com.vietxongxoa.model.Users;
+import com.vietxongxoa.model.User;
 import com.vietxongxoa.ui.base.BaseActivity;
-import com.vietxongxoa.ui.main.MainActivity;
+import com.vietxongxoa.ui.article.list.ArticleListActivity;
 
 import javax.inject.Inject;
 
@@ -22,35 +22,34 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CreateActivity extends BaseActivity implements CreateMvpView {
+public class UserRegisterActivity extends BaseActivity implements UserRegisterMvpView {
     @Inject
-    CreatePresenter<CreateMvpView> mCreatePresenter;
+    UserRegisterPresenter<UserRegisterMvpView> mUserRegisterPresenter;
 
     public static Intent getStartIntent(Context context) {
-        return new Intent(context, CreateActivity.class);
+        return new Intent(context, UserRegisterActivity.class);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityComponent().inject(this);
-        setContentView(R.layout.activity_create);
+        setContentView(R.layout.activity_user_regsiter);
         setActionBar();
         ButterKnife.bind(this);
-        mCreatePresenter.attachView(this);
-        if (mCreatePresenter.getUserName() != null) {
-            startActivity(MainActivity.getStartIntent(getBaseContext()));
+        mUserRegisterPresenter.attachView(this);
+        if (mUserRegisterPresenter.getUserName() != null) {
+            startActivity(ArticleListActivity.getStartIntent(getBaseContext()));
             finish();
         }
 
     }
 
-
     @Override
-    public void showData(Users data) {
+    public void showData(User data) {
         if (data != null) {
-            mCreatePresenter.setUsersName(data);
-            startActivity(MainActivity.getStartIntent(getBaseContext()));
+            mUserRegisterPresenter.setUsersName(data);
+            startActivity(ArticleListActivity.getStartIntent(getBaseContext()));
             finish();
         }
     }
@@ -66,7 +65,7 @@ public class CreateActivity extends BaseActivity implements CreateMvpView {
     @OnClick(R.id.btnCreate)
     public void onCreateUser(View view) {
         if (!edtName.getText().toString().matches("")) {
-            mCreatePresenter.postData(Users.getJson(String.valueOf(edtName.getText())));
+            mUserRegisterPresenter.postData(User.getJson(String.valueOf(edtName.getText())));
         } else {
             Toast.makeText(
                     getApplicationContext(),

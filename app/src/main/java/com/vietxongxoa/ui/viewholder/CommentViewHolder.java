@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.vietxongxoa.R;
-import com.vietxongxoa.model.CommentItem;
+import com.vietxongxoa.model.Comment;
 
 public class CommentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -28,10 +28,10 @@ public class CommentViewHolder extends RecyclerView.ViewHolder implements View.O
     }
 
     public void setData(Object item) {
-        CommentItem commentItem = (CommentItem) item;
-        textName.setText(commentItem.author);
-        textComment.setText(commentItem.content);
-        textDate.setText(commentItem.created);
+        Comment comment = (Comment) item;
+        textName.setText(comment.author);
+        textComment.setText(comment.content);
+        textDate.setText(comment.created);
     }
 
     @Override

@@ -1,20 +1,20 @@
-package com.vietxongxoa.ui.write;
+package com.vietxongxoa.ui.article.create;
 
 import com.google.gson.JsonObject;
 import com.vietxongxoa.data.DataManager;
 import com.vietxongxoa.data.listeners.WriteListener;
 import com.vietxongxoa.model.Data;
-import com.vietxongxoa.model.PostItem;
+import com.vietxongxoa.model.Article;
 import com.vietxongxoa.ui.base.BasePresenter;
 
 import javax.inject.Inject;
 
-public class WritePresenter<V extends WriteMvpView> extends BasePresenter<V> implements WriteMvpPresenter<V> {
+public class ArticleCreatePresenter<V extends ArticleCreateMvpView> extends BasePresenter<V> implements ArticleCreateMvpPresenter<V> {
 
     private final DataManager mDataManager;
 
     @Inject
-    public WritePresenter(DataManager dataManager) {
+    public ArticleCreatePresenter(DataManager dataManager) {
         this.mDataManager = dataManager;
     }
 
@@ -23,7 +23,7 @@ public class WritePresenter<V extends WriteMvpView> extends BasePresenter<V> imp
         getMvpView().showLoading();
         mDataManager.postWrite(new WriteListener() {
             @Override
-            public void onResponse(Data<PostItem> dataResponse) {
+            public void onResponse(Data<Article> dataResponse) {
                 getMvpView().hideLoading();
                 getMvpView().showData(dataResponse);
             }
