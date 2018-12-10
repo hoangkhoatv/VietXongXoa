@@ -1,28 +1,28 @@
 package com.vietxongxoa.utils;
 
-import android.content.Context;
-import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.text.Html;
-import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 
 public class TextUtils {
-    public static void makeTextViewResizable(final TextView tv, final int maxLine, final String expandText, final boolean viewMore) {
 
+    private static void makeTextViewResizable(
+            final TextView tv,
+            final int maxLine,
+            final String expandText,
+            final boolean viewMore
+    ) {
         if (tv.getTag() == null) {
             tv.setTag(tv.getText());
         }
         ViewTreeObserver vto = tv.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-
             @SuppressWarnings("deprecation")
             @Override
             public void onGlobalLayout() {
@@ -43,23 +43,31 @@ public class TextUtils {
                 tv.setText(text);
                 tv.setMovementMethod(LinkMovementMethod.getInstance());
                 tv.setText(
-                        addClickablePartTextViewResizable(Html.fromHtml(tv.getText().toString()), tv, lineEndIndex, expandText,
-                                viewMore), TextView.BufferType.SPANNABLE);
+                        addClickablePartTextViewResizable(Html.fromHtml(tv.getText().toString()),
+                                tv,
+                                lineEndIndex,
+                                expandText,
+                                viewMore
+                        ),
+                        TextView.BufferType.SPANNABLE
+                );
             }
         });
-
     }
-    private static SpannableStringBuilder addClickablePartTextViewResizable(final Spanned strSpanned, final TextView tv,
-                                                                            final int maxLine, final String spanableText, final boolean viewMore) {
+
+    private static SpannableStringBuilder addClickablePartTextViewResizable(
+            final Spanned strSpanned,
+            final TextView tv,
+            final int maxLine,
+            final String spanAbleText,
+            final boolean viewMore
+    ) {
         String str = strSpanned.toString();
         SpannableStringBuilder ssb = new SpannableStringBuilder(strSpanned);
-
-        if (str.contains(spanableText)) {
-
-
-            ssb.setSpan(new MySpannable(false){
+        if (str.contains(spanAbleText)) {
+            ssb.setSpan(new MySpannable(false) {
                 @Override
-                public void onClick(View widget) {
+                public void onClick(@NonNull View widget) {
                     tv.setLayoutParams(tv.getLayoutParams());
                     tv.setText(tv.getTag().toString(), TextView.BufferType.SPANNABLE);
                     tv.invalidate();
@@ -69,10 +77,9 @@ public class TextUtils {
                         makeTextViewResizable(tv, 5, "...xem thêm", true);
                     }
                 }
-            }, str.indexOf(spanableText), str.indexOf(spanableText) + spanableText.length(), 0);
+            }, str.indexOf(spanAbleText), str.indexOf(spanAbleText) + spanAbleText.length(), 0);
 
         }
         return ssb;
-
     }
 }

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/activity_horizontal_margin"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_comment"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/primaryPadding"
+        android:paddingTop="@dimen/primaryPadding"
+        android:paddingRight="@dimen/primaryPadding"
+        android:paddingBottom="@dimen/primaryPadding">
+
+        <TextView
+            android:id="@+id/text_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:text="@string/name_user"
+            android:textColor="@color/text_name"
+            android:textSize="@dimen/textFontSize"
+            android:textStyle="bold"
+            tools:ignore="RtlHardcoded" />
+
+        <TextView
+            android:id="@+id/text_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/primaryPadding"
+            android:text="@string/text_post"
+            android:textColor="@color/black"
+            android:textColorLink="@color/black"
+            android:textSize="@dimen/textFontSize" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/textHeight"
+        android:layout_marginLeft="@dimen/primaryPadding"
+        android:layout_marginTop="3dp"
+        android:layout_marginRight="@dimen/primaryPadding"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnLove"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:gravity="left"
+            android:text="@string/love"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/textFontSize"
+            android:typeface="normal"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+        <Button
+            android:id="@+id/btnAnswer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:gravity="left"
+            android:text="@string/answer"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/textFontSize"
+            android:typeface="normal"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+        <TextView
+            android:id="@+id/text_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:paddingLeft="@dimen/primaryPadding"
+            android:text="@string/text_time"
+            android:textSize="@dimen/textFontSize"
+            android:typeface="normal"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
+    </LinearLayout>
+
+</LinearLayout>

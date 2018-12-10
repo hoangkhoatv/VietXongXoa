@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        tools:ignore="UselessParent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/primaryPadding"
+                android:background="@color/white">
+
+                <EditText
+                    android:id="@+id/edtWrite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="@string/hint_writing"
+                    android:background="@android:color/transparent"
+                    android:gravity="top"
+                    android:hint="@string/hint_writing"
+                    android:inputType="textMultiLine"
+                    android:minHeight="@dimen/minHeightTextEditor"
+                    android:padding="@dimen/primaryPadding"
+                    android:textSize="@dimen/textFontSize"
+                    tools:targetApi="o" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btnDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/primaryPadding"
+                android:layout_marginBottom="@dimen/primaryPadding"
+                android:background="@color/colorPrimary"
+                android:onClick="onDeleteWrite"
+                android:paddingLeft="@dimen/bigPadding"
+                android:paddingRight="@dimen/bigPadding"
+                android:text="@string/text_delete"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

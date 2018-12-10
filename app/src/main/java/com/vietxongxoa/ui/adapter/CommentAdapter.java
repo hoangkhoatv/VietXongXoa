@@ -5,38 +5,40 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.vietxongxoa.R;
-import com.vietxongxoa.model.BaseItem;
-import com.vietxongxoa.model.CommentItem;
+import com.vietxongxoa.model.Article;
+import com.vietxongxoa.model.BaseModel;
+import com.vietxongxoa.model.Comment;
 import com.vietxongxoa.model.Data;
-import com.vietxongxoa.model.PostItem;
-import com.vietxongxoa.ui.main.ItemInteractiveListener;
+import com.vietxongxoa.ui.article.list.ItemInteractiveListener;
 import com.vietxongxoa.ui.viewholder.CommentViewHolder;
 import com.vietxongxoa.ui.viewholder.LoadMoreRecyclerViewAdapter;
 import com.vietxongxoa.ui.viewholder.PostDetailViewHolder;
-import com.vietxongxoa.ui.viewholder.WriteViewHolder;
 
 public class CommentAdapter extends LoadMoreRecyclerViewAdapter<Object> {
 
     private Context mContext;
     private ItemInteractiveListener itemInteractiveListener;
 
-    public CommentAdapter(@NonNull Context context, ItemClickListener itemClickListener, @NonNull RetryLoadMoreListener retryLoadMoreListener, ItemInteractiveListener itemInteractiveListener) {
+    public CommentAdapter(
+            @NonNull Context context,
+            ItemClickListener itemClickListener,
+            @NonNull RetryLoadMoreListener retryLoadMoreListener,
+            ItemInteractiveListener itemInteractiveListener
+    ) {
         super(context, itemClickListener, retryLoadMoreListener);
         this.itemInteractiveListener = itemInteractiveListener;
         mContext = context;
-
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == BaseItem.HEADER_TYPE) {
-            View view = mInflater.inflate(R.layout.post_detail_item, parent, false);
+        if (viewType == BaseModel.HEADER_TYPE) {
+            View view = mInflater.inflate(R.layout.item_article_detail, parent, false);
             return new PostDetailViewHolder(view);
-        } else if (viewType == BaseItem.SECOND_TYPE) {
-            View view = mInflater.inflate(R.layout.comment_item, parent, false);
+        } else if (viewType == BaseModel.SECOND_TYPE) {
+            View view = mInflater.inflate(R.layout.item_comment, parent, false);
             return new CommentViewHolder(view);
         }
         return super.onCreateViewHolder(parent, viewType);
@@ -45,15 +47,15 @@ public class CommentAdapter extends LoadMoreRecyclerViewAdapter<Object> {
 
     @Override
     protected int getCustomItemViewType(int position) {
-        Data<BaseItem> baseItem = (Data<BaseItem>) mDataList.get(position);
+        Data<BaseModel> baseItem = (Data<BaseModel>) mDataList.get(position);
         return baseItem.attributes.type;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof PostDetailViewHolder) {
-            final Data<PostItem> dataTupe = (Data<PostItem>) mDataList.get(position);
-            final PostItem item = dataTupe.attributes;
+            final Data<Article> dataTupe = (Data<Article>) mDataList.get(position);
+            final Article item = dataTupe.attributes;
             ((PostDetailViewHolder) holder).setItemClickListener(new com.vietxongxoa.ui.viewholder.ItemClickListener() {
                 @Override
                 public void onClick(View view, int position, boolean isLongClick) {
@@ -61,7 +63,7 @@ public class CommentAdapter extends LoadMoreRecyclerViewAdapter<Object> {
 
                 @Override
                 public void onLove(View view, int position, boolean isLove) {
-                    final Data<PostItem> dataTupe = (Data<PostItem>) mDataList.get(position);
+                    final Data<Article> dataTupe = (Data<Article>) mDataList.get(position);
                     itemInteractiveListener.onLove(dataTupe.uuid, isLove, position);
                 }
 
@@ -71,9 +73,9 @@ public class CommentAdapter extends LoadMoreRecyclerViewAdapter<Object> {
                 }
             });
             ((PostDetailViewHolder) holder).setData(item, mContext);
-        } else if (holder instanceof  CommentViewHolder){
-            Data<CommentItem> dataTupe = (Data<CommentItem>) mDataList.get(position);
-            CommentItem item = dataTupe.attributes;
+        } else if (holder instanceof CommentViewHolder) {
+            Data<Comment> dataTupe = (Data<Comment>) mDataList.get(position);
+            Comment item = dataTupe.attributes;
             ((CommentViewHolder) holder).setItemClickListener(new com.vietxongxoa.ui.viewholder.ItemClickListener() {
                 @Override
                 public void onClick(View view, int position, boolean isLongClick) {
@@ -94,26 +96,26 @@ public class CommentAdapter extends LoadMoreRecyclerViewAdapter<Object> {
         }
 
 
-            super.onBindViewHolder(holder, position);
+        super.onBindViewHolder(holder, position);
     }
 
-    public void loved(int pos){
-        ((Data<PostItem> ) mDataList.get(pos)).attributes.loved = true;
-        int love = Integer.parseInt(((Data<PostItem> ) mDataList.get(pos)).attributes.love) + 1;
-        ((Data<PostItem> ) mDataList.get(pos)).attributes.love = String.valueOf(love);
+    public void loved(int pos) {
+        ((Data<Article>) mDataList.get(pos)).attributes.loved = true;
+        int love = Integer.parseInt(((Data<Article>) mDataList.get(pos)).attributes.love) + 1;
+        ((Data<Article>) mDataList.get(pos)).attributes.love = String.valueOf(love);
         notifyItemChanged(pos);
     }
 
-    public void unLove(int pos){
-        ((Data<PostItem> ) mDataList.get(pos)).attributes.loved = false;
-        int love = Integer.parseInt(((Data<PostItem> ) mDataList.get(pos)).attributes.love) - 1;
-        ((Data<PostItem> ) mDataList.get(pos)).attributes.love = String.valueOf(love);
+    public void unLove(int pos) {
+        ((Data<Article>) mDataList.get(pos)).attributes.loved = false;
+        int love = Integer.parseInt(((Data<Article>) mDataList.get(pos)).attributes.love) - 1;
+        ((Data<Article>) mDataList.get(pos)).attributes.love = String.valueOf(love);
         notifyItemChanged(pos);
     }
 
-    public void increaseComment(){
-        int comment= ((Data<PostItem> ) mDataList.get(0)).attributes.comment + 1;
-        ((Data<PostItem> ) mDataList.get(0)).attributes.comment = comment;
+    public void increaseComment() {
+        int comment = ((Data<Article>) mDataList.get(0)).attributes.comment + 1;
+        ((Data<Article>) mDataList.get(0)).attributes.comment = comment;
         notifyItemChanged(0);
     }
 }

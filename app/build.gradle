@@ -77,7 +77,7 @@ dependencies {
     androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$rootProject.espressoVersion"
     androidTestImplementation "com.android.support.test.espresso:espresso-intents:$rootProject.espressoVersion"
 
-    // Resolve conflicts between main and test APK:
+    // Resolve conflicts between article.list and test APK:
     androidTestImplementation "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
     androidTestImplementation "com.android.support:support-v4:$rootProject.supportLibraryVersion"
     androidTestImplementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"

@@ -20,8 +20,11 @@
     <color name="colorPrimaryDark">#3A2A57</color>
     <color name="colorAccent">#FF4081</color>
     <color name="background">#EDEDED</color>
-    <color name="text_post">#383838</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#383838</color>
+    <color name="darkColor">#383838</color>
     <color name="text_name">#443266</color>
-    <color name="heart">#CC2929</color>
+    <color name="heart">#443266</color>
     <color name="comment">#808080</color>
+    <color name="grey">#808080</color>
 </resources>

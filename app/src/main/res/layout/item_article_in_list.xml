@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/primaryPadding"
+    android:background="@color/cardview_light_background"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/text_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:paddingLeft="@dimen/primaryPadding"
+        android:paddingTop="@dimen/primaryPadding"
+        android:paddingRight="@dimen/primaryPadding"
+        android:text="@string/name_user"
+        android:textColor="@color/text_name"
+        android:textSize="@dimen/textFontSize"
+        android:textStyle="bold"
+        tools:ignore="RtlHardcoded" />
+
+    <TextView
+        android:id="@+id/text_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:paddingLeft="@dimen/primaryPadding"
+        android:paddingRight="@dimen/primaryPadding"
+        android:paddingBottom="@dimen/primaryPadding"
+        android:text="@string/text_time"
+        android:textSize="@dimen/textFontSize"
+        tools:ignore="RtlHardcoded" />
+
+    <TextView
+        android:id="@+id/text_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="@dimen/textLineHeight"
+        android:paddingLeft="@dimen/primaryPadding"
+        android:paddingRight="@dimen/primaryPadding"
+        android:paddingBottom="@dimen/primaryPadding"
+        android:text="@string/text_post"
+        android:textColor="@color/black"
+        android:textColorLink="@color/black"
+        android:textSize="@dimen/textFontSize" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/articleDetailFooter"
+        android:background="@drawable/border_top"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/border_right">
+
+            <Button
+                android:id="@+id/btnLove"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="horizontal">
+
+                <com.vietxongxoa.utils.IconTextView
+                    android:id="@+id/iconLove"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fa_icon_love"
+                    android:textColor="@color/heart"
+                    android:textSize="@dimen/textFontSize" />
+
+                <TextView
+                    android:id="@+id/numLoved"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spaceSize"
+                    android:layout_marginLeft="@dimen/spaceSize"
+                    android:text="@string/zero"
+                    android:textColor="@color/heart"
+                    android:textSize="@dimen/textFontSize" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btnComment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="horizontal">
+
+                <com.vietxongxoa.utils.IconTextView
+                    android:id="@+id/iconComment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fa_icon_comment"
+                    android:textSize="@dimen/textFontSize" />
+
+                <TextView
+                    android:id="@+id/commentNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spaceSize"
+                    android:layout_marginLeft="@dimen/spaceSize"
+                    android:text="@string/zero"
+                    android:textColor="@color/comment"
+                    android:textSize="@dimen/textFontSize" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

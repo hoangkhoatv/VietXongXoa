@@ -1,18 +1,17 @@
 package com.vietxongxoa.data.listeners;
 
-import com.vietxongxoa.model.CommentItem;
+import com.vietxongxoa.model.Comment;
 import com.vietxongxoa.model.Data;
 
 import java.util.List;
 
-public interface  CommentListener {
+public interface CommentListener {
 
-    void onResponse(List<Data<CommentItem>> dataReponse);
+    void onResponse(List<Data<Comment>> dataResponse);
 
     void onError(String error);
 
-    void onCommnetResponse(Data<CommentItem> dataReponse);
+    void onCommentResponse(Data<Comment> dataResponse);
 
-    void onCommnetError(String error);
+    void onCommentError(String error);
 }
-

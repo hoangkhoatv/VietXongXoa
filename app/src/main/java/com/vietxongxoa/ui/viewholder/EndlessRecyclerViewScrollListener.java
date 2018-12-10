@@ -8,11 +8,8 @@ import android.util.Log;
 
 
 public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnScrollListener {
-    // The minimum amount of items to have below your current scroll position
-    // before loading more.
-    private int visibleThreshold = 10;
     // The current offset index of data you have loaded
-    private int currentPage = -10;
+    private int offset = 0;
     // The total number of items in the dataset after the last load
     private int previousTotalItemCount = 0;
     // True if we are still waiting for the last set of data to load.
@@ -20,19 +17,20 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
     // Sets the starting page index
     private int startingPageIndex = 0;
 
-    RecyclerView.LayoutManager mLayoutManager;
+    boolean rich = false;
 
-    public EndlessRecyclerViewScrollListener(RecyclerView.LayoutManager layoutManager) {
+    private RecyclerView.LayoutManager mLayoutManager;
+
+    protected EndlessRecyclerViewScrollListener(RecyclerView.LayoutManager layoutManager) {
         this.mLayoutManager = layoutManager;
     }
 
-    public int getLastVisibleItem(int[] lastVisibleItemPositions) {
+    private int getLastVisibleItem(int[] lastVisibleItemPositions) {
         int maxSize = 0;
         for (int i = 0; i < lastVisibleItemPositions.length; i++) {
             if (i == 0) {
                 maxSize = lastVisibleItemPositions[i];
-            }
-            else if (lastVisibleItemPositions[i] > maxSize) {
+            } else if (lastVisibleItemPositions[i] > maxSize) {
                 maxSize = lastVisibleItemPositions[i];
             }
         }
@@ -46,6 +44,7 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
     public void onScrolled(RecyclerView view, int dx, int dy) {
         int lastVisibleItemPosition = 0;
         int totalItemCount = mLayoutManager.getItemCount();
+        Log.d("totalItemCount", String.valueOf(totalItemCount));
 
         if (mLayoutManager instanceof StaggeredGridLayoutManager) {
             int[] lastVisibleItemPositions = ((StaggeredGridLayoutManager) mLayoutManager).findLastVisibleItemPositions(null);
@@ -60,7 +59,8 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
         // If the total item count is zero and the previous isn't, assume the
         // list is invalidated and should be reset back to initial state
         if (totalItemCount < previousTotalItemCount) {
-            this.currentPage = this.startingPageIndex;
+            Log.d("AAA","AAA");
+            this.offset = this.startingPageIndex;
             this.previousTotalItemCount = totalItemCount;
             if (totalItemCount == 0) {
                 this.loading = true;
@@ -70,19 +70,24 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
         // changed, if so we conclude it has finished loading and update the current page
         // number and total item count.
         if (loading && (totalItemCount > previousTotalItemCount)) {
+            Log.d("BBB","BBB");
             loading = false;
             previousTotalItemCount = totalItemCount;
         }
 //        Log.d("Pre Count ",String.valueOf(previousTotalItemCount));
 //        Log.d("Total Count",String.valueOf(totalItemCount));
-//        Log.d("Current",String.valueOf(currentPage));
+//        Log.d("Current",String.valueOf(offset));
 //
 //        Log.d("lastVisibleItemPosition",String.valueOf(lastVisibleItemPosition));
 //        Log.d("Loadinf",String.valueOf(loading));
-        if (loading && (lastVisibleItemPosition == totalItemCount -1) && (currentPage  >= totalItemCount)){
-            currentPage = currentPage -  visibleThreshold;
-            loading = false;
-        }
+        // The minimum amount of items to have below your current scroll position
+        // before loading more.
+        int visibleThreshold = 10;
+//        if (loading && (lastVisibleItemPosition == totalItemCount - 1) && (offset >= totalItemCount)) {
+//            Log.d("CCC","CCC");
+//            offset = offset - visibleThreshold;
+//            loading = false;
+//        }
 
 
         // If it isn’t currently loading, we check to see if we have breached
@@ -90,21 +95,25 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
         // If we do need to reload some more data, we execute onLoadMore to fetch the data.
         // threshold should reflect how many total columns there are too
 
-        if (!loading && (lastVisibleItemPosition + visibleThreshold) > totalItemCount) {
-            currentPage = currentPage +  visibleThreshold;
-            if ( currentPage < 0 ){
-                currentPage = 1;
-            }
-            onLoadMore(currentPage);
+        Log.d("lastVisibleItemPosition", String.valueOf(lastVisibleItemPosition));
+        Log.d("totalItemCount", String.valueOf(totalItemCount));
+
+
+        if ( !loading && (lastVisibleItemPosition ) >= (totalItemCount -1 )) {
+            Log.d("DDD","DDD");
+            onLoadMore(offset);
+            offset = offset + visibleThreshold;
             loading = true;
+            rich  = true;
         }
 
+        Log.d("offset", String.valueOf(offset));
 
     }
 
     // Call this method whenever performing new searches
     public void resetState() {
-        this.currentPage = this.startingPageIndex;
+        this.offset = this.startingPageIndex;
         this.previousTotalItemCount = 0;
         this.loading = true;
     }
