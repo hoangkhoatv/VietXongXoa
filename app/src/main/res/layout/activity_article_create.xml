@@ -30,7 +30,7 @@
                     android:background="@android:color/transparent"
                     android:gravity="top"
                     android:hint="@string/hint_writing"
-                    android:inputType="text"
+                    android:inputType="textMultiLine"
                     android:minHeight="@dimen/minHeightTextEditor"
                     android:padding="@dimen/primaryPadding"
                     android:textSize="@dimen/textFontSize"
