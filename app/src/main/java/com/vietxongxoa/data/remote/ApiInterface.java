@@ -34,7 +34,7 @@ public interface ApiInterface {
     );
 
     @POST("articles")
-    Call<DataResponse<Data<Article>>> postWirte(
+    Call<DataResponse<Data<Article>>> postWrite(
             @Header("Authorization") String authKey,
             @Body JsonObject content
     );

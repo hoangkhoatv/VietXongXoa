@@ -70,7 +70,7 @@ public class ArticleDataManager extends BaseDataManager {
 
     public void postWrite(final ArticleListener listener, JsonObject content) {
         ApiInterface apiService = ApiHelper.getClient().create(ApiInterface.class);
-        Call<DataResponse<Data<Article>>> call = apiService.postWirte(
+        Call<DataResponse<Data<Article>>> call = apiService.postWrite(
                 mPreferencesHelper.getToken(),
                 content
         );

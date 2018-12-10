@@ -45,7 +45,7 @@ public class ArticleListActivity extends BaseActivity
     SwipeRefreshLayout swipeRefreshLayout;
 
     int limit = 10;
-    int currentPage = 0;
+    int offset = 0;
     int endPage = -1;
     private PostAdapter adapter;
     private EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
@@ -76,7 +76,7 @@ public class ArticleListActivity extends BaseActivity
     @Override
     public void showData(final List<Data<Article>> data) {
         final List<Object> baseItems = new ArrayList<>();
-        for (int i = 0; i < data.size() - 1; i++) {
+        for (int i = 0; i < data.size(); i++) {
             data.get(i).attributes.type = BaseModel.SECOND_TYPE;
             baseItems.add(data.get(i));
         }
@@ -137,7 +137,6 @@ public class ArticleListActivity extends BaseActivity
             baseItem.add(dataItem);
             adapter.add(baseItem);
             isWrite = false;
-
         }
     }
 
@@ -152,9 +151,9 @@ public class ArticleListActivity extends BaseActivity
         recyclerView.setAdapter(adapter);
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
-            public void onLoadMore(final int page) {
-                currentPage = page;
-                loadMore(page);
+            public void onLoadMore(final int mOffset) {
+                offset = mOffset;
+                loadMore(mOffset);
             }
         };
         recyclerView.addOnScrollListener(endlessRecyclerViewScrollListener);
@@ -166,8 +165,8 @@ public class ArticleListActivity extends BaseActivity
                         if (adapter != null) {
                             isWrite = true;
                             endlessRecyclerViewScrollListener.resetState();
-                            currentPage = 0;
-                            loadMore(currentPage);
+                            offset = 0;
+                            loadMore(offset);
                         }
                     }
                 }
@@ -185,19 +184,19 @@ public class ArticleListActivity extends BaseActivity
 
     @Override
     public void onRetryLoadMore() {
-        loadMore(currentPage);
+        loadMore(offset);
     }
 
-    private void loadMore(final int page) {
+    private void loadMore(final int offset) {
         adapter.startLoadMore();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (page == endPage) {
+                if (offset == endPage) {
                     adapter.onReachEnd();
                     return;
                 }
-                mMainPresenter.getData(limit, page);
+                mMainPresenter.getData(limit, offset);
             }
         }, 500);
     }

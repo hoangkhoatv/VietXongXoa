@@ -45,7 +45,10 @@ public class CommentDataManager extends BaseDataManager {
             ) {
                 assert response.body() != null;
                 if (response.isSuccessful() && response.body().status.matches("success")) {
-                    listener.onResponse(response.body().data);
+                    if (response.body().data != null){
+                        listener.onResponse(response.body().data);
+                    }
+
                 } else {
                     Error error = ErrorUtils.parseError(response);
                     if (error != null) {
