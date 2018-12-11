@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -114,6 +115,7 @@ public class ArticleListActivity extends BaseActivity
 
     @Override
     public void showLove(String status, int position) {
+        Log.d("BBBB",status);
         if (status.matches("success")) {
             adapter.loved(position);
         }
@@ -121,9 +123,16 @@ public class ArticleListActivity extends BaseActivity
 
     @Override
     public void showUnLove(String status, int position) {
+        Log.d("BBBB",status);
+
         if (status.matches("success")) {
             adapter.unLove(position);
         }
+    }
+
+    @Override
+    public void showErrorLove(String error) {
+
     }
 
 
@@ -228,5 +237,7 @@ public class ArticleListActivity extends BaseActivity
         } else {
             mMainPresenter.deleteLove(idPost, position);
         }
+
+
     }
 }

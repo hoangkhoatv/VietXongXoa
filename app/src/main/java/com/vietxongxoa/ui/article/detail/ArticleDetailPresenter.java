@@ -118,6 +118,11 @@ public class ArticleDetailPresenter<V extends ArticleDetailMvpView> extends Base
             public void onUnLove(String status) {
 
             }
+
+            @Override
+            public void onError(String error) {
+
+            }
         }, content);
     }
 
@@ -133,6 +138,11 @@ public class ArticleDetailPresenter<V extends ArticleDetailMvpView> extends Base
             @Override
             public void onUnLove(String status) {
                 getMvpView().showUnLove(status, position);
+            }
+
+            @Override
+            public void onError(String error) {
+
             }
         }, content);
     }

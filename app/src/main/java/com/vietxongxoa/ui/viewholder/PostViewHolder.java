@@ -25,13 +25,14 @@ public class PostViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     private ItemClickListener itemClickListener;
     private IconTextView iconLove;
     private TextView numLoved;
+    private Button btnLove;
 
     public PostViewHolder(final View itemView) {
         super(itemView);
         textName = itemView.findViewById(R.id.text_name);
         textPost = itemView.findViewById(R.id.text_post);
         textDate = itemView.findViewById(R.id.text_date);
-        Button btnLove = itemView.findViewById(R.id.btnLove);
+        btnLove = itemView.findViewById(R.id.btnLove);
         Button btnComment = itemView.findViewById(R.id.btnComment);
         iconLove = itemView.findViewById(R.id.iconLove);
         numLoved = itemView.findViewById(R.id.numLoved);
@@ -40,6 +41,7 @@ public class PostViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         btnLove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btnLove.setEnabled(false);
                 itemClickListener.onLove(itemView, getAdapterPosition(), iconLove.isLove());
             }
         });
@@ -94,6 +96,8 @@ public class PostViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         } else {
             textPost.setText(strPost);
         }
+        btnLove.setEnabled(true);
+
     }
 
     @Override

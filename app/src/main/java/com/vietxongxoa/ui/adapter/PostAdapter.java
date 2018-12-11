@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -112,6 +113,8 @@ public class PostAdapter extends LoadMoreRecyclerViewAdapter<Object> {
         ((Data<Article>) mDataList.get(pos)).attributes.loved = true;
         int love = Integer.parseInt(((Data<Article>) mDataList.get(pos)).attributes.love) + 1;
         ((Data<Article>) mDataList.get(pos)).attributes.love = String.valueOf(love);
+        Log.d("BBBBL",String.valueOf(love));
+
         notifyItemChanged(pos);
     }
 
@@ -119,6 +122,9 @@ public class PostAdapter extends LoadMoreRecyclerViewAdapter<Object> {
         ((Data<Article>) mDataList.get(pos)).attributes.loved = false;
         int love = Integer.parseInt(((Data<Article>) mDataList.get(pos)).attributes.love) - 1;
         ((Data<Article>) mDataList.get(pos)).attributes.love = String.valueOf(love);
+        Log.d("BBBBU",String.valueOf(love));
+
         notifyItemChanged(pos);
+
     }
 }
