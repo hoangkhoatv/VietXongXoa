@@ -39,11 +39,17 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     // App's dependencies, including test
+    //noinspection GradleCompatible
     implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    //noinspection GradleCompatible
     implementation "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
+    //noinspection GradleCompatible
     implementation "com.android.support:design:$rootProject.supportLibraryVersion"
+    //noinspection GradleCompatible
     implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+    //noinspection GradleCompatible
     implementation "com.android.support:support-v4:$rootProject.supportLibraryVersion"
+    //noinspection GradleDependency
     implementation "com.android.support.test.espresso:espresso-idling-resource:$rootProject.espressoVersion"
     implementation "com.google.guava:guava:$rootProject.guavaVersion"
     implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
@@ -52,6 +58,7 @@ dependencies {
 
     //Required by Dagger2
     implementation "com.amitshekhar.android:android-networking:$rootProject.fastAndroidNetworkingVersion"
+    //noinspection GradleDependency
     implementation "com.jakewharton:butterknife:$rootProject.butterknifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterknifeVersion"
 
@@ -79,12 +86,33 @@ dependencies {
 
     // Resolve conflicts between article.list and test APK:
     androidTestImplementation "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
+    //noinspection GradleCompatible
     androidTestImplementation "com.android.support:support-v4:$rootProject.supportLibraryVersion"
+    //noinspection GradleCompatible
     androidTestImplementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+    //noinspection GradleCompatible
     androidTestImplementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    //noinspection GradleCompatible
     androidTestImplementation "com.android.support:design:$rootProject.supportLibraryVersion"
+    //noinspection GradleDependency
     implementation 'com.google.code.gson:gson:2.6.2'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+    implementation 'com.google.firebase:firebase-core:16.0.6'
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+}
+
+apply plugin: 'com.google.gms.google-services'
+
+
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == 'com.android.support') {
+            if (!requested.name.startsWith("multidex")) {
+                details.useVersion '25.3.0'
+            }
+        }
+    }
 }

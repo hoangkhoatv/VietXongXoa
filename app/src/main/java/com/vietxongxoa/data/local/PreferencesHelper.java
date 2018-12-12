@@ -22,9 +22,10 @@ public class PreferencesHelper {
     public static final String KEY_NUM_LOVE = "number love";
     public static final String KEY_LOVED = "loved";
     public static final String KEY_COMMENT = "comment";
+    private static final String KEY_FCM_TOKEN = "fcm_token";
 
     @Inject
-    PreferencesHelper(@ApplicationContext Context context) {
+    public PreferencesHelper(@ApplicationContext Context context) {
         mPref = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
     }
 
@@ -46,5 +47,13 @@ public class PreferencesHelper {
 
     public String getUserName() {
         return mPref.getString(KEY_USERNAME, null);
+    }
+
+    public void setKeyFcmToken(String fcmToken) {
+        mPref.edit().putString(KEY_FCM_TOKEN, fcmToken).apply();
+    }
+
+    public String getKeyFcmToken() {
+        return mPref.getString(KEY_FCM_TOKEN, null);
     }
 }
