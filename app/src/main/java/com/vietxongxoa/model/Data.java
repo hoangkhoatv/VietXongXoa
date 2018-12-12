@@ -12,6 +12,11 @@ public class Data<V> {
     @Expose
     public String type;
 
+    @SerializedName("relationships")
+    @Expose
+    public Relationships relationships;
+
+
     @SerializedName("uuid")
     @Expose
     public String uuid;

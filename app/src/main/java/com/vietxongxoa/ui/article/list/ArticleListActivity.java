@@ -174,8 +174,7 @@ public class ArticleListActivity extends BaseActivity
                         if (adapter != null) {
                             isWrite = true;
                             endlessRecyclerViewScrollListener.resetState();
-                            offset = 0;
-                            loadMore(offset);
+                            endlessRecyclerViewScrollListener.onLoadMore(0);
                         }
                     }
                 }
@@ -196,7 +195,7 @@ public class ArticleListActivity extends BaseActivity
         loadMore(offset);
     }
 
-    private void loadMore(final int offset) {
+    private void loadMore(final int mOffset) {
         adapter.startLoadMore();
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -205,7 +204,7 @@ public class ArticleListActivity extends BaseActivity
                     adapter.onReachEnd();
                     return;
                 }
-                mMainPresenter.getData(limit, offset);
+                mMainPresenter.getData(limit, mOffset);
             }
         }, 500);
     }

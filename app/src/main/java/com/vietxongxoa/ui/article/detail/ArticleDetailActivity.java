@@ -53,6 +53,8 @@ public class ArticleDetailActivity
     @BindView(R.id.btnComment)
     ImageButton btnComment;
 
+    private boolean isLoading = false;
+
 
     @Inject
     ArticleDetailPresenter<ArticleDetailMvpView> mDetailPresenter;
@@ -147,6 +149,7 @@ public class ArticleDetailActivity
                 } else {
                     adapter.onHidden();
                 }
+                isLoading = false;
             }
         });
     }
@@ -247,9 +250,15 @@ public class ArticleDetailActivity
             @Override
             public void onRefresh() {
                 if (adapter != null) {
-                    endlessRecyclerViewScrollListener.resetState();
-                    currentPage = 0;
-                    mDetailPresenter.getData(data.uuid);
+                    if (isLoading == false){
+                        endlessRecyclerViewScrollListener.resetState();
+                        currentPage = 0;
+                        mDetailPresenter.getData(data.uuid);
+                        isLoading = true;
+                    } else {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+
                 }
             }
         });
@@ -287,7 +296,9 @@ public class ArticleDetailActivity
                     adapter.onReachEnd();
                     return;
                 }
+                isLoading = true;
                 mDetailPresenter.getComment(data.uuid, limit, page);
+
             }
         }, 500);
     }

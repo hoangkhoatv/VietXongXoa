@@ -16,9 +16,7 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
     private boolean loading = true;
     // Sets the starting page index
     private int startingPageIndex = 0;
-
-    boolean rich = false;
-
+    private  int visibleThreshold = 10;
     private RecyclerView.LayoutManager mLayoutManager;
 
     protected EndlessRecyclerViewScrollListener(RecyclerView.LayoutManager layoutManager) {
@@ -104,7 +102,6 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
             onLoadMore(offset);
             offset = offset + visibleThreshold;
             loading = true;
-            rich  = true;
         }
 
         Log.d("offset", String.valueOf(offset));
@@ -113,7 +110,7 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
 
     // Call this method whenever performing new searches
     public void resetState() {
-        this.offset = this.startingPageIndex;
+        this.offset = visibleThreshold;
         this.previousTotalItemCount = 0;
         this.loading = true;
     }
