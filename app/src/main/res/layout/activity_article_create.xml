@@ -26,7 +26,6 @@
                     android:id="@+id/edtWrite"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:autofillHints="@string/hint_writing"
                     android:background="@android:color/transparent"
                     android:gravity="top"
                     android:hint="@string/hint_writing"
@@ -34,7 +33,8 @@
                     android:minHeight="@dimen/minHeightTextEditor"
                     android:padding="@dimen/primaryPadding"
                     android:textSize="@dimen/textFontSize"
-                    tools:targetApi="o" />
+                    tools:targetApi="o"
+                    tools:ignore="Autofill" />
             </RelativeLayout>
 
             <Button

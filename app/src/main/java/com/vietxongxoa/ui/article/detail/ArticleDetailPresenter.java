@@ -10,18 +10,21 @@ import com.vietxongxoa.data.manager.LoveDataManager;
 import com.vietxongxoa.model.Article;
 import com.vietxongxoa.model.Comment;
 import com.vietxongxoa.model.Data;
+import com.vietxongxoa.model.DataResponse;
 import com.vietxongxoa.ui.base.BasePresenter;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
+import retrofit2.Call;
+
 public class ArticleDetailPresenter<V extends ArticleDetailMvpView> extends BasePresenter<V> implements ArticleDetailMvpPresenter<V> {
 
     private final CommentDataManager commentDataManager;
     private final ArticleDataManager articleDataManager;
     private final LoveDataManager loveDataManager;
-
+    Call<DataResponse<List<Data<Comment>>>> callComment;
     @Inject
     ArticleDetailPresenter(
             CommentDataManager commentDataManager,
@@ -50,10 +53,14 @@ public class ArticleDetailPresenter<V extends ArticleDetailMvpView> extends Base
 
     @Override
     public void getComment(String uuid, int limit, int offset) {
-        commentDataManager.getComments(new CommentListener() {
+        callComment = commentDataManager.getComments(new CommentListener() {
             @Override
             public void onResponse(List<Data<Comment>> dataResponse) {
-                getMvpView().showDataComments(dataResponse);
+                if (dataResponse != null){
+                    if(getMvpView() !=null){
+                    getMvpView().showDataComments(dataResponse);
+                    }
+                }
             }
 
             @Override
@@ -118,6 +125,11 @@ public class ArticleDetailPresenter<V extends ArticleDetailMvpView> extends Base
             public void onUnLove(String status) {
 
             }
+
+            @Override
+            public void onError(String error) {
+
+            }
         }, content);
     }
 
@@ -134,6 +146,20 @@ public class ArticleDetailPresenter<V extends ArticleDetailMvpView> extends Base
             public void onUnLove(String status) {
                 getMvpView().showUnLove(status, position);
             }
+
+            @Override
+            public void onError(String error) {
+
+            }
         }, content);
+    }
+
+    @Override
+    public void cancelCallComment() {
+        if (callComment!=null){
+            if(!callComment.isCanceled()){
+                callComment.cancel();
+            }
+        }
     }
 }

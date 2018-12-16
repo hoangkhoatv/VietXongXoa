@@ -1,11 +1,8 @@
 package com.vietxongxoa.ui.article.list;
 
 import android.annotation.SuppressLint;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -61,16 +58,6 @@ public class ArticleListActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // Create channel to show notifications.
-            String channelId  = getString(R.string.default_notification_channel_id);
-            String channelName = getString(R.string.default_notification_channel_name);
-            NotificationManager notificationManager =
-                    getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(new NotificationChannel(channelId,
-                    channelName, NotificationManager.IMPORTANCE_LOW));
-        }
         activityComponent().inject(this);
         setContentView(R.layout.activity_article_list);
         setActionBar();
@@ -139,6 +126,11 @@ public class ArticleListActivity extends BaseActivity
         }
     }
 
+    @Override
+    public void showErrorLove(String error) {
+
+    }
+
 
     private void setWritePost() {
         if (isWrite) {
@@ -164,25 +156,24 @@ public class ArticleListActivity extends BaseActivity
         recyclerView.setAdapter(adapter);
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
-            public void onLoadMore(final int mOffset) {
-                offset = mOffset;
-                loadMore(mOffset);
+            public void onLoadMore(final int offset) {
+                ArticleListActivity.this.offset = offset;
+                loadMore(offset);
             }
         };
         recyclerView.addOnScrollListener(endlessRecyclerViewScrollListener);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        if (adapter != null) {
-                            isWrite = true;
-                            endlessRecyclerViewScrollListener.resetState();
-                            offset = 0;
-                            loadMore(offset);
-                        }
+            new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    if (adapter != null) {
+                        isWrite = true;
+                        endlessRecyclerViewScrollListener.resetState();
+                        endlessRecyclerViewScrollListener.onLoadMore(0);
                     }
                 }
+            }
         );
     }
 
@@ -200,7 +191,7 @@ public class ArticleListActivity extends BaseActivity
         loadMore(offset);
     }
 
-    private void loadMore(final int offset) {
+    private void loadMore(final int mOffset) {
         adapter.startLoadMore();
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -209,7 +200,7 @@ public class ArticleListActivity extends BaseActivity
                     adapter.onReachEnd();
                     return;
                 }
-                mMainPresenter.getData(limit, offset);
+                mMainPresenter.getData(limit, mOffset);
             }
         }, 500);
     }

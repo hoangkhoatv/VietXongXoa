@@ -7,7 +7,9 @@ import com.vietxongxoa.data.listeners.LoveListener;
 import com.vietxongxoa.data.local.PreferencesHelper;
 import com.vietxongxoa.data.remote.ApiHelper;
 import com.vietxongxoa.data.remote.ApiInterface;
+import com.vietxongxoa.data.remote.ErrorUtils;
 import com.vietxongxoa.model.DataResponse;
+import com.vietxongxoa.model.Error;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -39,6 +41,11 @@ public class LoveDataManager extends BaseDataManager {
                 if (response.isSuccessful()) {
                     assert response.body() != null;
                     listener.onLoved(response.body().status);
+                } else {
+                    Error error = ErrorUtils.parseError(response);
+                    if (error != null) {
+                        listener.onError(error.message);
+                    }
                 }
             }
 
@@ -47,6 +54,7 @@ public class LoveDataManager extends BaseDataManager {
                     @NonNull Call<DataResponse<Boolean>> call,
                     @NonNull Throwable t
             ) {
+                listener.onError(t.getMessage());
 
             }
         });
@@ -67,11 +75,17 @@ public class LoveDataManager extends BaseDataManager {
                 if (response.isSuccessful()) {
                     assert response.body() != null;
                     listener.onUnLove(response.body().status);
+                } else {
+                    Error error = ErrorUtils.parseError(response);
+                    if (error != null) {
+                        listener.onError(error.message);
+                    }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<DataResponse<Boolean>> call, @NonNull Throwable t) {
+                listener.onError(t.getMessage());
 
             }
         });

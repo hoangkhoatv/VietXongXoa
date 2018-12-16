@@ -1,70 +1,100 @@
 package com.vietxongxoa.fcm;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.media.RingtoneManager;
 import android.os.Build;
+import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.firebase.messaging.RemoteMessage;
 import com.vietxongxoa.R;
+import com.vietxongxoa.ui.article.list.ArticleListActivity;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.Map;
 
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
+    public static final String FCM_PARAM = "picture";
+    private static final String CHANNEL_NAME = "FCM";
+    private static final String CHANNEL_DESC = "Firebase Cloud Messaging";
+    private int numMessages = 0;
 
-    private static final String TAG = "MyFirebaseMsgService";
-    private static final String CHANNEL_ID = "MyFirebaseMsgService";
-
-    /**
-     * Called when message is received.
-     *
-     * @param remoteMessage Object representing the message received from Firebase Cloud Messaging.
-     */
-    // [START receive_message]
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
+        super.onMessageReceived(remoteMessage);
+        RemoteMessage.Notification notification = remoteMessage.getNotification();
+        Map<String, String> data = remoteMessage.getData();
+        Log.d("FROM", remoteMessage.getFrom());
+        assert notification != null;
+        // sendNotification(notification, data);
+    }
 
-        Log.d(TAG, "From: " + remoteMessage.getFrom());
+    private void sendNotification(RemoteMessage.Notification notification, Map<String, String> data) {
+        Bundle bundle = new Bundle();
+        bundle.putString(FCM_PARAM, data.get(FCM_PARAM));
 
-        // Check if message contains a data payload.
-        if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+        Intent intent = new Intent(this, ArticleListActivity.class);
+        intent.putExtras(bundle);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                .setContentTitle(notification.getTitle())
+                .setContentText(notification.getBody())
+                .setAutoCancel(true)
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                //.setSound(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.win))
+                .setContentIntent(pendingIntent)
+                .setContentInfo("Hello")
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
+                .setColor(getColor(R.color.colorAccent))
+                .setLights(Color.RED, 1000, 300)
+                .setDefaults(Notification.DEFAULT_VIBRATE)
+                .setNumber(++numMessages)
+                .setSmallIcon(R.mipmap.ic_launcher);
+
+        try {
+            String picture = data.get(FCM_PARAM);
+            if (picture != null && !"".equals(picture)) {
+                URL url = new URL(picture);
+                Bitmap bigPicture = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                notificationBuilder.setStyle(
+                        new NotificationCompat.BigPictureStyle().bigPicture(bigPicture).setSummaryText(notification.getBody())
+                );
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        // Check if message contains a notification payload.
-        if (remoteMessage.getNotification() != null) {
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-            sendNotification(remoteMessage.getNotification().getBody());
-        }
-    }
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-    @Override
-    public void onNewToken(String token) {
-        Log.d(TAG, "Refreshed token: " + token);
-        sendRegistrationToServer(token);
-    }
-
-
-    private void sendRegistrationToServer(String token) {
-        // TODO: Implement this method to send token to your app server.
-    }
-
-    /**
-     * Create and show a simple notification containing the received FCM message.
-     *
-     * @param messageBody FCM message body received.
-     */
-    private void sendNotification(String messageBody) {
-        Log.d(TAG, String.valueOf(Build.VERSION.SDK_INT));
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.channel_name);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(messageBody);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            NotificationChannel channel = new NotificationChannel(
+                    getString(R.string.notification_channel_id), CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT
+            );
+            channel.setDescription(CHANNEL_DESC);
+            channel.setShowBadge(true);
+            channel.canShowBadge();
+            channel.enableLights(true);
+            channel.setLightColor(Color.RED);
+            channel.enableVibration(true);
+            channel.setVibrationPattern(new long[]{100, 200, 300, 400, 500});
+
+            assert notificationManager != null;
             notificationManager.createNotificationChannel(channel);
         }
+
+        assert notificationManager != null;
+        notificationManager.notify(0, notificationBuilder.build());
     }
 }

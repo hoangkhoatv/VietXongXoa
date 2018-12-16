@@ -15,4 +15,7 @@ public interface ArticleListMvpView extends MvpView {
     void showLove(String status, int position);
 
     void showUnLove(String status, int position);
+
+    void showErrorLove(String error);
+
 }
