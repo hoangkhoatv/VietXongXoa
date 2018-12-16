@@ -17,14 +17,13 @@
             android:id="@+id/edtName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints="@string/create_hint"
             android:background="@android:color/transparent"
             android:hint="@string/create_hint"
             android:inputType="text"
             android:maxLines="1"
             android:padding="@dimen/primaryPadding"
             android:textSize="@dimen/textFontSize"
-            tools:ignore="UnusedAttribute" />
+            tools:ignore="Autofill,UnusedAttribute" />
     </RelativeLayout>
 
     <Button

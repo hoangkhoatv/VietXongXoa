@@ -35,4 +35,10 @@
     <string name="retry">Thử lại</string>
     <string name="nothing">nothing</string>
     <string name="love">Thích</string>
+    <string name="default_notification_channel_id">default_notification_channel_id</string>
+    <string name="fcm_message">fcm_message</string>
+    <string name="default_notification_channel_name">default_notification_channel_name</string>
+    <string name="channel_name">channel_name</string>
+    <string name="channel_description">channel_description</string>
+    <string name="notification_channel_id">default</string>
 </resources>

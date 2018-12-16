@@ -126,6 +126,11 @@ public class ArticleListActivity extends BaseActivity
         }
     }
 
+    @Override
+    public void showErrorLove(String error) {
+
+    }
+
 
     private void setWritePost() {
         if (isWrite) {
@@ -151,25 +156,24 @@ public class ArticleListActivity extends BaseActivity
         recyclerView.setAdapter(adapter);
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
-            public void onLoadMore(final int mOffset) {
-                offset = mOffset;
-                loadMore(mOffset);
+            public void onLoadMore(final int offset) {
+                ArticleListActivity.this.offset = offset;
+                loadMore(offset);
             }
         };
         recyclerView.addOnScrollListener(endlessRecyclerViewScrollListener);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        if (adapter != null) {
-                            isWrite = true;
-                            endlessRecyclerViewScrollListener.resetState();
-                            offset = 0;
-                            loadMore(offset);
-                        }
+            new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    if (adapter != null) {
+                        isWrite = true;
+                        endlessRecyclerViewScrollListener.resetState();
+                        endlessRecyclerViewScrollListener.onLoadMore(0);
                     }
                 }
+            }
         );
     }
 
@@ -187,7 +191,7 @@ public class ArticleListActivity extends BaseActivity
         loadMore(offset);
     }
 
-    private void loadMore(final int offset) {
+    private void loadMore(final int mOffset) {
         adapter.startLoadMore();
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -196,7 +200,7 @@ public class ArticleListActivity extends BaseActivity
                     adapter.onReachEnd();
                     return;
                 }
-                mMainPresenter.getData(limit, offset);
+                mMainPresenter.getData(limit, mOffset);
             }
         }, 500);
     }

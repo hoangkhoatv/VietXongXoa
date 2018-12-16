@@ -13,5 +13,7 @@ public interface ArticleDetailMvpPresenter<V extends ArticleDetailMvpView> exten
     void postLove(String uuid, int position);
 
     void deleteLove(String uuid, int position);
+
+    void cancelCallComment();
 }
 

@@ -1,6 +1,7 @@
 package com.vietxongxoa.data.manager;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.gson.JsonObject;
 import com.vietxongxoa.data.listeners.CommentListener;
@@ -13,7 +14,10 @@ import com.vietxongxoa.model.Data;
 import com.vietxongxoa.model.DataResponse;
 import com.vietxongxoa.model.Error;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -30,7 +34,7 @@ public class CommentDataManager extends BaseDataManager {
         super(preferencesHelper);
     }
 
-    public void getComments(final CommentListener listener, String uuid, int limit, int offset) {
+    public Call<DataResponse<List<Data<Comment>>>> getComments(final CommentListener listener, String uuid, final int limit, int offset) {
         ApiInterface apiService = ApiHelper.getClient().create(ApiInterface.class);
         Call<DataResponse<List<Data<Comment>>>> call = apiService.getComments(
                 mPreferencesHelper.getToken(),
@@ -45,10 +49,10 @@ public class CommentDataManager extends BaseDataManager {
             ) {
                 assert response.body() != null;
                 if (response.isSuccessful() && response.body().status.matches("success")) {
-                    if (response.body().data != null){
-                        listener.onResponse(response.body().data);
-                    }
+                        if (response.body().data != null){
+                            listener.onResponse(response.body().data);
 
+                        }
                 } else {
                     Error error = ErrorUtils.parseError(response);
                     if (error != null) {
@@ -65,6 +69,7 @@ public class CommentDataManager extends BaseDataManager {
                 listener.onError(t.getMessage());
             }
         });
+        return call;
     }
 
     public void postComment(final CommentListener listener, JsonObject content) {

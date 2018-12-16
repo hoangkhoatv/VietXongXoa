@@ -99,9 +99,6 @@ public abstract class LoadMoreRecyclerViewAdapter<T> extends BaseRecyclerViewAda
     public void startLoadMore() {
         mOnLoadMoreFailed = false;
         mLoadHidden = false;
-
-
-        notifyDataSetChanged();
     }
 
     /**
@@ -111,8 +108,6 @@ public abstract class LoadMoreRecyclerViewAdapter<T> extends BaseRecyclerViewAda
         mOnLoadMoreFailed = true;
         mLoadHidden = false;
         notifyItemChanged(bottomItemPosition());
-
-
     }
 
     public void onHidden() {

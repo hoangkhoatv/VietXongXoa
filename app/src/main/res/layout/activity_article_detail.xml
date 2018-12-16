@@ -34,13 +34,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_weight="0.9"
-            android:autofillHints="@string/enter_comment"
             android:background="@android:color/transparent"
             android:hint="@string/enter_comment"
             android:inputType="text"
             android:paddingBottom="@dimen/secondaryPadding"
             android:textSize="@dimen/textFontSize"
-            tools:targetApi="o" />
+            tools:targetApi="o"
+            tools:ignore="Autofill" />
 
         <ImageButton
             android:id="@+id/btnComment"
