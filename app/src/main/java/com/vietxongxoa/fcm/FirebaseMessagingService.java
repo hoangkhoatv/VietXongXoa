@@ -59,23 +59,25 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        NotificationChannel channel = new NotificationChannel(
-                getString(R.string.notification_channel_id),
-                CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_DEFAULT
-        );
 
-        channel.setDescription(CHANNEL_DESC);
-        channel.setShowBadge(true);
-        channel.canShowBadge();
-        channel.enableLights(true);
-        channel.setLightColor(Color.RED);
-        channel.enableVibration(true);
-        channel.setVibrationPattern(new long[]{100, 200, 300, 400, 500});
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    getString(R.string.notification_channel_id),
+                    CHANNEL_NAME,
+                    NotificationManager.IMPORTANCE_DEFAULT
+            );
+            channel.setDescription(CHANNEL_DESC);
+            channel.setShowBadge(true);
+            channel.canShowBadge();
+            channel.enableLights(true);
+            channel.setLightColor(Color.RED);
+            channel.enableVibration(true);
+            channel.setVibrationPattern(new long[]{100, 200, 300, 400, 500});
 
+            assert notificationManager != null;
+            notificationManager.createNotificationChannel(channel);
+        }
         assert notificationManager != null;
-        notificationManager.createNotificationChannel(channel);
-
         notificationManager.notify(0, notificationBuilder.build());
     }
 }
