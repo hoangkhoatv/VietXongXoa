@@ -18,7 +18,7 @@
 <resources>
     <color name="colorPrimary">#443266</color>
     <color name="colorPrimaryDark">#3A2A57</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#443266</color>
     <color name="background">#EDEDED</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#383838</color>

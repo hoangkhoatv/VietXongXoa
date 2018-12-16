@@ -42,7 +42,6 @@ public class UserRegisterActivity extends BaseActivity implements UserRegisterMv
             startActivity(ArticleListActivity.getStartIntent(getBaseContext()));
             finish();
         }
-
     }
 
     @Override
