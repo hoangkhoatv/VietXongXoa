@@ -23,6 +23,9 @@ public class PreferencesHelper {
     public static final String KEY_LOVED = "loved";
     public static final String KEY_COMMENT = "comment";
     private static final String KEY_FCM_TOKEN = "fcm_token";
+    public static final String KEY_POSITON = "position";
+    public static final String KEY_PLACE = "place";
+
 
     @Inject
     public PreferencesHelper(@ApplicationContext Context context) {

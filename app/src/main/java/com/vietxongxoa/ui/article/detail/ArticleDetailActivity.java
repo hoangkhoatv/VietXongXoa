@@ -1,8 +1,10 @@
 package com.vietxongxoa.ui.article.detail;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -221,7 +223,8 @@ public class ArticleDetailActivity
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                sendDataResult();
+
             }
         });
         TextView txtTitle = (TextView) view.findViewById(R.id.text_title);
@@ -310,5 +313,23 @@ public class ArticleDetailActivity
             BaseActivity.hideKeyboard(this);
             mDetailPresenter.postComment(data.uuid, edtComment.getText().toString());
         }
+    }
+
+    protected void sendDataResult(){
+        Intent intentChange = new Intent();
+        intentChange.putExtra( PreferencesHelper.KEY_PLACE,
+                getIntent().getIntExtra(PreferencesHelper.KEY_POSITON,0));
+        Data<Article> articleData =  (Data<Article>) adapter.getItem(0);
+        intentChange.putExtra(PreferencesHelper.KEY_LOVED, articleData.attributes.loved);
+        intentChange.putExtra(PreferencesHelper.KEY_NUM_LOVE, articleData.attributes.love);
+        intentChange.putExtra(PreferencesHelper.KEY_COMMENT, articleData.attributes.comment);
+        setResult(Activity.RESULT_OK, intentChange);
+        finish();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+       sendDataResult();
     }
 }

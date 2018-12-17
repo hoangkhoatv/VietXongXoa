@@ -1,6 +1,7 @@
 package com.vietxongxoa.ui.article.list;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,15 +11,18 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.vietxongxoa.R;
+import com.vietxongxoa.data.local.PreferencesHelper;
 import com.vietxongxoa.model.Article;
 import com.vietxongxoa.model.ArticleCreateModel;
 import com.vietxongxoa.model.BaseModel;
 import com.vietxongxoa.model.Data;
 import com.vietxongxoa.ui.adapter.PostAdapter;
+import com.vietxongxoa.ui.article.detail.ArticleDetailActivity;
 import com.vietxongxoa.ui.base.BaseActivity;
 import com.vietxongxoa.ui.viewholder.EndlessRecyclerViewScrollListener;
 
@@ -35,7 +39,7 @@ public class ArticleListActivity extends BaseActivity
         PostAdapter.ItemClickListener,
         PostAdapter.RetryLoadMoreListener,
         ItemInteractiveListener {
-
+    public static final int UPDATE_ITEM = 1000;
     @Inject
     ArticleListPresenter<ArticleListMvpView> mMainPresenter;
 
@@ -64,6 +68,7 @@ public class ArticleListActivity extends BaseActivity
         ButterKnife.bind(this);
         mMainPresenter.attachView(this);
         setupRecyclerView();
+
     }
 
     @Override
@@ -232,5 +237,25 @@ public class ArticleListActivity extends BaseActivity
         } else {
             mMainPresenter.deleteLove(idPost, position);
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent dataResult) {
+        if(requestCode == UPDATE_ITEM && resultCode == Activity.RESULT_OK) {
+            Bundle extras = dataResult.getExtras();
+
+            Article article = new Article();
+            int positon = extras.getInt(PreferencesHelper.KEY_PLACE,0);
+            Log.d("PPosition",String.valueOf(positon));
+
+            boolean loved = dataResult.getBooleanExtra(PreferencesHelper.KEY_LOVED,false);
+            String numlove =dataResult.getStringExtra(PreferencesHelper.KEY_NUM_LOVE);
+            int comments = dataResult.getIntExtra(PreferencesHelper.KEY_COMMENT,0);
+            article.love = numlove;
+            article.loved = loved;
+            article.comment = comments;
+            adapter.changeItem(positon,article);
+        }
+
     }
 }
