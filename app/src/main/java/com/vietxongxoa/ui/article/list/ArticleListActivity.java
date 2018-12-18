@@ -39,12 +39,15 @@ public class ArticleListActivity extends BaseActivity
         PostAdapter.ItemClickListener,
         PostAdapter.RetryLoadMoreListener,
         ItemInteractiveListener {
+
     public static final int UPDATE_ITEM = 1000;
+
     @Inject
     ArticleListPresenter<ArticleListMvpView> mMainPresenter;
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -57,6 +60,7 @@ public class ArticleListActivity extends BaseActivity
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, ArticleListActivity.class);
+
     }
 
     @Override
@@ -100,6 +104,7 @@ public class ArticleListActivity extends BaseActivity
                 }
             }
         });
+
     }
 
     @Override
@@ -112,9 +117,11 @@ public class ArticleListActivity extends BaseActivity
         if (adapter != null) {
             adapter.onLoadMoreFailed();
         }
+
         if (swipeRefreshLayout.isRefreshing()) {
             swipeRefreshLayout.setRefreshing(false);
         }
+
     }
 
     @Override
@@ -122,6 +129,7 @@ public class ArticleListActivity extends BaseActivity
         if (status.matches("success")) {
             adapter.loved(position);
         }
+
     }
 
     @Override
@@ -129,6 +137,7 @@ public class ArticleListActivity extends BaseActivity
         if (status.matches("success")) {
             adapter.unLove(position);
         }
+
     }
 
     @Override
@@ -148,6 +157,7 @@ public class ArticleListActivity extends BaseActivity
             adapter.add(baseItem);
             isWrite = false;
         }
+
     }
 
     private void setupRecyclerView() {
@@ -180,6 +190,7 @@ public class ArticleListActivity extends BaseActivity
                 }
             }
         );
+
     }
 
     private void updateAdapter() {
@@ -194,6 +205,7 @@ public class ArticleListActivity extends BaseActivity
     @Override
     public void onRetryLoadMore() {
         loadMore(offset);
+
     }
 
     private void loadMore(final int mOffset) {
@@ -208,6 +220,7 @@ public class ArticleListActivity extends BaseActivity
                 mMainPresenter.getData(limit, mOffset);
             }
         }, 500);
+
     }
 
     @Override
@@ -228,6 +241,7 @@ public class ArticleListActivity extends BaseActivity
         parent.setContentInsetsAbsolute(0, 0);
         TextView txtTitle = (TextView) view.findViewById(R.id.text_title);
         txtTitle.setText(getString(R.string.title_main));
+
     }
 
     @Override
@@ -237,17 +251,15 @@ public class ArticleListActivity extends BaseActivity
         } else {
             mMainPresenter.deleteLove(idPost, position);
         }
+
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent dataResult) {
         if(requestCode == UPDATE_ITEM && resultCode == Activity.RESULT_OK) {
             Bundle extras = dataResult.getExtras();
-
             Article article = new Article();
             int positon = extras.getInt(PreferencesHelper.KEY_PLACE,0);
-            Log.d("PPosition",String.valueOf(positon));
-
             boolean loved = dataResult.getBooleanExtra(PreferencesHelper.KEY_LOVED,false);
             String numlove =dataResult.getStringExtra(PreferencesHelper.KEY_NUM_LOVE);
             int comments = dataResult.getIntExtra(PreferencesHelper.KEY_COMMENT,0);
@@ -255,7 +267,9 @@ public class ArticleListActivity extends BaseActivity
             article.loved = loved;
             article.comment = comments;
             adapter.changeItem(positon,article);
+            
         }
 
     }
+
 }

@@ -325,7 +325,6 @@ public class ArticleDetailActivity
         intentChange.putExtra(PreferencesHelper.KEY_COMMENT, articleData.attributes.comment);
         setResult(Activity.RESULT_OK, intentChange);
         finish();
-
     }
 
     @Override
