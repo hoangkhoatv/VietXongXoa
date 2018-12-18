@@ -15,6 +15,7 @@ import com.vietxongxoa.model.BaseModel;
 import com.vietxongxoa.model.Data;
 import com.vietxongxoa.ui.article.create.ArticleCreateActivity;
 import com.vietxongxoa.ui.article.detail.ArticleDetailActivity;
+import com.vietxongxoa.ui.article.list.ArticleListActivity;
 import com.vietxongxoa.ui.article.list.ItemInteractiveListener;
 import com.vietxongxoa.ui.viewholder.LoadMoreRecyclerViewAdapter;
 import com.vietxongxoa.ui.viewholder.PostViewHolder;
@@ -72,7 +73,9 @@ public class PostAdapter extends LoadMoreRecyclerViewAdapter<Object> {
                             intent.putExtra(PreferencesHelper.KEY_NUM_LOVE, item.love);
                             intent.putExtra(PreferencesHelper.KEY_COMMENT, item.comment);
                             intent.putExtra(PreferencesHelper.KEY_LOVED, item.loved);
-                            mContext.startActivity(intent);
+                            intent.putExtra(PreferencesHelper.KEY_POSITON,position);
+                            ((ArticleListActivity) mContext).startActivityForResult(intent,ArticleListActivity.UPDATE_ITEM);
+
                         }
 
                         @Override
@@ -122,4 +125,15 @@ public class PostAdapter extends LoadMoreRecyclerViewAdapter<Object> {
         ((Data<Article>) mDataList.get(pos)).attributes.love = String.valueOf(love);
         notifyItemChanged(pos);
     }
+
+    public void changeItem(int position, Article article) {
+        ((Data<Article>) mDataList.get(position)).attributes.loved = article.loved;
+        ((Data<Article>) mDataList.get(position)).attributes.comment = article.comment;
+        ((Data<Article>) mDataList.get(position)).attributes.love = article.love;
+        notifyItemChanged(position);
+
+
+    }
+
+
 }
