@@ -132,12 +132,12 @@ public class ArticleDetailActivity
     }
 
     @Override
-    public void showDataComments(List<Data<Comment>> commens) {
+    public void showDataComments(List<Data<Comment>> comments) {
 
         final List<Object> baseItems = new ArrayList<>();
-        for (int i = 0; i < commens.size(); i++) {
-            commens.get(i).attributes.type = BaseModel.SECOND_TYPE;
-            baseItems.add(commens.get(i));
+        for (int i = 0; i < comments.size(); i++) {
+            comments.get(i).attributes.type = BaseModel.SECOND_TYPE;
+            baseItems.add(comments.get(i));
         }
         ArticleDetailActivity.this.runOnUiThread(new Runnable() {
             @Override
@@ -149,6 +149,7 @@ public class ArticleDetailActivity
                 if (baseItems.size() != 0) {
                     adapter.add(baseItems);
                 } else {
+                    adapter.onReachEnd();
                     adapter.onHidden();
                 }
                 isLoading = false;
@@ -253,7 +254,7 @@ public class ArticleDetailActivity
             @Override
             public void onRefresh() {
                 if (adapter != null) {
-                    if (isLoading == false){
+                    if (isLoading == false) {
                         endlessRecyclerViewScrollListener.resetState();
                         currentPage = 0;
                         mDetailPresenter.getData(data.uuid);
@@ -315,11 +316,11 @@ public class ArticleDetailActivity
         }
     }
 
-    protected void sendDataResult(){
+    protected void sendDataResult() {
         Intent intentChange = new Intent();
-        intentChange.putExtra( PreferencesHelper.KEY_PLACE,
-                getIntent().getIntExtra(PreferencesHelper.KEY_POSITON,0));
-        Data<Article> articleData =  (Data<Article>) adapter.getItem(0);
+        intentChange.putExtra(PreferencesHelper.KEY_PLACE,
+                getIntent().getIntExtra(PreferencesHelper.KEY_POSITON, 0));
+        Data<Article> articleData = (Data<Article>) adapter.getItem(0);
         intentChange.putExtra(PreferencesHelper.KEY_LOVED, articleData.attributes.loved);
         intentChange.putExtra(PreferencesHelper.KEY_NUM_LOVE, articleData.attributes.love);
         intentChange.putExtra(PreferencesHelper.KEY_COMMENT, articleData.attributes.comment);
@@ -329,6 +330,6 @@ public class ArticleDetailActivity
 
     @Override
     public void onBackPressed() {
-       sendDataResult();
+        sendDataResult();
     }
 }

@@ -14,6 +14,7 @@ import com.vietxongxoa.model.Data;
 import com.vietxongxoa.ui.article.list.ItemInteractiveListener;
 import com.vietxongxoa.ui.viewholder.CommentViewHolder;
 import com.vietxongxoa.ui.viewholder.LoadMoreRecyclerViewAdapter;
+import com.vietxongxoa.ui.viewholder.NoCommentViewHolder;
 import com.vietxongxoa.ui.viewholder.PostDetailViewHolder;
 
 public class CommentAdapter extends LoadMoreRecyclerViewAdapter<Object> {
@@ -40,6 +41,9 @@ public class CommentAdapter extends LoadMoreRecyclerViewAdapter<Object> {
         } else if (viewType == BaseModel.SECOND_TYPE) {
             View view = mInflater.inflate(R.layout.item_comment, parent, false);
             return new CommentViewHolder(view);
+        }  else if (viewType == BaseModel.THIRD_TYPE){
+            View view = mInflater.inflate(R.layout.item_comment_empty, parent, false);
+            return new NoCommentViewHolder(view);
         }
         return super.onCreateViewHolder(parent, viewType);
 

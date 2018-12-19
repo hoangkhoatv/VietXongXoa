@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -70,7 +71,7 @@ public abstract class LoadMoreRecyclerViewAdapter<T> extends BaseRecyclerViewAda
 
     private static class BottomViewHolder extends RecyclerView.ViewHolder {
         private ProgressBar mProgressBar;
-        private TextView mTvNoMoreItem;
+        private LinearLayout mTvNoMoreItem;
         private Button mBtnRetry;
         private View layoutRetry;
         private RetryLoadMoreListener mRetryLoadMoreListener;
@@ -81,7 +82,7 @@ public abstract class LoadMoreRecyclerViewAdapter<T> extends BaseRecyclerViewAda
             mProgressBar = (ProgressBar) itemView.findViewById(R.id.progress);
             layoutRetry = itemView.findViewById(R.id.layout_retry);
             mBtnRetry = (Button) itemView.findViewById(R.id.button_retry);
-            mTvNoMoreItem = (TextView) itemView.findViewById(R.id.text_no_more_item);
+            mTvNoMoreItem = (LinearLayout) itemView.findViewById(R.id.text_no_more_item);
             layoutRetry.setVisibility(View.GONE); // gone layout retry as default
             mTvNoMoreItem.setVisibility(View.GONE); // gone text view no more item as default
             mBtnRetry.setOnClickListener(new View.OnClickListener() {

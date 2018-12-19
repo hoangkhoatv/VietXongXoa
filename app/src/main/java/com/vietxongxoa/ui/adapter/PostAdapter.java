@@ -75,7 +75,6 @@ public class PostAdapter extends LoadMoreRecyclerViewAdapter<Object> {
                             intent.putExtra(PreferencesHelper.KEY_LOVED, item.loved);
                             intent.putExtra(PreferencesHelper.KEY_POSITON,position);
                             ((ArticleListActivity) mContext).startActivityForResult(intent,ArticleListActivity.UPDATE_ITEM);
-
                         }
 
                         @Override
