@@ -118,4 +118,5 @@ public class CommentAdapter extends LoadMoreRecyclerViewAdapter<Object> {
         ((Data<Article>) mDataList.get(0)).attributes.comment = comment;
         notifyItemChanged(0);
     }
+
 }
