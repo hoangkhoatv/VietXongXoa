@@ -1,83 +1,44 @@
 package com.vietxongxoa.fcm;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.media.RingtoneManager;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.google.firebase.messaging.RemoteMessage;
 import com.vietxongxoa.R;
-import com.vietxongxoa.ui.article.list.ArticleListActivity;
+import com.vietxongxoa.data.local.PreferencesHelper;
+import com.vietxongxoa.ui.article.detail.ArticleDetailActivity;
 
-import java.util.Map;
+import java.util.Objects;
 
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
-    private static final String CHANNEL_NAME = "FCM";
-    private static final String CHANNEL_DESC = "Firebase Cloud Messaging";
-    private int numMessages = 0;
-
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        RemoteMessage.Notification notification = remoteMessage.getNotification();
-        Map<String, String> data = remoteMessage.getData();
-        assert notification != null;
-        sendNotification(notification, data);
-    }
-
-    private void sendNotification(RemoteMessage.Notification notification, Map<String, String> data) {
-        Intent intent = new Intent(this, ArticleListActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(
-                this,
-                0,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT
-        );
-
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setContentTitle(notification.getTitle())
-                .setContentText(notification.getBody())
-                .setAutoCancel(true)
-                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                .setContentIntent(pendingIntent)
-                .setColor(getColor(R.color.colorPrimary))
-                .setLights(Color.RED, 1000, 300)
-                .setDefaults(Notification.DEFAULT_VIBRATE)
-                .setNumber(++numMessages)
+        Log.d("msg", "onMessageReceived - articleUuid: " + remoteMessage.getData().get("articleUuid"));
+        String articleUuid = remoteMessage.getData().get("articleUuid");
+        Intent intent = new Intent(this, ArticleDetailActivity.class);
+        intent.putExtra(PreferencesHelper.KEY_ARTICLE_UUID, articleUuid);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        String channelId = "default";
+        NotificationCompat.Builder builder = new  NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.drawable.send)
-                .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(),
-                        R.drawable.send))
-                .addAction(R.drawable.send, "Call", pendingIntent)
-                .addAction(R.drawable.send, "More", pendingIntent)
-                .addAction(R.drawable.send, "And more", pendingIntent);
-
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(
-                    getString(R.string.notification_channel_id),
-                    CHANNEL_NAME,
-                    NotificationManager.IMPORTANCE_DEFAULT
-            );
-            channel.setDescription(CHANNEL_DESC);
-            channel.setShowBadge(true);
-            channel.canShowBadge();
-            channel.enableLights(true);
-            channel.setLightColor(Color.RED);
-            channel.enableVibration(true);
-            channel.setVibrationPattern(new long[]{100, 200, 300, 400, 500});
-
-            assert notificationManager != null;
-            notificationManager.createNotificationChannel(channel);
+                .setContentTitle(Objects.requireNonNull(remoteMessage.getNotification()).getTitle())
+                .setContentText(Objects.requireNonNull(remoteMessage.getNotification()).getBody())
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent);
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(channelId, "default", NotificationManager.IMPORTANCE_DEFAULT);
+            assert manager != null;
+            manager.createNotificationChannel(channel);
         }
-        assert notificationManager != null;
-        notificationManager.notify(0, notificationBuilder.build());
+        assert manager != null;
+        manager.notify(1, builder.build());
     }
 }
