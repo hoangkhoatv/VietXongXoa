@@ -118,10 +118,10 @@ public class ArticleDetailActivity
                 }
                 if (baseItems.size() != 0) {
                     adapter.add(baseItems);
-                } else {
-                    adapter.onHidden();
                 }
-                loadMore(currentPage);
+                adapter.onHidden();
+
+//                loadMore(currentPage);
             }
         });
     }
@@ -173,7 +173,8 @@ public class ArticleDetailActivity
                 if (baseItems.size() != 0) {
                     adapter.add(baseItems);
                 } else {
-                    adapter.onHidden();
+                        adapter.onHidden();
+
                 }
             }
         });
@@ -244,8 +245,8 @@ public class ArticleDetailActivity
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(final int offset) {
-                currentPage = offset;
-                loadMore(offset);
+//                currentPage = offset;
+//                loadMore(offset);
             }
         };
         recyclerView.addOnScrollListener(endlessRecyclerViewScrollListener);
@@ -269,6 +270,8 @@ public class ArticleDetailActivity
         List<Object> baseItem = new ArrayList<>();
         baseItem.add(data);
         adapter.add(baseItem);
+        adapter.onHidden();
+
     }
 
     @Override
@@ -287,25 +290,25 @@ public class ArticleDetailActivity
 
     @Override
     public void onRetryLoadMore() {
-        loadMore(currentPage);
+//        loadMore(currentPage);
 
     }
 
-    private void loadMore(final int page) {
-        adapter.startLoadMore();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (page == endPage) {
-                    adapter.onReachEnd();
-                    return;
-                }
-                isLoading = true;
-                mDetailPresenter.getComment(data.uuid, limit, page);
-
-            }
-        }, 500);
-    }
+//    private void loadMore(final int page) {
+//        adapter.startLoadMore();
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                if (page == endPage) {
+//                    adapter.onReachEnd();
+//                    return;
+//                }
+//                isLoading = true;
+//                mDetailPresenter.getComment(data.uuid, limit, page);
+//
+//            }
+//        }, 500);
+//    }
 
     @OnClick(R.id.btnComment)
     public void onClickComment(View view) {
