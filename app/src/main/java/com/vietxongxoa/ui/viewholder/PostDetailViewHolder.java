@@ -19,13 +19,13 @@ public class PostDetailViewHolder extends RecyclerView.ViewHolder implements Vie
     private IconTextView iconLove;
     private TextView numLoved;
     private TextView numComment;
-
+    private Button btnLove;
     public PostDetailViewHolder(final View itemView) {
         super(itemView);
         textName = (TextView) itemView.findViewById(R.id.text_name);
         textPost = (TextView) itemView.findViewById(R.id.text_post);
         textDate = (TextView) itemView.findViewById(R.id.text_date);
-        Button btnLove = (Button) itemView.findViewById(R.id.btnLove);
+        btnLove = (Button) itemView.findViewById(R.id.btnLove);
         iconLove = (IconTextView) itemView.findViewById(R.id.iconLove);
         numLoved = (TextView) itemView.findViewById(R.id.numLoved);
         numComment = (TextView) itemView.findViewById(R.id.numberComment);
@@ -34,6 +34,7 @@ public class PostDetailViewHolder extends RecyclerView.ViewHolder implements Vie
         btnLove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btnLove.setEnabled(false);
                 itemClickListener.onLove(itemView, getAdapterPosition(), iconLove.isLove());
             }
         });
@@ -62,6 +63,7 @@ public class PostDetailViewHolder extends RecyclerView.ViewHolder implements Vie
             iconLove.setNotLove();
         }
         textPost.setText(strPost);
+        btnLove.setEnabled(true);
     }
 
     @Override

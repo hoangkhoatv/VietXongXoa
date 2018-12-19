@@ -38,7 +38,9 @@ public class ArticleListPresenter<V extends ArticleListMvpView> extends BasePres
             }
             @Override
             public void onError(String error) {
-                getMvpView().showError(error);
+                if (getMvpView() != null) {
+                    getMvpView().showError(error);
+                }
             }
         }, page, limit);
     }
