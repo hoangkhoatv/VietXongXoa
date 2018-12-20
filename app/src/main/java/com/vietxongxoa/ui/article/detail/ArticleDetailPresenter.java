@@ -1,6 +1,5 @@
 package com.vietxongxoa.ui.article.detail;
 
-import android.util.Log;
 
 import com.google.gson.JsonObject;
 import com.vietxongxoa.data.listeners.ArticleListener;
