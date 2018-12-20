@@ -1,5 +1,7 @@
 package com.vietxongxoa.ui.article.detail;
 
+import android.util.Log;
+
 import com.google.gson.JsonObject;
 import com.vietxongxoa.data.listeners.ArticleListener;
 import com.vietxongxoa.data.listeners.CommentListener;
@@ -41,6 +43,7 @@ public class ArticleDetailPresenter<V extends ArticleDetailMvpView> extends Base
         articleDataManager.getDetail(new ArticleListener() {
             @Override
             public void onResponse(Data<Article> dataResponse) {
+
                 getMvpView().showData(dataResponse);
             }
 

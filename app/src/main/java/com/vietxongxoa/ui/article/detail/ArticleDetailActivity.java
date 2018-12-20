@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -109,6 +110,12 @@ public class ArticleDetailActivity
         final List<Object> baseItems = new ArrayList<>();
         data.attributes.type = BaseModel.HEADER_TYPE;
         baseItems.add(data);
+        if (data.relationships.comments != null){
+            for(Data<Comment> commentData : data.relationships.comments){
+                commentData.attributes.type = BaseModel.SECOND_TYPE;
+                baseItems.add(commentData);
+            }
+        }
         ArticleDetailActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -119,16 +126,21 @@ public class ArticleDetailActivity
                 if (baseItems.size() != 0) {
                     adapter.add(baseItems);
                 }
-                adapter.onHidden();
 
-//                loadMore(currentPage);
+                if (baseItems.size() == 1) {
+                    adapter.onReachEnd();
+                } else if (baseItems.size() > 1){
+                    adapter.onHiddenReachEnd();
+                }
+                adapter.onHidden();
+                isLoading = false;
             }
         });
     }
 
     @Override
     public void showError(String error) {
-
+        Log.e("Details",error);
     }
 
     @Override
@@ -172,10 +184,11 @@ public class ArticleDetailActivity
             public void run() {
                 if (baseItems.size() != 0) {
                     adapter.add(baseItems);
+                    adapter.onHiddenReachEnd();
                 } else {
-                        adapter.onHidden();
-
+                    adapter.onHidden();
                 }
+
             }
         });
         btnComment.setEnabled(true);
@@ -267,10 +280,11 @@ public class ArticleDetailActivity
                 }
             }
         });
-        List<Object> baseItem = new ArrayList<>();
-        baseItem.add(data);
-        adapter.add(baseItem);
-        adapter.onHidden();
+        mDetailPresenter.getData(data.uuid);
+//        List<Object> baseItem = new ArrayList<>();
+//        baseItem.add(data);
+//        adapter.add(baseItem);
+//        adapter.onHidden();
 
     }
 
