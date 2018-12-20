@@ -1,7 +1,6 @@
 package com.vietxongxoa.data.manager;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.google.gson.JsonObject;
 import com.vietxongxoa.data.listeners.ArticleListener;
