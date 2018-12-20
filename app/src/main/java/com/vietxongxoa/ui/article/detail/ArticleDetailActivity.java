@@ -138,7 +138,6 @@ public class ArticleDetailActivity
 
     @Override
     public void showError(String error) {
-        Log.e("Details",error);
     }
 
     @Override
