@@ -115,6 +115,7 @@ public class ArticleDataManager extends BaseDataManager {
             ) {
                 assert response.body() != null;
                 if (response.isSuccessful() && response.body().status.matches("success")) {
+                    assert  response.body().data != null;
                     listener.onResponse(response.body().data);
                 } else {
                     Error error = ErrorUtils.parseError(response);

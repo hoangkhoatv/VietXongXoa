@@ -16,6 +16,12 @@ import com.vietxongxoa.ui.article.detail.ArticleDetailActivity;
 import java.util.Objects;
 
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
+
+    @Override
+    public void onNewToken(String s) {
+        Log.e("NEW_TOKEN", s);
+    }
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
@@ -26,7 +32,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
         String channelId = "default";
-        NotificationCompat.Builder builder = new  NotificationCompat.Builder(this, channelId)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.drawable.send)
                 .setContentTitle(Objects.requireNonNull(remoteMessage.getNotification()).getTitle())
                 .setContentText(Objects.requireNonNull(remoteMessage.getNotification()).getBody())
@@ -41,4 +47,5 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         assert manager != null;
         manager.notify(1, builder.build());
     }
+
 }

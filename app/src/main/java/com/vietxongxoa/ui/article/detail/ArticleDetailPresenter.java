@@ -26,6 +26,7 @@ public class ArticleDetailPresenter<V extends ArticleDetailMvpView> extends Base
     private final ArticleDataManager articleDataManager;
     private final LoveDataManager loveDataManager;
     Call<DataResponse<List<Data<Comment>>>> callComment;
+
     @Inject
     ArticleDetailPresenter(
             CommentDataManager commentDataManager,
@@ -42,7 +43,7 @@ public class ArticleDetailPresenter<V extends ArticleDetailMvpView> extends Base
         articleDataManager.getDetail(new ArticleListener() {
             @Override
             public void onResponse(Data<Article> dataResponse) {
-
+                assert getMvpView() != null;
                 getMvpView().showData(dataResponse);
             }
 
@@ -58,9 +59,9 @@ public class ArticleDetailPresenter<V extends ArticleDetailMvpView> extends Base
         callComment = commentDataManager.getComments(new CommentListener() {
             @Override
             public void onResponse(List<Data<Comment>> dataResponse) {
-                if (dataResponse != null){
-                    if(getMvpView() !=null){
-                    getMvpView().showDataComments(dataResponse);
+                if (dataResponse != null) {
+                    if (getMvpView() != null) {
+                        getMvpView().showDataComments(dataResponse);
                     }
                 }
             }
@@ -158,8 +159,8 @@ public class ArticleDetailPresenter<V extends ArticleDetailMvpView> extends Base
 
     @Override
     public void cancelCallComment() {
-        if (callComment!=null){
-            if(!callComment.isCanceled()){
+        if (callComment != null) {
+            if (!callComment.isCanceled()) {
                 callComment.cancel();
             }
         }
