@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -167,7 +168,12 @@ public class ArticleListActivity extends BaseActivity
                     @Override
                     public void onSuccess(InstanceIdResult instanceIdResult) {
                         String deviceToken = instanceIdResult.getToken();
-                        mMainPresenter.postFirebaseToken(deviceToken);
+                        PreferencesHelper preferencesHelper = new PreferencesHelper(getBaseContext());
+                        String oldDeviceToken =preferencesHelper.getKeyFcmToken();
+                        assert deviceToken != null;
+                        if (!oldDeviceToken.equals(deviceToken)){
+                            mMainPresenter.postFirebaseToken(deviceToken);
+                        }
                     }
                 }
         );
