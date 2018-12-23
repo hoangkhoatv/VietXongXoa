@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.google.gson.JsonObject;
 import com.vietxongxoa.data.listeners.ArticleListener;
 import com.vietxongxoa.data.listeners.DataListener;
+import com.vietxongxoa.data.listeners.FirebaseListener;
 import com.vietxongxoa.data.local.PreferencesHelper;
 import com.vietxongxoa.data.remote.ApiHelper;
 import com.vietxongxoa.data.remote.ApiInterface;
@@ -67,6 +68,7 @@ public class ArticleDataManager extends BaseDataManager {
         });
 
     }
+
 
     public void postWrite(final ArticleListener listener, JsonObject content) {
         ApiInterface apiService = ApiHelper.getClient().create(ApiInterface.class);

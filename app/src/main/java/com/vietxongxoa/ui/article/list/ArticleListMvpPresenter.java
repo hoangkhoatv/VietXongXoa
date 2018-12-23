@@ -9,4 +9,6 @@ public interface ArticleListMvpPresenter<V extends ArticleListMvpView> extends M
     void postLove(String uuid, int position);
 
     void deleteLove(String uuid, int position);
+
+    void postFirebaseToken(String token);
 }

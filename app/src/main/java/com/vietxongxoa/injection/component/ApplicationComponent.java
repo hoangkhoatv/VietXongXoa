@@ -6,6 +6,7 @@ import android.content.Context;
 import com.vietxongxoa.MyApplication;
 import com.vietxongxoa.data.manager.ArticleDataManager;
 import com.vietxongxoa.data.manager.CommentDataManager;
+import com.vietxongxoa.data.manager.FirebaseDataManager;
 import com.vietxongxoa.data.manager.LoveDataManager;
 import com.vietxongxoa.data.manager.UserDataManager;
 import com.vietxongxoa.injection.annotation.ApplicationContext;
@@ -30,4 +31,5 @@ public interface ApplicationComponent {
     CommentDataManager commentDataManager();
     LoveDataManager loveDataManager();
     UserDataManager userDataManager();
+    FirebaseDataManager  firebaseDataManager();
 }

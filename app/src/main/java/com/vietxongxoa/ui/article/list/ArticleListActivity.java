@@ -109,7 +109,13 @@ public class ArticleListActivity extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        showDialogRate();
+        if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
+            showDialogRate();
+        }
+        else {
+            recyclerView.scrollToPosition(0);
+        }
+        mBackPressed = System.currentTimeMillis();
     }
 
     @Override
@@ -145,12 +151,23 @@ public class ArticleListActivity extends BaseActivity
 
     }
 
+    @Override
+    public void showFirebaseReponse(String fcmDeviceToken) {
+
+    }
+
+    @Override
+    public void showFirebaseError(String error) {
+
+    }
+
     private void getFirebaseToken() {
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(
                 new OnSuccessListener<InstanceIdResult>() {
                     @Override
                     public void onSuccess(InstanceIdResult instanceIdResult) {
                         String deviceToken = instanceIdResult.getToken();
+                        mMainPresenter.postFirebaseToken(deviceToken);
                     }
                 }
         );

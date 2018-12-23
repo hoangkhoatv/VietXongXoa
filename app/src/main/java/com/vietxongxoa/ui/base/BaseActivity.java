@@ -27,6 +27,8 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
 
     private ActivityComponent mActivityComponent;
     private ProgressDialog progressDialog;
+    protected static final int TIME_INTERVAL = 1500;
+    protected long mBackPressed;
 
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);

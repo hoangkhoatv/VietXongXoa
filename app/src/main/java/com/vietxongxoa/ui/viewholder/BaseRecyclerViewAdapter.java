@@ -36,6 +36,7 @@ public abstract class BaseRecyclerViewAdapter<T>
         return mDataList.get(pos);
     }
 
+
     public int sizeData() {
         return mDataList.size();
     }
