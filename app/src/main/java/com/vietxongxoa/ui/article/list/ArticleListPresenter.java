@@ -16,8 +16,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import static com.vietxongxoa.data.local.PreferencesHelper.KEY_FCM_TOKEN;
-
+import static com.vietxongxoa.data.local.PreferencesHelper.KEY_FCM_DEVICE_TOKEN;
 
 public class ArticleListPresenter<V extends ArticleListMvpView> extends BasePresenter<V> implements ArticleListMvpPresenter<V> {
 
@@ -100,7 +99,7 @@ public class ArticleListPresenter<V extends ArticleListMvpView> extends BasePres
     @Override
     public void postFirebaseToken(final String token) {
         JsonObject content = new JsonObject();
-        content.addProperty(KEY_FCM_TOKEN , token);
+        content.addProperty(KEY_FCM_DEVICE_TOKEN, token);
         firebaseDataManager.postFirebaseToken(new FirebaseListener() {
             @Override
             public void onFirebaseResponse(DataResponse<Boolean> dataResponse) {

@@ -1,6 +1,5 @@
 package com.vietxongxoa.data.manager;
 
-import android.util.Log;
 
 import com.google.gson.JsonObject;
 import com.vietxongxoa.data.listeners.FirebaseListener;
@@ -18,7 +17,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.vietxongxoa.data.local.PreferencesHelper.KEY_FCM_TOKEN;
+import static com.vietxongxoa.data.local.PreferencesHelper.KEY_FCM_DEVICE_TOKEN;
 
 public class FirebaseDataManager extends BaseDataManager {
 
@@ -42,7 +41,7 @@ public class FirebaseDataManager extends BaseDataManager {
                         listener.onFirebaseResponse(response.body());
                         mPreferencesHelper.setKeyFcmToken(
                                 String.valueOf(
-                                        content.getAsJsonObject().getAsJsonPrimitive(KEY_FCM_TOKEN).getAsString()
+                                        content.getAsJsonObject().getAsJsonPrimitive(KEY_FCM_DEVICE_TOKEN).getAsString()
                                 )
                         );
                     }
