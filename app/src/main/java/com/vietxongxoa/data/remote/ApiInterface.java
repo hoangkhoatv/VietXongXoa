@@ -70,4 +70,10 @@ public interface ApiInterface {
             @Header("Authorization") String authKey,
             @Body JsonObject content
     );
+
+    @POST("firebase/fcm/token")
+    Call<DataResponse<Boolean>> postFirebaseToken(
+            @Header("Authorization") String authKey,
+            @Body JsonObject content
+    );
 }

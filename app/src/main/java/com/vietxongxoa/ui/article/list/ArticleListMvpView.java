@@ -2,6 +2,7 @@ package com.vietxongxoa.ui.article.list;
 
 import com.vietxongxoa.model.Article;
 import com.vietxongxoa.model.Data;
+import com.vietxongxoa.model.DataResponse;
 import com.vietxongxoa.ui.base.MvpView;
 
 import java.util.List;
@@ -17,5 +18,9 @@ public interface ArticleListMvpView extends MvpView {
     void showUnLove(String status, int position);
 
     void showErrorLove(String error);
+
+    void showFirebaseReponse(String status);
+
+    void showFirebaseError(String error);
 
 }
