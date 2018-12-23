@@ -11,10 +11,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.vietxongxoa.R;
 import com.vietxongxoa.data.local.PreferencesHelper;
 import com.vietxongxoa.model.Article;
@@ -22,7 +24,6 @@ import com.vietxongxoa.model.ArticleCreateModel;
 import com.vietxongxoa.model.BaseModel;
 import com.vietxongxoa.model.Data;
 import com.vietxongxoa.ui.adapter.PostAdapter;
-import com.vietxongxoa.ui.article.detail.ArticleDetailActivity;
 import com.vietxongxoa.ui.base.BaseActivity;
 import com.vietxongxoa.ui.viewholder.EndlessRecyclerViewScrollListener;
 
@@ -60,7 +61,6 @@ public class ArticleListActivity extends BaseActivity
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, ArticleListActivity.class);
-
     }
 
     @Override
@@ -72,7 +72,7 @@ public class ArticleListActivity extends BaseActivity
         ButterKnife.bind(this);
         mMainPresenter.attachView(this);
         setupRecyclerView();
-
+        getFirebaseToken();
     }
 
     @Override
@@ -145,6 +145,16 @@ public class ArticleListActivity extends BaseActivity
 
     }
 
+    private void getFirebaseToken() {
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(
+                new OnSuccessListener<InstanceIdResult>() {
+                    @Override
+                    public void onSuccess(InstanceIdResult instanceIdResult) {
+                        String deviceToken = instanceIdResult.getToken();
+                    }
+                }
+        );
+    }
 
     private void setWritePost() {
         if (isWrite) {
@@ -179,16 +189,16 @@ public class ArticleListActivity extends BaseActivity
         recyclerView.addOnScrollListener(endlessRecyclerViewScrollListener);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(
-            new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    if (adapter != null) {
-                        isWrite = true;
-                        endlessRecyclerViewScrollListener.resetState();
-                        endlessRecyclerViewScrollListener.onLoadMore(0);
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        if (adapter != null) {
+                            isWrite = true;
+                            endlessRecyclerViewScrollListener.resetState();
+                            endlessRecyclerViewScrollListener.onLoadMore(0);
+                        }
                     }
                 }
-            }
         );
 
     }
@@ -241,7 +251,6 @@ public class ArticleListActivity extends BaseActivity
         parent.setContentInsetsAbsolute(0, 0);
         TextView txtTitle = (TextView) view.findViewById(R.id.text_title);
         txtTitle.setText(getString(R.string.title_main));
-
     }
 
     @Override
@@ -256,20 +265,17 @@ public class ArticleListActivity extends BaseActivity
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent dataResult) {
-        if(requestCode == UPDATE_ITEM && resultCode == Activity.RESULT_OK) {
+        if (requestCode == UPDATE_ITEM && resultCode == Activity.RESULT_OK) {
             Bundle extras = dataResult.getExtras();
             Article article = new Article();
-            int positon = extras.getInt(PreferencesHelper.KEY_PLACE,0);
-            boolean loved = dataResult.getBooleanExtra(PreferencesHelper.KEY_LOVED,false);
-            String numlove =dataResult.getStringExtra(PreferencesHelper.KEY_NUM_LOVE);
-            int comments = dataResult.getIntExtra(PreferencesHelper.KEY_COMMENT,0);
+            int position = extras.getInt(PreferencesHelper.KEY_PLACE, 0);
+            boolean loved = dataResult.getBooleanExtra(PreferencesHelper.KEY_LOVED, false);
+            String numlove = dataResult.getStringExtra(PreferencesHelper.KEY_NUM_LOVE);
+            int comments = dataResult.getIntExtra(PreferencesHelper.KEY_COMMENT, 0);
             article.love = numlove;
             article.loved = loved;
             article.comment = comments;
-            adapter.changeItem(positon,article);
-            
+            adapter.changeItem(position, article);
         }
-
     }
-
 }

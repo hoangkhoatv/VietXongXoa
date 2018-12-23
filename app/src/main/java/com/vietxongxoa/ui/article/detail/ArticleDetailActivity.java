@@ -10,7 +10,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -60,9 +59,7 @@ public class ArticleDetailActivity
     @Inject
     ArticleDetailPresenter<ArticleDetailMvpView> mDetailPresenter;
     Data<Article> data;
-    int limit = 10;
     int currentPage = 0;
-    int endPage = -1;
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, ArticleDetailActivity.class);
@@ -108,8 +105,8 @@ public class ArticleDetailActivity
         final List<Object> baseItems = new ArrayList<>();
         data.attributes.type = BaseModel.HEADER_TYPE;
         baseItems.add(data);
-        if (data.relationships.comments != null){
-            for(Data<Comment> commentData : data.relationships.comments){
+        if (data.relationships.comments != null) {
+            for (Data<Comment> commentData : data.relationships.comments) {
                 commentData.attributes.type = BaseModel.SECOND_TYPE;
                 baseItems.add(commentData);
             }
@@ -127,7 +124,7 @@ public class ArticleDetailActivity
 
                 if (baseItems.size() == 1) {
                     adapter.onReachEnd();
-                } else if (baseItems.size() > 1){
+                } else if (baseItems.size() > 1) {
                     adapter.onHiddenReachEnd();
                 }
                 adapter.onHidden();
@@ -255,8 +252,6 @@ public class ArticleDetailActivity
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(final int offset) {
-//                currentPage = offset;
-//                loadMore(offset);
             }
         };
         recyclerView.addOnScrollListener(endlessRecyclerViewScrollListener);
@@ -265,7 +260,7 @@ public class ArticleDetailActivity
             @Override
             public void onRefresh() {
                 if (adapter != null) {
-                    if (isLoading == false) {
+                    if (!isLoading) {
                         endlessRecyclerViewScrollListener.resetState();
                         currentPage = 0;
                         mDetailPresenter.getData(data.uuid);
@@ -278,11 +273,6 @@ public class ArticleDetailActivity
             }
         });
         mDetailPresenter.getData(data.uuid);
-//        List<Object> baseItem = new ArrayList<>();
-//        baseItem.add(data);
-//        adapter.add(baseItem);
-//        adapter.onHidden();
-
     }
 
     @Override
@@ -301,25 +291,9 @@ public class ArticleDetailActivity
 
     @Override
     public void onRetryLoadMore() {
-//        loadMore(currentPage);
 
     }
 
-//    private void loadMore(final int page) {
-//        adapter.startLoadMore();
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                if (page == endPage) {
-//                    adapter.onReachEnd();
-//                    return;
-//                }
-//                isLoading = true;
-//                mDetailPresenter.getComment(data.uuid, limit, page);
-//
-//            }
-//        }, 500);
-//    }
 
     @OnClick(R.id.btnComment)
     public void onClickComment(View view) {
@@ -334,10 +308,14 @@ public class ArticleDetailActivity
         Intent intentChange = new Intent();
         intentChange.putExtra(PreferencesHelper.KEY_PLACE,
                 getIntent().getIntExtra(PreferencesHelper.KEY_POSITON, 0));
-        Data<Article> articleData = (Data<Article>) adapter.getItem(0);
-        intentChange.putExtra(PreferencesHelper.KEY_LOVED, articleData.attributes.loved);
-        intentChange.putExtra(PreferencesHelper.KEY_NUM_LOVE, articleData.attributes.love);
-        intentChange.putExtra(PreferencesHelper.KEY_COMMENT, articleData.attributes.comment);
+        try {
+            Data<Article> articleData = (Data<Article>) adapter.getItem(0);
+            intentChange.putExtra(PreferencesHelper.KEY_LOVED, articleData.attributes.loved);
+            intentChange.putExtra(PreferencesHelper.KEY_NUM_LOVE, articleData.attributes.love);
+            intentChange.putExtra(PreferencesHelper.KEY_COMMENT, articleData.attributes.comment);
+        } catch (Exception e) {
+            finish();
+        }
         setResult(Activity.RESULT_OK, intentChange);
         finish();
     }
