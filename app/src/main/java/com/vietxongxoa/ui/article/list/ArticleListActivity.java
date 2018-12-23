@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +16,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.vietxongxoa.R;
@@ -112,8 +114,7 @@ public class ArticleListActivity extends BaseActivity
     public void onBackPressed() {
         if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
             showDialogRate();
-        }
-        else {
+        } else {
             recyclerView.scrollToPosition(0);
         }
         mBackPressed = System.currentTimeMillis();
@@ -163,16 +164,19 @@ public class ArticleListActivity extends BaseActivity
     }
 
     private void getFirebaseToken() {
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(
-                new OnSuccessListener<InstanceIdResult>() {
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                     @Override
-                    public void onSuccess(InstanceIdResult instanceIdResult) {
-                        String deviceToken = instanceIdResult.getToken();
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            return;
+                        }
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
                         PreferencesHelper preferencesHelper = new PreferencesHelper(getBaseContext());
-                        String oldDeviceToken =preferencesHelper.getKeyFcmToken();
-                        assert deviceToken != null;
-                        if (!oldDeviceToken.equals(deviceToken)){
-                            mMainPresenter.postFirebaseToken(deviceToken);
+                        String oldDeviceToken = preferencesHelper.getKeyFcmToken();
+                        if (oldDeviceToken == null || !oldDeviceToken.equals(token)) {
+                            mMainPresenter.postFirebaseToken(token);
                         }
                     }
                 }
