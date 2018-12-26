@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import com.vietxongxoa.R;
 import com.vietxongxoa.data.local.PreferencesHelper;
@@ -57,7 +58,7 @@ public class PostAdapter extends LoadMoreRecyclerViewAdapter<Object> {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         if (holder instanceof PostViewHolder) {
             final Data<Article> data = (Data<Article>) mDataList.get(position);
             final Article item = data.attributes;
@@ -90,6 +91,19 @@ public class PostAdapter extends LoadMoreRecyclerViewAdapter<Object> {
                     }
             );
             ((PostViewHolder) holder).setData(item, mContext);
+            ((PostViewHolder) holder).textPost.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    ((PostViewHolder) holder).textPost.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    int lineCount = ((PostViewHolder) holder).textPost.getLineCount();
+                    if (lineCount > 5){
+                        for (int i = 0 ; i < 5; i++){
+                            Log.d("BBBBB", String.valueOf(((PostViewHolder) holder).textPost.getLayout().getLineStart(i)));
+                        }
+                    }
+
+                }
+            });
         } else if (holder instanceof WriteViewHolder) {
             ((WriteViewHolder) holder).setItemClickListener(new com.vietxongxoa.ui.viewholder.ItemClickListener() {
                 @Override

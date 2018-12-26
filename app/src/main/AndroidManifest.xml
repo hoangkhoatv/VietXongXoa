@@ -15,21 +15,6 @@
         android:theme="@style/CustomTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
-        <service
-            android:name=".fcm.FirebaseMessagingService"
-            tools:ignore="ExportedService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/send" />
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/colorAccent" />
-
         <activity
             android:name=".ui.article.list.ArticleListActivity"
             android:screenOrientation="portrait" />

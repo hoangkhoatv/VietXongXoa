@@ -8,8 +8,8 @@ android {
         applicationId "com.vietxongxoa"
         minSdkVersion 23
         targetSdkVersion 26
-        versionCode 5
-        versionName "v0.1.4"
+        versionCode 6
+        versionName "v0.1.6"
         multiDexEnabled false
     }
     buildTypes {

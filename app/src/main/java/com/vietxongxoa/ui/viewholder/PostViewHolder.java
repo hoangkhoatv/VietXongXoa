@@ -7,7 +7,9 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -19,7 +21,7 @@ import com.vietxongxoa.utils.MySpannable;
 public class PostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private TextView textName;
-    private TextView textPost;
+    public TextView textPost;
     private TextView textDate;
     private TextView commentNumber;
     private ItemClickListener itemClickListener;
@@ -75,27 +77,30 @@ public class PostViewHolder extends RecyclerView.ViewHolder implements View.OnCl
             numLoved.setTextColor(context.getResources().getColor(R.color.comment));
             iconLove.setNotLove();
         }
-        if (strPost.length() > 280) {
-            String temp = strPost.substring(0, 280);
-            String readMoreString = context.getString(R.string.read_more);
-            String viewMore = temp + readMoreString;
-            Spannable span = SpannableStringBuilder.valueOf(viewMore);
-            span.setSpan(
-                    new MySpannable(false) {
-                        @Override
-                        public void onClick(@NonNull View view) {
-                            textPost.setText(strPost);
-                        }
-                    },
-                    viewMore.indexOf(readMoreString),
-                    viewMore.indexOf(readMoreString) + readMoreString.length(),
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-            );
-            textPost.setText(span);
-            textPost.setMovementMethod(LinkMovementMethod.getInstance());
-        } else {
-            textPost.setText(strPost);
-        }
+        textPost.setText(strPost);
+//        if (strPost.length() > 280) {
+//            String temp = strPost.substring(0, 280);
+//            String readMoreString = context.getString(R.string.read_more);
+//            String viewMore = temp + readMoreString;
+//            Spannable span = SpannableStringBuilder.valueOf(viewMore);
+//            span.setSpan(
+//                    new MySpannable(false) {
+//                        @Override
+//                        public void onClick(@NonNull View view) {
+//                            textPost.setText(strPost);
+//                        }
+//                    },
+//                    viewMore.indexOf(readMoreString),
+//                    viewMore.indexOf(readMoreString) + readMoreString.length(),
+//                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+//            );
+//            textPost.setText(span);
+//            textPost.setMovementMethod(LinkMovementMethod.getInstance());
+//        } else {
+//        }
+
+
+
         btnLove.setEnabled(true);
 
     }
